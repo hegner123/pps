@@ -1,11 +1,14 @@
 {
-  "name": "pps-supbase",
+  "name": "pps-supabase",
   "version": "1.0.0",
   "description": "pps with supabase backend",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+"scripts": {
+  "dev": "next dev",
+  "build": "next build",
+  "start": "next start",
+  "lint": "next lint"
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hegner123/pps.git"
@@ -15,5 +18,10 @@
   "bugs": {
     "url": "https://github.com/hegner123/pps/issues"
   },
-  "homepage": "https://github.com/hegner123/pps#readme"
+  "homepage": "https://github.com/hegner123/pps#readme",
+  "dependencies": {
+    "next": "^13.1.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
 }
