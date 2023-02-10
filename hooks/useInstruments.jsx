@@ -21,7 +21,7 @@ export const useInstruments = (song) => {
     // console.log(value);
   }
 
-  if (song) {
+  if (song && fetched === false) {
     getInstruments(song).then((data) => {
       setInstruments(data);
       setFetched(true);
