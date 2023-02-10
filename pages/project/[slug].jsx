@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSongs } from "../../hooks/useSongs";
+
 import { Grid } from "../../components/grid";
 import { useProject } from "../../hooks/useProject";
 import { useRouter } from "next/router";
@@ -17,9 +17,7 @@ const Dashboard = () => {
         {projectData?.hasProject?.name}
       </h1>
       <div className="col-start-3 col-end-7">
-        {ready && (
-          <Grid projectSlug={projectSlug} projectId={projectData?.id} />
-        )}
+          <Grid projectSlug={projectSlug} projectId={projectData?.id}  />
       </div>
     </div>
   );

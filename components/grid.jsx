@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useArrangement } from "../hooks/useArrangement";
+import { useSongs } from "../hooks/useSongs";
 
-export const Grid = (projectSlug) => {
-  const songData = useSongs(projectData?.id);
+export const Grid = ({projectSlug, projectId,projectArrangement}) => {
+  const songData = useSongs(projectId);
   const [songTitles, setSongTitles] = useState([]);
   const [songIds, setSongIds] = useState([]);
-  const arrangement = useArrangement(songIds, arrangementOrder);
+  const arrangement = useArrangement(songIds, projectArrangement);
   const [fetched, setFetched] = useState(false);
 
   useEffect(() => {
