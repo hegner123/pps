@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSongs } from "../../hooks/useSongs";
+
 import { Grid } from "../../components/grid";
 import { useProject } from "../../hooks/useProject";
 import { useRouter } from "next/router";
@@ -7,8 +7,14 @@ import { useRouter } from "next/router";
 const Dashboard = () => {
   const [ready, setReady] = useState(false);
   const router = useRouter();
-  const projectSlug = router.query.slug;
-  const projectData = useProject(projectSlug);
+
+  const projectData = useProject(router);
+
+  useEffect(() => {
+    if (projectData?.fetched) {
+      setReady(true);
+    }
+  }, [projectData?.fetched]);
 
   // console.log(songTitles);
   return (
@@ -18,7 +24,10 @@ const Dashboard = () => {
       </h1>
       <div className="col-start-3 col-end-7">
         {ready && (
-          <Grid projectSlug={projectSlug} projectId={projectData?.id} />
+          <Grid
+            projectSlug={projectData?.projectSlug}
+            projectId={projectData?.id}
+          />
         )}
       </div>
     </div>
