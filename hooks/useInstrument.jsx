@@ -1,25 +1,24 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../lib/supabaseClient";
 
-export const useInstrument = (instrumentId) => {
+export const useInstrument = (id) => {
   const [status, setStatus] = useState();
   const [ready, setReady] = useState(false);
+  const [instrumentId, setInstrumentId] = useState(id);
   const [updating, setUpdating] = useState(false);
-
-  useEffect(() => {}, []);
 
   async function getInstrument(instId) {
     let { data: Instruments, error } = await supabase
       .from("Instruments")
       .select("status")
-      .eq("id", `${instId}`);
+      .eq("id", `${instrumentId.instId}`);
 
     if (error) console.log("error", error);
 
     return Instruments;
   }
 
-  async function handleInstrumentUpdate(e) {
+  function handleInstrumentUpdate(e) {
     let update;
     if (status === "incomplete") {
       update = "complete";
@@ -27,19 +26,21 @@ export const useInstrument = (instrumentId) => {
       update = "incomplete";
     }
 
-    console.log("update", update);
-    console.log("instId", instrumentId.instId);
+    updateInstrument(update).then((data) => {
+      setStatus(data[0].status);
+    });
 
-    const { data: Status, error } = await supabase
-      .from("Instruments")
-      .update({ status: update })
-      .eq("id", instrumentId.instId)
-      .select();
+    async function updateInstrument() {
+      let { data: Status, error } = await supabase
+        .from("Instruments")
+        .update({ status: `${update}` })
+        .eq("id", `${instrumentId.instId}`)
+        .select();
 
-    if (error) console.log("error", error);
-    console.log(Status);
+      if (error) console.log("error", error);
 
-    setStatus(Status);
+      return Status;
+    }
   }
 
   useEffect(() => {
