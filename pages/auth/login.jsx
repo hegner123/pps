@@ -1,7 +1,7 @@
 import { useState } from "react";
+import useLogin from "../../hooks/useLogin";
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const userLogin = useLogin();
   return (
     <section className="grid grid-cols-12 grid-rows-12 min-h-screen  bg-slate-50">
       <form className="grid my-auto col-start-3 col-span-5 gap-4 bg-slate-400 rounded p-4 max-h-max">
@@ -13,7 +13,7 @@ const LoginForm = () => {
           className="border-solid border-b-2 border-black col-span-full bg-transparent"
           type="email"
           name="email"
-          value={email}
+          value={userLogin.email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <label className="col-span-full" htmlFor="password">
@@ -24,7 +24,7 @@ const LoginForm = () => {
           type="password"
           name="password"
           id="password"
-          value={password}
+          value={userLogin.password}
           onChange={(e) => setPassword(e.target.value)}
         />
        <div className="flex space-x-4">

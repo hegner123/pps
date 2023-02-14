@@ -1,15 +1,14 @@
 
-  import { useState,useEffect } from "react";
-  import { supabase } from "../../lib/supabaseClient";
+  import { useState, useEffect } from "react";
+  import { supabase } from "../lib/supabaseClient";
 
   const useLogin = () => {
-      const [email, setEmail] = useState("");
+    const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
   const [error, setError] = useState(null);
   
   async function loginUser(){
-    let { data, error } = await supabase.auth.login({
+    let { data, error } = await supabase.auth.signInWithPassword({
       email: `${email}`,
       password: `${password}`,
     })
@@ -31,4 +30,9 @@
 
                 loginUser();
             }
-        }
+
+            return {email, password, error, setEmail, setPassword, handleSubmit}
+}
+
+        
+export default useLogin;
