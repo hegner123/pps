@@ -32,11 +32,6 @@ export const useArrangement = (songId, arrangementOrder) => {
     return ordered;
   }
 
-  function handleInstrumentUpdate(e) {
-    const { name, value } = e.target;
-    // console.log(value);
-  }
-
   useEffect(() => {
     if (songId && fetched === false) {
       getInstruments(songId).then((data) => {

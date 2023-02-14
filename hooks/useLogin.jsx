@@ -1,0 +1,34 @@
+
+  import { useState,useEffect } from "react";
+  import { supabase } from "../../lib/supabaseClient";
+
+  const useLogin = () => {
+      const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  
+  const [error, setError] = useState(null);
+  
+  async function loginUser(){
+    let { data, error } = await supabase.auth.login({
+      email: `${email}`,
+      password: `${password}`,
+    })
+    if (error) {
+      setError(error);
+      return;
+    }
+    console.log(data)
+    return data;
+}
+      
+      function handleSubmit(e){
+          e.preventDefault();
+          if (password !== passwordConfirmation) {
+              setError("Passwords do not match");
+              return;
+            }
+
+
+                loginUser();
+            }
+        }

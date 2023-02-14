@@ -1,11 +1,15 @@
 import { useState } from "react";
+
+
 const RegisterForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+ const userRegister = useRegister();
+
+
+
+
   return (
-    <section className="grid grid-cols-12 grid-rows-12 min-h-screen  bg-slate-200">
-      <form className="grid my-auto col-start-5 col-end-7 gap-4 bg-slate-400 rounded p-4 max-h-max">
+    <section className="grid grid-cols-12 grid-rows-12 min-h-screen  bg-slate-50">
+      <form className="grid my-auto col-start-3 col-span-5 gap-4 bg-slate-400 rounded p-4 max-h-max" >
         <h1 className="col-span-full text-6xl">Register</h1>
         <label className="col-span-full" htmlFor="email">
           Email
@@ -15,7 +19,7 @@ const RegisterForm = () => {
           type="email"
           name="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => userRegister.setEmail(e.target.value)}
         />
         <label className="col-span-full" htmlFor="password">
           Password
@@ -26,7 +30,7 @@ const RegisterForm = () => {
           name="password"
           id="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => userRegister.setPassword(e.target.value)}
         />
         <label className="col-span-full" htmlFor="password-confirmation">
           Password Confirmation
@@ -37,18 +41,19 @@ const RegisterForm = () => {
           name="password-confirmation"
           id="password-confirmation"
           value={passwordConfirmation}
-          onChange={(e) => setPasswordConfirmation(e.target.value)}
+          onChange={(e) => userRegister.setPasswordConfirmation(e.target.value)}
         />
-        <input
-          className="bg-black text-white rounded p-2 col-span-2 hover:bg-slate-500 cursor-pointer"
-          type="submit"
-          value="Submit"
-        />
-        <a
-          className="bg-black text-white rounded p-2 col-span-2 hover:bg-slate-500 cursor-pointer text-center"
-          href="../">
-          Cancel
-        </a>
+        <div className="flex space-x-4">
+          <button
+            className="bg-black text-white rounded p-2  hover:bg-slate-500 cursor-pointer"
+            type="submit" onClick={(e) => userRegister.handleSubmit(e)}
+            >Submit</button>
+          <a
+            className="bg-black text-white rounded p-2  hover:bg-slate-500 cursor-pointer text-center"
+            href="../">
+            Cancel
+          </a>
+        </div>
       </form>
     </section>
   );
