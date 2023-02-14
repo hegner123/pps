@@ -1,25 +1,21 @@
 import { useEffect, useState } from "react";
 import { useArrangement } from "../hooks/useArrangement";
 import { useSongs } from "../hooks/useSongs";
+import { TableRow } from "./tableRow";
 
-export const Grid = ({ projectSlug, projectId }) => {
-  const songData = useSongs(projectId);
+export const Grid = ({ projectSlug, projectData }) => {
+  const songData = useSongs(projectData?.id);
   const [songTitles, setSongTitles] = useState([]);
   const [songIds, setSongIds] = useState([]);
-  const arrangement = useArrangement(songIds, arrangementOrder);
-  const [fetched, setFetched] = useState(false);
+
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    if (arrangement?.ready && fetched === false) {
-      console.log(arrangement);
-      setFetched(true);
-    }
-  }, [arrangement]);
-  useEffect(() => {
-    if (projectSlug) {
-      songData?.songs?.forEach((song) => {
-        setSongTitles((songTitles) => [...songTitles, song.name]);
+    if (songData.fetched) {
+      setReady(true);
+      songData?.songs.forEach((song) => {
         setSongIds((songIds) => [...songIds, song.id]);
+        setSongTitles((songTitles) => [...songTitles, song.name]);
       });
     }
   }, [songData.fetched]);
@@ -31,28 +27,23 @@ export const Grid = ({ projectSlug, projectId }) => {
           <thead>
             <tr>
               <th></th>
-              {arrangement &&
-                arrangement.arrangementOrder?.map((instrument, i) => (
-                  <>
-                    <th className="capitalize" key={i}>
-                      {instrument}
-                    </th>
-                  </>
+              {ready &&
+                projectData.arrangement_order?.order.map((instrument) => (
+                  <th className="capitalize" key={instrument}>
+                    {instrument}
+                  </th>
                 ))}
             </tr>
           </thead>
           <tbody>
-            {songTitles &&
-              songTitles.map((song, i) => (
-                <tr key={song}>
-                  <td>{song}</td>
-                  {arrangement &&
-                    arrangement.orderedInstruments[i]?.map((instrument, j) => (
-                      <td>
-                        <p>{j}</p>
-                      </td>
-                    ))}
-                </tr>
+            {ready &&
+              songData.songs.map((song, i) => (
+                <TableRow
+                  key={songTitles[i]}
+                  songTitle={songTitles[i]}
+                  songData={song}
+                  arrangementOrder={projectData.arrangement_order?.order}
+                />
               ))}
           </tbody>
         </table>

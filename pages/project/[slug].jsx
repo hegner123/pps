@@ -16,7 +16,6 @@ const Dashboard = () => {
     }
   }, [projectData?.fetched]);
 
-  // console.log(songTitles);
   return (
     <div className="bg-emerald-50 min-h-screen min-w-full grid grid-cols-12 grid-rows-2 py-60">
       <h1 className="text-6xl col-start-3 col-end-7">
@@ -26,7 +25,7 @@ const Dashboard = () => {
         {ready && (
           <Grid
             projectSlug={projectData?.projectSlug}
-            projectId={projectData?.id}
+            projectData={projectData?.hasProject}
           />
         )}
       </div>

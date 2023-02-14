@@ -2,24 +2,34 @@ import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabaseClient";
 import _ from "lodash";
 
-export const useArrangement = (songIds, arrangementOrder) => {
-  const [hasInstruments, setInstruments] = useState([]);
-  const [compiledInstruments, setCompiledInstruments] = useState([]);
+export const useArrangement = (songId, arrangementOrder) => {
+  const [hasInstruments, setHasInstruments] = useState([]);
   const [orderedInstruments, setOrderedInstruments] = useState([]);
-  const [arrangement, setArrangement] = useState([]);
   const [ready, setReady] = useState(false);
-
   const [fetched, setFetched] = useState(false);
 
   async function getInstruments(song) {
     let { data: Instruments, error } = await supabase
       .from("Instruments")
-      .select("*")
+      .select("id, name")
       .eq("song_id", `${song}`);
 
     if (error) console.log("error", error);
 
     return Instruments;
+  }
+
+  function orderInstruments(instruments) {
+    const ordered = [];
+    arrangementOrder.forEach((order) => {
+      instruments.forEach((instrument) => {
+        if (instrument.name.toLowerCase() === order) {
+          ordered.push(instrument);
+        }
+      });
+    });
+
+    return ordered;
   }
 
   function handleInstrumentUpdate(e) {
@@ -28,66 +38,25 @@ export const useArrangement = (songIds, arrangementOrder) => {
   }
 
   useEffect(() => {
-    if (songIds && fetched === false) {
-      songIds.forEach((song) => {
-        getInstruments(song).then((data) => {
-          if (data.length > 0) {
-            setInstruments((hasInstruments) => [...hasInstruments, data]);
-          }
-          setFetched(true);
-        });
+    if (songId && fetched === false) {
+      getInstruments(songId).then((data) => {
+        if (data.length > 0) {
+          setHasInstruments(data);
+        }
+        setFetched(true);
       });
     }
-  }, [songIds, fetched]);
+  }, [songId, fetched]);
 
   useEffect(() => {
-    hasInstruments?.forEach((song) => {
-      song.forEach((instrument) => {
-        if (compiledInstruments.includes(instrument.name) === false) {
-          setCompiledInstruments((compiledInstruments) => [
-            ...compiledInstruments,
-            instrument.name,
-          ]);
-        }
-      });
-    });
-    if (hasInstruments) {
-      orderInstruments();
+    if (hasInstruments && ready === false && fetched === true) {
+      setOrderedInstruments(orderInstruments(hasInstruments));
+      setReady(true);
     }
   }, [hasInstruments, fetched]);
 
-  useEffect(() => {
-    if (orderedInstruments.length === songIds.length && ready === false) {
-      console.log(songIds.length);
-      setReady(true);
-    }
-  }, [orderedInstruments]);
-
-  // Create new array with instruments in the order they appear in the arrangement
-
-  function orderInstruments() {
-    let order = [];
-    hasInstruments?.forEach((song) => {
-      let ordered = [];
-      arrangementOrder?.forEach((instOrder) => {
-        song.forEach((instrument) => {
-          if (instOrder === instrument.name.toLowerCase()) {
-            ordered.push(instrument);
-          } else {
-            ordered.push({ name: instOrder, status: null });
-          }
-        });
-      });
-      order.push(ordered);
-    });
-    setOrderedInstruments(order);
-  }
-
   return {
-    hasInstruments,
     orderedInstruments,
-    arrangementOrder,
-
     ready,
     onchange: handleInstrumentUpdate,
   };
