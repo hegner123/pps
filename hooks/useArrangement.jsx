@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../lib/supabaseClient";
 import _ from "lodash";
 
 export const useArrangement = (songId, arrangementOrder) => {
@@ -8,32 +7,18 @@ export const useArrangement = (songId, arrangementOrder) => {
   const [ready, setReady] = useState(false);
   const [fetched, setFetched] = useState(false);
 
-  async function getInstruments(song) {
-    let { data: Instruments, error } = await supabase
-      .from("Instruments")
-      .select("id, name")
-      .eq("song_id", `${song}`);
-
-    if (error) console.log("error", error);
-
-    return Instruments;
-  }
-
-  function orderInstruments(instruments) {
-    const ordered = [];
-    arrangementOrder.forEach((order) => {
-      instruments.forEach((instrument) => {
-        if (instrument.name.toLowerCase() === order) {
-          ordered.push(instrument);
-        }
-      });
-    });
-
-    return ordered;
-  }
-
   useEffect(() => {
-    if (songId && fetched === false) {
+    async function getInstruments(song) {
+      let { data: Instruments, error } = await supabaseClient
+        .from("Instruments")
+        .select("id, name")
+        .eq("song_id", `${song}`);
+
+      if (error) console.log("error", error);
+
+      return Instruments;
+    }
+    if (songId && fetched === false && user) {
       getInstruments(songId).then((data) => {
         if (data.length > 0) {
           setHasInstruments(data);
@@ -41,9 +26,21 @@ export const useArrangement = (songId, arrangementOrder) => {
         setFetched(true);
       });
     }
-  }, [songId, fetched]);
+  }, [songId, fetched, user]);
 
   useEffect(() => {
+    function orderInstruments(instruments) {
+      const ordered = [];
+      arrangementOrder.forEach((order) => {
+        instruments.forEach((instrument) => {
+          if (instrument.name.toLowerCase() === order) {
+            ordered.push(instrument);
+          }
+        });
+      });
+
+      return ordered;
+    }
     if (hasInstruments && ready === false && fetched === true) {
       setOrderedInstruments(orderInstruments(hasInstruments));
       setReady(true);

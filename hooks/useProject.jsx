@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { supabase } from "../lib/supabaseClient";
+import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
 
 export const useProject = (router) => {
   const [hasProject, setProject] = useState();
   const [projectSlug, setProjectSlug] = useState();
   const [fetched, setFetched] = useState(false);
   const [isReady, setIsReady] = useState(false);
+  const supabaseClient = useSupabaseClient();
+  const user = useUser();
 
   useEffect(() => {
     if (router.isReady) {
@@ -15,31 +17,35 @@ export const useProject = (router) => {
     }
   }, [router.isReady]);
 
-  async function getProject(slug) {
-    if (slug === undefined) {
-      console.log("undefined slug");
-      return;
+  useEffect(() => {
+    async function getProject(slug) {
+      if (slug === undefined) {
+        console.log("undefined slug");
+        return;
+      }
+
+      let { data: Project, error } = await supabaseClient
+        .from("Projects")
+        .select("*")
+        .eq("slug", `${slug}`);
+
+      if (error) console.log("error", error);
+
+      return Project[0];
     }
-    let { data: Project, error } = await supabase
-      .from("Projects")
-      .select("*")
-      .eq("slug", `${slug}`);
 
-    if (error) console.log("error", error);
-
-    return Project[0];
-  }
-  if (fetched === false && isReady) {
-    getProject(projectSlug)
-      .then((data) => {
-        setProject(data);
-        //   console.log(project);
-        setFetched(true);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+    if (fetched === false && isReady && user) {
+      getProject(projectSlug)
+        .then((data) => {
+          setProject(data);
+          //   console.log(project);
+          setFetched(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [user]);
 
   return { hasProject, fetched, projectSlug };
 };
