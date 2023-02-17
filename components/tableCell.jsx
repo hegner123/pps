@@ -10,8 +10,9 @@ export const TableCell = (instId) => {
   }, [inst]);
   const classes = inst.status === "complete" ? "bg-green-500" : "bg-red-500";
   return (
-    <td onClick={inst.onclick} className={classes}>
-      test
-    </td>
+    <td
+      onClick={inst.onclick}
+      className={`${classes} cursor-pointer hover:filter p-2`}
+      style={{ "--tw-brightness": 0.8 }}></td>
   );
 };

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import _ from "lodash";
 
 export const useArrangement = (songId, arrangementOrder) => {
@@ -6,6 +7,7 @@ export const useArrangement = (songId, arrangementOrder) => {
   const [orderedInstruments, setOrderedInstruments] = useState([]);
   const [ready, setReady] = useState(false);
   const [fetched, setFetched] = useState(false);
+  const supabaseClient = useSupabaseClient();
 
   useEffect(() => {
     async function getInstruments(song) {
@@ -18,7 +20,7 @@ export const useArrangement = (songId, arrangementOrder) => {
 
       return Instruments;
     }
-    if (songId && fetched === false && user) {
+    if (songId && fetched === false) {
       getInstruments(songId).then((data) => {
         if (data.length > 0) {
           setHasInstruments(data);
@@ -26,7 +28,7 @@ export const useArrangement = (songId, arrangementOrder) => {
         setFetched(true);
       });
     }
-  }, [songId, fetched, user]);
+  }, [songId, fetched]);
 
   useEffect(() => {
     function orderInstruments(instruments) {
@@ -50,6 +52,5 @@ export const useArrangement = (songId, arrangementOrder) => {
   return {
     orderedInstruments,
     ready,
-    onchange: handleInstrumentUpdate,
   };
 };

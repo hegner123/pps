@@ -36,7 +36,7 @@ export const useInstrument = (id) => {
 
   useEffect(() => {
     async function getInstrument(instId) {
-      let { data: Instruments, error } = await supabase
+      let { data: Instruments, error } = await supabaseClient
         .from("Instruments")
         .select("status")
         .eq("id", `${instrumentId.instId}`);

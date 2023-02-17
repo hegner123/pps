@@ -1,9 +1,4 @@
-import { useProjects } from "../hooks/useProjects";
-
-
-function Page() {
-  const userProjects = useProjects();
-
+const Homepage = () => {
   return (
     <div className="bg-slate-50 min-h-screen min-w-full grid grid-cols-12 grid-rows-2 py-60">
       <div className="col-start-3 col-end-7 pt-5">
@@ -11,25 +6,20 @@ function Page() {
           ProProject Studio
         </h1>
         <div className="pt-10 space-x-4">
-          <a className="p-3 bg-black text-white rounded" href="/auth/login">
-            Login
-          </a>
-          <a className="p-3 bg-black text-white rounded" href="/auth/register">
-            Register
-          </a>
-          <ul className="list-disc list-inside">
-            {/* {userProjects?.projects?.map((project) => (
-              <li key={project.id}>
-                <a className="underline" href={`/project/${project.slug}`}>
-                  {project.name}
-                </a>
-              </li>
-            ))} */}
-          </ul>
+          <div className="p-5">
+            <a className="p-3 bg-black text-white rounded" href="/auth/login">
+              Login
+            </a>
+            <a
+              className="p-3 bg-black text-white rounded"
+              href="/auth/register">
+              Register
+            </a>
+          </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default Page;
+export default Homepage;

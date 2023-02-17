@@ -1,11 +1,13 @@
 import { Auth, ThemeSupa } from "@supabase/auth-ui-react";
 import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 const LoginPage = () => {
   const supabaseClient = useSupabaseClient();
   const user = useUser();
   const [data, setData] = useState();
+  const router = useRouter();
 
   useEffect(() => {
     async function loadData() {
@@ -16,32 +18,25 @@ const LoginPage = () => {
     if (user) loadData();
   }, [user]);
 
-  if (!user)
-    return (
-      <main className="bg-slate-50 min-w-full min-h-screen grid place-items-center">
-        <div className="w-56  ">
-          <Auth
-            redirectTo="http://localhost:3000/"
-            appearance={{ theme: ThemeSupa }}
-            supabaseClient={supabaseClient}
-          />
-          <a
-            className="p-3 bg-black text-white hover:bg-slate-200 text-center"
-            href="../">
-            Cancel
-          </a>
-        </div>
-      </main>
-    );
+  if (user) {
+    router.push("/dashboard");
+  }
 
   return (
-    <>
-      <button onClick={() => supabaseClient.auth.signOut()}>Sign out</button>
-      <p>user:</p>
-      <pre>{JSON.stringify(user, null, 2)}</pre>
-      <p>client-side data fetching with RLS</p>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-    </>
+    <main className="bg-slate-50 min-w-full min-h-screen grid place-items-center">
+      <div className="w-56  ">
+        <Auth
+          redirectTo="http://localhost:3000/"
+          appearance={{ theme: ThemeSupa }}
+          supabaseClient={supabaseClient}
+        />
+        <a
+          className="p-3 bg-black text-white hover:bg-slate-200 text-center"
+          href="../">
+          Cancel
+        </a>
+      </div>
+    </main>
   );
 };
 

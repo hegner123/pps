@@ -34,18 +34,18 @@ export const useProject = (router) => {
       return Project[0];
     }
 
-    if (fetched === false && isReady && user) {
+    if (fetched === false && isReady) {
       getProject(projectSlug)
         .then((data) => {
           setProject(data);
-          //   console.log(project);
+
           setFetched(true);
         })
         .catch((err) => {
           console.log(err);
         });
     }
-  }, [user]);
+  }, [isReady]);
 
   return { hasProject, fetched, projectSlug };
 };
