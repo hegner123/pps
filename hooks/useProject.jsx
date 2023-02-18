@@ -2,20 +2,25 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
 
-export const useProject = (router) => {
+export const useProject = ({ action }) => {
   const [hasProject, setProject] = useState();
   const [projectSlug, setProjectSlug] = useState();
   const [fetched, setFetched] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const supabaseClient = useSupabaseClient();
+  const router = useRouter();
   const user = useUser();
 
+  function newProject() {
+    console.log("new project");
+  }
+
   useEffect(() => {
-    if (router.isReady) {
+    if (action === "read") {
       setIsReady(true);
       setProjectSlug(router.query.slug);
     }
-  }, [router.isReady]);
+  }, [action]);
 
   useEffect(() => {
     async function getProject(slug) {
@@ -47,5 +52,5 @@ export const useProject = (router) => {
     }
   }, [isReady]);
 
-  return { hasProject, fetched, projectSlug };
+  return { hasProject, fetched, newProject };
 };

@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { useArrangement } from "../../hooks/useArrangement";
 import { useSongs } from "../../hooks/useSongs";
 import { TableRow } from "./tableRow";
 
-export const Grid = ({ projectSlug, projectData }) => {
+export const Grid = ({ projectData }) => {
   const songData = useSongs(projectData?.id);
   const [songTitles, setSongTitles] = useState([]);
   const [songIds, setSongIds] = useState([]);

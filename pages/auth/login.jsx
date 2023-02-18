@@ -19,7 +19,8 @@ const LoginPage = () => {
   }, [user]);
 
   if (user) {
-    router.push("/dashboard");
+    console.log(user);
+    router.push(`/dashboard/`);
   }
 
   return (

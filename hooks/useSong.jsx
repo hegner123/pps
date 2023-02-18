@@ -16,17 +16,16 @@ export const useSong = (id) => {
         .eq("id", `${id}`);
 
       if (error) console.log("error", error);
-      console.log(Song[0]);
+      console.log(Song);
 
       return Song[0];
     }
-    if (fetched === false && user) {
+    if (user) {
       getSong(id).then((data) => {
         setSong(data);
-        setFetched(true);
       });
     }
-  }, [user]);
+  }, [user, id]);
 
-  return { song, id, fetched };
+  return { song, id };
 };
