@@ -25,7 +25,7 @@ export const TableRow = ({ songTitle, songData, arrangementOrder }) => {
             {songTitle}
           </div>
           {arrangement.ready &&
-            arrangement.orderedInstruments.map((instrument) => (
+            arrangement?.orderedInstruments.map((instrument) => (
               <TableCell key={instrument.id} instId={instrument.id} />
             ))}
         </>

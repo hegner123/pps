@@ -15,7 +15,9 @@ const SingleProject = () => {
   const [updateAlert, setUpdateAlert] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 
-  const projectData = useProject(router);
+  const projectData = useProject();
+
+  
 
   useEffect(() => {
     if (projectData?.fetched) {

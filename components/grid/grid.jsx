@@ -12,7 +12,7 @@ export const Grid = ({ projectData }) => {
   useEffect(() => {
     if (songData.fetched) {
       setReady(true);
-      songData?.songs.forEach((song) => {
+      songData?.songs?.forEach((song) => {
         setSongIds((songIds) => [...songIds, song.id]);
         setSongTitles((songTitles) => [...songTitles, song.name]);
       });
@@ -29,7 +29,7 @@ export const Grid = ({ projectData }) => {
         }}>
         <div className="col-start-1 col-span-1 row-start-1"></div>
         {ready &&
-          projectData.arrangement_order?.order.map((instrument, i) => (
+          projectData?.arrangement_order?.order.map((instrument, i) => (
             <div
               className={`capitalize col-start-${
                 i + 2
@@ -40,12 +40,12 @@ export const Grid = ({ projectData }) => {
           ))}
 
         {ready &&
-          songData.songs.map((song, i) => (
+          songData?.songs?.map((song, i) => (
             <TableRow
               key={songTitles[i]}
               songTitle={songTitles[i]}
               songData={song}
-              arrangementOrder={projectData.arrangement_order?.order}
+              arrangementOrder={projectData?.arrangement_order?.order}
             />
           ))}
       </div>

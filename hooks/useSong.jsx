@@ -4,7 +4,6 @@ import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
 
 export const useSong = (id) => {
   const [song, setSong] = useState(null);
-  const [fetched, setFetched] = useState(false);
   const supabaseClient = useSupabaseClient();
   const user = useUser();
 

@@ -1,26 +1,34 @@
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
 import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useRouter } from "next/router";
+import utils from "../utils";
 
-export const useProject = ({ action }) => {
+export const useProject = () => {
   const [hasProject, setProject] = useState();
-  const [projectSlug, setProjectSlug] = useState();
   const [fetched, setFetched] = useState(false);
-  const [isReady, setIsReady] = useState(false);
   const supabaseClient = useSupabaseClient();
   const router = useRouter();
+  console.log(router);
+
   const user = useUser();
 
-  function newProject() {
-    console.log("new project");
-  }
-
-  useEffect(() => {
-    if (action === "read") {
-      setIsReady(true);
-      setProjectSlug(router.query.slug);
+  async function newProject(form) {
+    let formSlug = utils.slugify(form.name);
+    if (form === undefined) {
+      console.log("undefined form");
+      return;
     }
-  }, [action]);
+    // console.log("user", user);
+    const { data, error } = await supabaseClient
+      .from("Projects")
+      .insert([
+        { name: `${form.name}`, slug: `${formSlug}`, user_ids: [`${user.id}`] },
+      ])
+      .select();
+    if (error) console.log("error", error);
+    console.log("data", data);
+    return data;
+  }
 
   useEffect(() => {
     async function getProject(slug) {
@@ -39,18 +47,17 @@ export const useProject = ({ action }) => {
       return Project[0];
     }
 
-    if (fetched === false && isReady) {
-      getProject(projectSlug)
+    if (fetched === false && router?.query?.slug) {
+      getProject(router?.query?.slug)
         .then((data) => {
           setProject(data);
-
           setFetched(true);
         })
         .catch((err) => {
           console.log(err);
         });
     }
-  }, [isReady]);
+  }, [router]);
 
   return { hasProject, fetched, newProject };
 };

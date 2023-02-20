@@ -13,10 +13,8 @@ export const useProjects = (userId, project) => {
       let { data: Projects, error } = await supabaseClient
         .from("Projects")
         .select("*")
-        .overlaps("user_ids", [
-          userId || "89448e16-0162-4158-a740-b260c785c070",
-        ]);
-      // .eq("slug", `${project}`);
+        .overlaps("user_ids", [user.id]);
+      
 
       if (error) console.log("error", error);
 
