@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSongs } from "../../hooks/useSongs";
 import { TableRow } from "./tableRow";
+import { TableSorting } from "./tableSorting";
 
 export const Grid = ({ projectData }) => {
   const songData = useSongs(projectData?.id);
@@ -8,6 +9,15 @@ export const Grid = ({ projectData }) => {
   const [songIds, setSongIds] = useState([]);
 
   const [ready, setReady] = useState(false);
+
+  const arrangementOrder = projectData?.arrangement_order?.order.map(
+    (inst, i) => {
+      return {
+        id: i,
+        text: inst,
+      };
+    }
+  );
 
   useEffect(() => {
     if (songData.fetched) {
@@ -22,24 +32,9 @@ export const Grid = ({ projectData }) => {
   return (
     <>
       <div
-        className="grid "
-        style={{
-          gridTemplateColumns:
-            "repeat(auto-fill, min(fit-content,var(--grid-cell-size)))",
-        }}>
-        <div className="col-start-1 col-span-1 row-start-1"></div>
-        {ready &&
-          projectData?.arrangement_order?.order.map((instrument, i) => (
-            <div
-              className={`capitalize col-start-${
-                i + 2
-              } row-start-1 text-center flex justify-between hover:bg-slate-500 `}
-              key={instrument}>
-              <button className="text-slate-50">←</button>
-              {instrument}
-              <button className="text-slate-50">→</button>
-            </div>
-          ))}
+        >
+       
+        {ready && <TableSorting projectData={arrangementOrder || false} />}
 
         {ready &&
           songData?.songs?.map((song, i) => (

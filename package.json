@@ -24,6 +24,7 @@
     "@supabase/auth-helpers-react": "^0.3.1",
     "@supabase/auth-ui-react": "^0.2.7",
     "@supabase/supabase-js": "^2.5.0",
+    "immutability-helper": "^3.1.1",
     "jotai": "^2.0.2",
     "jotai-devtools": "^0.2.0",
     "lodash": "^4.17.21",
