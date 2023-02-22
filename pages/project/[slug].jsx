@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Grid } from "../../components/grid/";
 import { useProject } from "../../hooks/useProject";
 import { useRouter } from "next/router";
-import SongDetails from "../../components/song/song";
+import SongDetails from "../../components/song/songDetails";
 import { selectedSongInit } from "../../state/store";
 import { useAtom } from "jotai";
 

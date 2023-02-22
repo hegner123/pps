@@ -33,9 +33,11 @@ export const Grid = ({ projectData }) => {
             <div
               className={`capitalize col-start-${
                 i + 2
-              } row-start-1 text-center`}
+              } row-start-1 text-center flex justify-between hover:bg-slate-500 `}
               key={instrument}>
+              <button className="text-slate-50">←</button>
               {instrument}
+              <button className="text-slate-50">→</button>
             </div>
           ))}
 
