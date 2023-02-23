@@ -31,9 +31,7 @@ export const Grid = ({ projectData }) => {
 
   return (
     <>
-      <div
-        >
-       
+      <div>
         {ready && <TableSorting projectData={arrangementOrder || false} />}
 
         {ready &&
@@ -42,7 +40,7 @@ export const Grid = ({ projectData }) => {
               key={songTitles[i]}
               songTitle={songTitles[i]}
               songData={song}
-              arrangementOrder={projectData?.arrangement_order?.order}
+              arrangementOrder={arrangementOrder}
             />
           ))}
       </div>

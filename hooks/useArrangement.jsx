@@ -20,6 +20,8 @@ export const useArrangement = (songId, arrangementOrder) => {
 
       return Instruments;
     }
+
+    async function updateArrangment()
     if (songId && fetched === false) {
       getInstruments(songId).then((data) => {
         if (data.length > 0) {

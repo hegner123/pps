@@ -1,10 +1,14 @@
 import update from "immutability-helper";
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { useDrop } from "react-dnd";
 import { TableHeader } from "./tableHeader";
 import { ItemTypes } from "../../itemTypes";
+import { useAtom } from "jotai";
+import { currentArrangement } from "../../state/store";
 
 export const TableSorting = memo(function Container(props) {
+  const [arrangementOrder, setArrangementOrder] = useAtom(currentArrangement);
+  const [dropped, setDropped] = useState(true);
   const [headers, setHeaders] = useState(props.projectData);
   const findHeader = useCallback(
     (id) => {
@@ -18,6 +22,7 @@ export const TableSorting = memo(function Container(props) {
   );
   const moveHeader = useCallback(
     (id, atIndex) => {
+      setDropped(false);
       const { header, index } = findHeader(id);
       setHeaders(
         update(headers, {
@@ -27,10 +32,17 @@ export const TableSorting = memo(function Container(props) {
           ],
         })
       );
+      setDropped(true);
     },
     [findHeader, headers, setHeaders]
   );
   const [, drop] = useDrop(() => ({ accept: ItemTypes.HEADER }));
+  useEffect(() => {
+    if (dropped) {
+      setArrangementOrder(headers);
+    }
+  }, [headers]);
+
   return (
     <div
       ref={drop}

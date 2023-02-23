@@ -5,11 +5,13 @@ import { useProject } from "../../hooks/useProject";
 import { useRouter } from "next/router";
 import SongDetails from "../../components/song/songDetails";
 import { selectedSongInit } from "../../state/store";
+import { currentArrangement } from "../../state/store";
 import { useAtom } from "jotai";
 
 
 const SingleProject = () => {
   const [selectedSong, setSelectedSong] = useAtom(selectedSongInit);
+  const [arrangementOrder, setArrangementOrder] = useAtom(currentArrangement);
   const [ready, setReady] = useState(false);
   const router = useRouter();
   const [updateAlert, setUpdateAlert] = useState(false);
@@ -22,6 +24,7 @@ const SingleProject = () => {
   useEffect(() => {
     if (projectData?.fetched) {
       setReady(true);
+      setArrangementOrder(projectData?.hasProject?.arrangementOrder);
     }
   }, [projectData?.fetched]);
 
@@ -41,6 +44,7 @@ const SingleProject = () => {
             <Grid
               projectSlug={projectData?.projectSlug}
               projectData={projectData?.hasProject}
+              
             />
           )}
           {ready && <SongDetails song={selectedSong} />}
