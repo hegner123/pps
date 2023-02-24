@@ -4,6 +4,8 @@ import { useState } from "react";
 import JotaiProvider from "../state/store";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import DebugModal from "../debug/components/debugModal";
+
 import Navigation from "../components/nav";
 import "../styles/globals.css";
 
@@ -16,13 +18,17 @@ function MyApp({ Component, pageProps }) {
     <SessionContextProvider
       supabaseClient={supabaseClient}
       initialSession={pageProps.initialSession}>
-      <DndProvider backend={HTML5Backend}>
         <JotaiProvider>
-          <Navigation />
+          <DndProvider backend={HTML5Backend}>
 
-          <Component {...pageProps} />
+            <Navigation />
+            <div style={{display:"grid"}}>
+            <DebugModal />
+           
+            <Component {...pageProps} />
+            </div>
+          </DndProvider>
         </JotaiProvider>
-      </DndProvider>
     </SessionContextProvider>
   );
 }

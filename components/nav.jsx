@@ -1,4 +1,5 @@
 import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
+import DebugUi from "../debug/debug";
 import { useRouter } from "next/router";
 
 const Navigation = () => {
@@ -25,6 +26,7 @@ const Navigation = () => {
         )}
       </div>
       <ul className="flex space-x-5">
+        <li>
         {!user ? (
           <a className="font-bold hover:underline" href="/">
             Home
@@ -34,7 +36,8 @@ const Navigation = () => {
             Home
           </a>
         )}
-        <li></li>
+
+        </li>
         <li>
           {!user ? (
             <a className="font-bold hover:underline" href="/auth/login">
@@ -48,6 +51,9 @@ const Navigation = () => {
               Logout
             </span>
           )}
+        </li>
+        <li>
+           <DebugUi />
         </li>
       </ul>
     </nav>

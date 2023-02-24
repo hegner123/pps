@@ -2,6 +2,8 @@ import { memo } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { ItemTypes } from "../../itemTypes";
 
+import { useArrangement } from "../../hooks/useArrangement";
+
 export const TableHeader = memo(function Header({
   id,
   text,
@@ -9,6 +11,7 @@ export const TableHeader = memo(function Header({
   findHeader,
   classes,
 }) {
+  
   const originalIndex = findHeader(id).index;
   const [{ isDragging }, drag] = useDrag(
     () => ({

@@ -1,13 +1,32 @@
 import { useEffect, useState } from "react";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { currentArrangement } from "../state/store";
+import { projectId } from "../state/store";
+import { useAtom } from "jotai";
 import _ from "lodash";
 
 export const useArrangement = (songId, arrangementOrder) => {
+  const [hasProjectId]=useAtom(projectId);
   const [hasInstruments, setHasInstruments] = useState([]);
   const [orderedInstruments, setOrderedInstruments] = useState([]);
   const [ready, setReady] = useState(false);
   const [fetched, setFetched] = useState(false);
+  const [arrangement, setArrangement] = useAtom(currentArrangement);
   const supabaseClient = useSupabaseClient();
+
+    async function updateArrangement() {
+      const updateData={order:[...arrangement]}
+      const jsonUpdateData = JSON.stringify(updateData);
+      let { data: newArrangement, error } = await supabaseClient
+        .from("Projects")
+        .update({arrangement_order: `${jsonUpdateData}`})
+        .eq("id", `${hasProjectId}`);
+        if (error) console.log("error", error);
+
+        setArrangement(newArrangement[0].arrangement_order.order);
+
+      return newArrangement;
+    }
 
   useEffect(() => {
     async function getInstruments(song) {
@@ -21,15 +40,7 @@ export const useArrangement = (songId, arrangementOrder) => {
       return Instruments;
     }
 
-    async function updateArrangment()
-    if (songId && fetched === false) {
-      getInstruments(songId).then((data) => {
-        if (data.length > 0) {
-          setHasInstruments(data);
-        }
-        setFetched(true);
-      });
-    }
+
   }, [songId, fetched]);
 
   useEffect(() => {
@@ -54,5 +65,6 @@ export const useArrangement = (songId, arrangementOrder) => {
   return {
     orderedInstruments,
     ready,
+    updateArrangement,
   };
 };
