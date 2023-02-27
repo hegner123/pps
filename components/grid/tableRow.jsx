@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import { useArrangement } from "../../hooks/useArrangement";
 import { TableCell } from "./tableCell";
-import { useSetAtom } from "jotai";
-import { selectedSongInit } from "../../state/store";
+import { useAtom } from "jotai";
+import { selectedSongInit , currentArrangement} from "../../state/store";
 
 export const TableRow = ({ songTitle, songData, arrangementOrder }) => {
   const arrangement = useArrangement(songData.id, arrangementOrder);
 
+
   const [ready, setReady] = useState(false);
-  const setSelectedInst = useSetAtom(selectedSongInit);
+  const [setSelectedInst] = useAtom(selectedSongInit);
+  const [currentArrangements] = useAtom(currentArrangement);
 
   useEffect(() => {
     if (arrangement.ready) {
@@ -24,8 +26,8 @@ export const TableRow = ({ songTitle, songData, arrangementOrder }) => {
             onClick={() => setSelectedInst(songData?.id)}>
             {songTitle}
           </div>
-          {arrangement.ready &&
-            arrangement?.orderedInstruments.map((instrument) => (
+          {currentArrangements.length > 0 &&
+            currentArrangements?.orderedInstruments.map((instrument) => (
               <TableCell key={instrument.id} instId={instrument.id} />
             ))}
         </>

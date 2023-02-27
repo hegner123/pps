@@ -8,7 +8,7 @@ export const useProject = () => {
   const [fetched, setFetched] = useState(false);
   const supabaseClient = useSupabaseClient();
   const router = useRouter();
-  console.log(router);
+
 
   const user = useUser();
 

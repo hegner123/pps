@@ -1,16 +1,21 @@
 import {selectedSongInit,currentArrangement,projectId,debug} from "../../state/store";
 import { useAtom } from "jotai";
-const debugModal = () => {
-    
+import { useEffect } from "react";
+
+const DebugModal = () => {    
     const [selectedSongInitValue] = useAtom(selectedSongInit)
-const [currentArrangementValue] = useAtom(currentArrangement)
-const [projectIdValue] = useAtom(projectId)
+    const [currentArrangementValue] = useAtom(currentArrangement)
+    const [projectIdValue] = useAtom(projectId)
     const [debugValue] = useAtom(debug)
     const modalStyle={
         position:"absolute",
         justifySelf: "center",
         alignSelf:"center"
     }
+
+    useEffect(()=>{
+        console.log(currentArrangementValue)
+    },[currentArrangementValue])
     
     
     return <>
@@ -21,6 +26,18 @@ const [projectIdValue] = useAtom(projectId)
     <ul>
         <li>
             <p className="text-white">SelectedSong: {selectedSongInitValue}</p>
+        </li>
+        <li>
+            <p className="text-white">CurrentArrangement: </p>
+            <ul>
+            {currentArrangementValue.map(inst=>{
+                return (<>
+                <li key={inst.text}>
+                    <p className="text-white">inst: {inst.text}</p>
+                </li>
+                </>)
+            })}
+            </ul>
         </li>
 
         <li>
@@ -37,4 +54,4 @@ const [projectIdValue] = useAtom(projectId)
     </>
 }
 
-export default debugModal
+export default DebugModal

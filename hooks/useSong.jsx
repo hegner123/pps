@@ -25,7 +25,7 @@ export const useSong = (id) => {
       ])
       .select();
     if (error) console.log("error", error);
-    console.log("data", data);
+    
     return data;
   }
 
@@ -37,7 +37,7 @@ export const useSong = (id) => {
         .eq("id", `${id}`);
 
       if (error) console.log("error", error);
-      console.log(Song);
+      
 
       return Song[0];
     }

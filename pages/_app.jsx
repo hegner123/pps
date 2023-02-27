@@ -9,27 +9,24 @@ import DebugModal from "../debug/components/debugModal";
 import Navigation from "../components/nav";
 import "../styles/globals.css";
 
-
-
 function MyApp({ Component, pageProps }) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
-
   return (
-    <SessionContextProvider
-      supabaseClient={supabaseClient}
-      initialSession={pageProps.initialSession}>
-        <JotaiProvider>
-          <DndProvider backend={HTML5Backend}>
-
-            <Navigation />
-            <div style={{display:"grid"}}>
-            <DebugModal />
-           
-            <Component {...pageProps} />
-            </div>
-          </DndProvider>
-        </JotaiProvider>
-    </SessionContextProvider>
+    
+      <SessionContextProvider
+        supabaseClient={supabaseClient}
+        initialSession={pageProps.initialSession}>
+          <JotaiProvider>
+            <DndProvider backend={HTML5Backend}>
+              <Navigation />
+              <div style={{display:"grid"}}>
+              <DebugModal />
+              <Component {...pageProps} />
+              </div>
+            </DndProvider>
+          </JotaiProvider>
+      </SessionContextProvider>
+    
   );
 }
 
