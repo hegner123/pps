@@ -47,8 +47,11 @@ export const useInstrument = (id) => {
     }
     if (instrumentId && ready === false && user) {
       getInstrument(instrumentId.instId).then((data) => {
-        setStatus(data[0].status);
+        console.log(data);
+        if(data[0]){
+        // setStatus(data[0].status);
         setReady(true);
+        }
       });
     }
   }, [instrumentId, user]);

@@ -11,11 +11,11 @@ export const useArrangement = (songId, arrangementOrder) => {
   const [orderedInstruments, setOrderedInstruments] = useState([]);
   const [ready, setReady] = useState(false);
   const [fetched, setFetched] = useState(false);
-  const [arrangement, setArrangement] = useAtom(currentArrangement);
+  const [arrangedInstruments, setArrangedInstruments] = useAtom(currentArrangement);
   const supabaseClient = useSupabaseClient();
 
     async function updateArrangement() {
-      const updateData={order:[...arrangement]}
+      const updateData={order:[...arrangedInstruments]}
       const jsonUpdateData = JSON.stringify(updateData);
       let { data: newArrangement, error } = await supabaseClient
         .from("Projects")
@@ -23,7 +23,7 @@ export const useArrangement = (songId, arrangementOrder) => {
         .eq("id", `${hasProjectId}`);
         if (error) console.log("error", error);
 
-        setArrangement(newArrangement[0].arrangement_order.order);
+        
 
       return newArrangement;
     }
@@ -63,7 +63,7 @@ export const useArrangement = (songId, arrangementOrder) => {
   }, [hasInstruments, fetched]);
 
   return {
-    orderedInstruments,
+    arrangedInstruments,
     ready,
     updateArrangement,
   };
