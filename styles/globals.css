@@ -1,9 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 :root {
     --grid-cell-size: 300px;
-
 }
 
 .cell {
@@ -12,5 +12,4 @@
 
 .cell:hover {
     filter: brightness(0.8);
-
 }

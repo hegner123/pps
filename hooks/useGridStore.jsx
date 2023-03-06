@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 const useGridStore = (song) => {
-  const [selectedSong, setSelectedSong] = useState(0);
+  const [selectedSong, setSelectedSong] = useState(0)
   useEffect(() => {
     if (song) {
-      setSelectedSong(song);
+      setSelectedSong(song)
     }
-  }, [song]);
+  }, [song])
 
-  function handleSelectSong(song) {
-    setSelectedSong(song);
+  function handleSelectSong (song) {
+    setSelectedSong(song)
   }
 
-  return { selectedSong, handleSelectSong };
-};
+  return { selectedSong, handleSelectSong }
+}
 
-export { useGridStore };
+export { useGridStore }

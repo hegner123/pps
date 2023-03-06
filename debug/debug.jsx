@@ -1,20 +1,20 @@
-import { debug } from "../state/store";
-import { useAtom } from "jotai";
-import { useState } from "react";
+import { debug } from '../state/store'
+import { useAtom } from 'jotai'
+import { useState } from 'react'
 
 const DebugUi = () => {
-    const [ debugUi, setDebug ] = useAtom(debug);
+    const [ debugUi, setDebug ] = useAtom(debug)
     
     const toggleDebug = () => {
-        setDebug(!debugUi);
-    };
+        setDebug(!debugUi)
+    }
     
     return (
-        <div className="debug">
+        <div className='debug'>
         <button onClick={toggleDebug}>Debug</button>
         
         </div>
-    );
+    )
     }
 
-    export default DebugUi;
+    export default DebugUi

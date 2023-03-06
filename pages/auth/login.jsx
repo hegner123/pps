@@ -1,26 +1,26 @@
-import { Auth, ThemeSupa } from "@supabase/auth-ui-react";
-import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { Auth, ThemeSupa } from '@supabase/auth-ui-react'
+import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
 const LoginPage = () => {
-  const supabaseClient = useSupabaseClient();
-  const user = useUser();
-  const [data, setData] = useState();
-  const router = useRouter();
+  const supabaseClient = useSupabaseClient()
+  const user = useUser()
+  const [data, setData] = useState()
+  const router = useRouter()
 
   useEffect(() => {
-    async function loadData() {
-      const { data } = await supabaseClient.from("test").select("*");
-      setData(data);
+    async function loadData () {
+      const { data } = await supabaseClient.from('test').select('*')
+      setData(data)
     }
     // Only run query once user is logged in.
-    if (user) loadData();
-  }, [user]);
+    if (user) loadData()
+  }, [user])
 
   if (user) {
-    console.log(user);
-    router.push(`/dashboard/`);
+    // console.log(user)
+    router.push('/dashboard/')
   }
 
   return (
@@ -33,12 +33,13 @@ const LoginPage = () => {
         />
         <a
           className="p-3 bg-black text-white hover:bg-slate-200 text-center"
-          href="../">
+          href="../"
+        >
           Cancel
         </a>
       </div>
     </main>
-  );
-};
+  )
+}
 
-export default LoginPage;
+export default LoginPage

@@ -1,8 +1,8 @@
-import { useProjects } from "../hooks/useProjects";
-import PlusButton from "../components/svg/plusButton";
-import { useAtom } from "jotai";
+import { useProjects } from '../hooks/project/useProjects'
+import PlusButton from '../components/svg/plusButton'
+
 const Dashboard = () => {
-  const userProjects = useProjects();
+  const userProjects = useProjects()
 
   return (
     <main className="grid grid-cols-12 justify-center min-w-full bg-slate-50 min-h-screen">
@@ -18,7 +18,8 @@ const Dashboard = () => {
             <li key={project.id} className={`col-start-${i + 1} `}>
               <a
                 className="underline p-4 bg-slate-500 w-fit block text-white rounded hover:bg-slate-50 hover:text-black"
-                href={`/project/${project.slug}`}>
+                href={`/project/${project.slug}`}
+              >
                 {project.name}
               </a>
             </li>
@@ -26,7 +27,7 @@ const Dashboard = () => {
         </ul>
       </div>
     </main>
-  );
-};
+  )
+}
 
-export default Dashboard;
+export default Dashboard

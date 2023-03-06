@@ -1,60 +1,35 @@
-import { useState, useEffect } from "react";
-import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useState, useEffect } from 'react'
+import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
+import { getInstrument, updateInstrument } from '../supabaseTables'
 
-export const useInstrument = (id) => {
-  const [status, setStatus] = useState();
-  const [ready, setReady] = useState(false);
-  const [instrumentId, setInstrumentId] = useState(id);
-  const [updating, setUpdating] = useState(false);
-  const supabaseClient = useSupabaseClient();
-  const user = useUser();
+export const useInstrument = (instId) => {
+  const [status, setStatus] = useState()
+  const [ready, setReady] = useState(false)
+  const supabaseClient = useSupabaseClient()
+  const user = useUser()
 
-  function handleInstrumentUpdate(e) {
-    let update;
-    if (status === "incomplete") {
-      update = "complete";
+  function handleInstrumentUpdate (e) {
+    let update
+    if (status === 'incomplete') {
+      update = 'complete'
     } else {
-      update = "incomplete";
+      update = 'incomplete'
     }
 
-    updateInstrument(update).then((data) => {
-      setStatus(data[0].status);
-    });
-
-    async function updateInstrument() {
-      let { data: Status, error } = await supabaseClient
-        .from("Instruments")
-        .update({ status: `${update}` })
-        .eq("id", `${instrumentId.instId}`)
-        .select();
-
-      if (error) console.log("error", error);
-
-      return Status;
-    }
+    updateInstrument(instId, update, supabaseClient).then((data) => {
+      // console.log(data)
+      // setStatus(data.status)
+    })
   }
 
   useEffect(() => {
-    async function getInstrument(instId) {
-      let { data: Instruments, error } = await supabaseClient
-        .from("Instruments")
-        .select("status")
-        .eq("id", `${instrumentId.instId}`);
-
-      if (error) console.log("error", error);
-
-      return Instruments;
+    if (instId && ready === false && user) {
+      getInstrument(instId, supabaseClient).then((data) => {
+        // console.log(data)
+        setStatus(data.status)
+      })
     }
-    if (instrumentId && ready === false && user) {
-      getInstrument(instrumentId.instId).then((data) => {
-        console.log(data);
-        if(data[0]){
-        // setStatus(data[0].status);
-        setReady(true);
-        }
-      });
-    }
-  }, [instrumentId, user]);
+  }, [instId, user])
 
-  return { status, ready, onclick: handleInstrumentUpdate };
-};
+  return { status, ready, onclick: handleInstrumentUpdate }
+}

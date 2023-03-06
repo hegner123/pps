@@ -1,47 +1,47 @@
-import update from "immutability-helper";
-import { memo, useCallback, useEffect, useState } from "react";
-import { useDrop } from "react-dnd";
-import { TableHeader } from "./tableHeader";
-import { ItemTypes } from "../../itemTypes";
-import { useAtom } from "jotai";
-import { currentArrangement } from "../../state/store";
+import update from 'immutability-helper'
+import { memo, useCallback, useEffect, useState } from 'react'
+import { useDrop } from 'react-dnd'
+import { TableHeader } from './tableHeader'
+import { ItemTypes } from '../../itemTypes'
+import { useAtom } from 'jotai'
+import { currentArrangement } from '../../state/store'
 
-export const TableSorting = memo(function Container(props) {
-  const [arrangementOrder, setArrangementOrder] = useAtom(currentArrangement);
-  const [dropped, setDropped] = useState(true);
-  const [headers, setHeaders] = useState(props.projectData);
+export const TableSorting = memo(function Container (props) {
+  const [arrangementOrder, setArrangementOrder] = useAtom(currentArrangement)
+  const [dropped, setDropped] = useState(true)
+  const [headers, setHeaders] = useState(props.projectData)
   const findHeader = useCallback(
     (id) => {
-      const header = headers.filter((c) => `${c.id}` === id)[0];
+      const header = headers.filter((c) => `${c.id}` === id)[0]
       return {
         header,
-        index: headers.indexOf(header),
-      };
+        index: headers.indexOf(header)
+      }
     },
     [headers]
-  );
+  )
   const moveHeader = useCallback(
     (id, atIndex) => {
-      setDropped(false);
-      const { header, index } = findHeader(id);
+      setDropped(false)
+      const { header, index } = findHeader(id)
       setHeaders(
         update(headers, {
           $splice: [
             [index, 1],
-            [atIndex, 0, header],
-          ],
+            [atIndex, 0, header]
+          ]
         })
-      );
-      setDropped(true);
+      )
+      setDropped(true)
     },
     [findHeader, headers, setHeaders]
-  );
-  const [, drop] = useDrop(() => ({ accept: ItemTypes.HEADER }));
+  )
+  const [, drop] = useDrop(() => ({ accept: ItemTypes.HEADER }))
   useEffect(() => {
     if (dropped) {
-      setArrangementOrder(headers);
+      setArrangementOrder(headers)
     }
-  }, [headers]);
+  }, [headers])
 
   return (
     <div
@@ -49,8 +49,9 @@ export const TableSorting = memo(function Container(props) {
       className="grid "
       style={{
         gridTemplateColumns:
-          "repeat(auto-fill, min(fit-content,var(--grid-cell-size)))",
-      }}>
+          'repeat(auto-fill, min(fit-content,var(--grid-cell-size)))'
+      }}
+    >
       <div className="col-start-1 col-span-1 row-start-1"></div>
       {headers?.map((header, i) => (
         <TableHeader
@@ -64,6 +65,7 @@ export const TableSorting = memo(function Container(props) {
           findHeader={findHeader}
         />
       ))}
+      {props.children}
     </div>
-  );
-});
+  )
+})

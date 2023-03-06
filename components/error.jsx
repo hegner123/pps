@@ -1,7 +1,7 @@
 
 const Error=({error, severity})=>{
     return(
-        <div className="p-3 bg-rose-300">
+        <div className='p-3 bg-rose-300'>
             <h1>404 Error</h1>
         </div>
     )

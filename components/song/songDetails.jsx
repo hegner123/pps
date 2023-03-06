@@ -1,7 +1,7 @@
-import { useSong } from "../../hooks/useSong";
+import { useSong } from '../../hooks/song/useSong'
 
 const SongDetails = ({ song }) => {
-  const songData = useSong(song);
+  const songData = useSong(song)
 
   return (
     <>
@@ -23,7 +23,7 @@ const SongDetails = ({ song }) => {
         </>
       )}
     </>
-  );
-};
+  )
+}
 
-export default SongDetails;
+export default SongDetails
