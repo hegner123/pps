@@ -11,7 +11,7 @@ async function getInstrument (instrumentId, supabaseClient) {
 async function getInstruments (songID, supabaseClient) {
   const { data: Instruments, error } = await supabaseClient
     .from('Instruments')
-    .select('id, name')
+    .select('id, name, status')
     .eq('song_id', `${songID}`)
 
   if (error) console.log('error', error)
@@ -20,7 +20,6 @@ async function getInstruments (songID, supabaseClient) {
 }
 
 async function updateInstrument (instrumentId, update, supabaseClient) {
-  console.table({ instrumentId, update })
   const { data: Status, error } = await supabaseClient
     .from('Instruments')
     .update({ status: `${update}` })
@@ -28,7 +27,7 @@ async function updateInstrument (instrumentId, update, supabaseClient) {
     .select()
 
   if (error) console.log('error', error)
-  // console.log(Status)
+  console.log(Status)
 
   return Status
 }

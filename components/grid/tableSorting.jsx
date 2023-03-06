@@ -5,6 +5,7 @@ import { TableHeader } from './tableHeader'
 import { ItemTypes } from '../../itemTypes'
 import { useAtom } from 'jotai'
 import { currentArrangement } from '../../state/store'
+import PropTypes from 'prop-types'
 
 export const TableSorting = memo(function Container (props) {
   const [arrangementOrder, setArrangementOrder] = useAtom(currentArrangement)
@@ -69,3 +70,7 @@ export const TableSorting = memo(function Container (props) {
     </div>
   )
 })
+
+TableSorting.propTypes = {
+  props: PropTypes.string
+}

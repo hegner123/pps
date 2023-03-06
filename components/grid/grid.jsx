@@ -38,7 +38,7 @@ export const Grid = ({ projectData }) => {
                 <TableRow
                   key={songTitles[i]}
                   songTitle={songTitles[i]}
-                  songData={song}
+                  songID={song?.id}
                   arrangementOrder={arrangementOrder}
                 />
               ))}

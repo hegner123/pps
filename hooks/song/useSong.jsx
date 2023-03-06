@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
 import { getSong } from '../../supabaseTables/songs'
+import { getInstruments } from '../../supabaseTables'
 
 export const useSong = (id) => {
   const [song, setSong] = useState(null)
@@ -14,6 +15,14 @@ export const useSong = (id) => {
       })
     }
   }, [user, id])
+
+  useEffect(() => {
+    if (song) {
+      getInstruments(song.id, supabaseClient).then((data) => {
+        setSong({ ...song, instruments: data })
+      })
+    }
+  }, [song])
 
   return { song, id }
 }

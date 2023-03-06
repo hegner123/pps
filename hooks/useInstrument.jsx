@@ -18,7 +18,7 @@ export const useInstrument = (instId) => {
 
     updateInstrument(instId, update, supabaseClient).then((data) => {
       // console.log(data)
-      // setStatus(data.status)
+      setStatus(data.status)
     })
   }
 
@@ -27,6 +27,7 @@ export const useInstrument = (instId) => {
       getInstrument(instId, supabaseClient).then((data) => {
         // console.log(data)
         setStatus(data.status)
+        setReady(true)
       })
     }
   }, [instId, user])

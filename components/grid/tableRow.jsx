@@ -1,21 +1,18 @@
 import { useEffect, useState } from 'react'
-
 import { TableCell } from './tableCell'
 import { useAtom, useSetAtom } from 'jotai'
 import { selectedSongInit, currentArrangement } from '../../state/store'
 import PropTypes from 'prop-types'
+import { useArrangement } from '../../hooks/arrangement/useArrangement'
 
-export const TableRow = ({ songTitle, songData }) => {
-  const arrangement = useAtom(currentArrangement)
-
-  const [ready, setReady] = useState(false)
+export const TableRow = ({ songTitle, songID }) => {
+  const [currentArrangementOrder] = useAtom(currentArrangement)
+  const arrangement = useArrangement(songID, currentArrangementOrder)
+  const [ready, setReady] = useState(true)
   const setSelectedInst = useSetAtom(selectedSongInit)
 
   useEffect(() => {
-    if (arrangement[0]?.length > 0) {
-      setReady(true)
-      // console.log('arrangement', arrangement)
-    }
+    console.log(arrangement)
   }, [arrangement])
 
   return (
@@ -24,14 +21,13 @@ export const TableRow = ({ songTitle, songData }) => {
         <>
           <div
             className="cell hover:bg-slate-200 cursor-pointer flex justify-center items-center"
-            onClick={() => setSelectedInst(songData?.id)}
+            onClick={() => setSelectedInst(songID)}
           >
             {songTitle}
           </div>
-          {arrangement[0].length > 0 &&
-            arrangement[0]?.map((instrument) => (
-              <TableCell key={instrument.id} instId={instrument?.id + 1} />
-            ))}
+          {arrangement.orderedInstruments.map((instrument) => (
+            <TableCell key={instrument.id} instId={instrument.id + 1} />
+          ))}
         </>
       )}
     </>
@@ -40,5 +36,5 @@ export const TableRow = ({ songTitle, songData }) => {
 
 TableRow.propTypes = {
   songTitle: PropTypes.string.isRequired,
-  songData: PropTypes.object.isRequired
+  songID: PropTypes.number
 }

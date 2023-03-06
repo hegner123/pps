@@ -23,14 +23,11 @@ export const useArrangement = (songId, arrangementOrder) => {
       setHasInstruments(data)
       setFetched(true)
     })
-  }, [songId, fetched])
-
-  useEffect(() => {
-    function orderInstruments (instruments) {
+    function orderInstruments (instruments, projectArrangement) {
       const ordered = []
-      arrangementOrder.forEach((order) => {
+      projectArrangement?.forEach((order) => {
         instruments.forEach((instrument) => {
-          if (instrument.name.toLowerCase() === order) {
+          if (instrument.name.toLowerCase() === order.text) {
             ordered.push(instrument)
           }
         })
@@ -38,15 +35,20 @@ export const useArrangement = (songId, arrangementOrder) => {
 
       return ordered
     }
-    if (hasInstruments && ready === false && fetched === true) {
-      setOrderedInstruments(orderInstruments(hasInstruments))
-      setArrangedInstruments(orderedInstruments)
-      setReady(true)
+    if (hasInstruments && fetched) {
+      const postOrderedInstruments = orderInstruments(
+        hasInstruments,
+        arrangementOrder
+      )
+      if (postOrderedInstruments) {
+        setOrderedInstruments(...orderedInstruments, postOrderedInstruments)
+        setReady(true)
+      }
     }
-  }, [hasInstruments, fetched])
+  }, [songId, fetched])
 
   return {
-    arrangedInstruments,
+    orderedInstruments,
     ready,
     handleUpdateArrangement
   }
