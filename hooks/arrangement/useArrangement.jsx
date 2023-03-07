@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { updateArrangement, getInstruments } from '../../supabaseTables'
 import { currentArrangement, projectId } from '../../state/store'
 import { useAtom } from 'jotai'
@@ -7,15 +7,30 @@ import { useSupabaseClient } from '@supabase/auth-helpers-react'
 export const useArrangement = (songId, arrangementOrder) => {
   const [hasProjectId] = useAtom(projectId)
   const [hasInstruments, setHasInstruments] = useState([])
-  const [orderedInstruments, setOrderedInstruments] = useState([])
   const [ready, setReady] = useState(false)
   const [fetched, setFetched] = useState(false)
   const supabaseClient = useSupabaseClient()
   const [arrangedInstruments, setArrangedInstruments] =
     useAtom(currentArrangement)
+  const orderedInstruments = useMemo(
+    () => orderInstruments(hasInstruments, arrangementOrder),
+    [hasInstruments, arrangementOrder]
+  )
 
   function handleUpdateArrangement () {
     updateArrangement(hasProjectId, arrangedInstruments, supabaseClient)
+  }
+  function orderInstruments (instruments, projectArrangement) {
+    if (fetched === false) return false
+    const ordered = []
+    projectArrangement?.forEach((order) => {
+      instruments.forEach((instrument) => {
+        if (instrument.name.toLowerCase() !== order.text) return
+        ordered.push(instrument)
+      })
+    })
+    setReady(true)
+    return ordered
   }
 
   useEffect(() => {
@@ -23,29 +38,7 @@ export const useArrangement = (songId, arrangementOrder) => {
       setHasInstruments(data)
       setFetched(true)
     })
-    function orderInstruments (instruments, projectArrangement) {
-      const ordered = []
-      projectArrangement?.forEach((order) => {
-        instruments.forEach((instrument) => {
-          if (instrument.name.toLowerCase() === order.text) {
-            ordered.push(instrument)
-          }
-        })
-      })
-
-      return ordered
-    }
-    if (hasInstruments && fetched) {
-      const postOrderedInstruments = orderInstruments(
-        hasInstruments,
-        arrangementOrder
-      )
-      if (postOrderedInstruments) {
-        setOrderedInstruments(...orderedInstruments, postOrderedInstruments)
-        setReady(true)
-      }
-    }
-  }, [songId, fetched])
+  }, [songId, fetched, arrangedInstruments])
 
   return {
     orderedInstruments,

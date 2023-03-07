@@ -42,7 +42,7 @@ export const TableHeader = memo(function Header ({
 
   return (
     <div ref={(node) => drag(drop(node))} className={classes}>
-      {text}
+      <p>{text}</p>
     </div>
   )
 })

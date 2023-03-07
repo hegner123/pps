@@ -41,7 +41,9 @@ export const TableSorting = memo(function Container (props) {
   useEffect(() => {
     if (dropped) {
       setArrangementOrder(headers)
+      return
     }
+    setArrangementOrder(false)
   }, [headers])
 
   return (
@@ -58,7 +60,7 @@ export const TableSorting = memo(function Container (props) {
         <TableHeader
           classes={`capitalize col-start-${
             i + 2
-          } row-start-1 text-center flex justify-between hover:bg-slate-500 `}
+          } row-start-1 text-center flex justify-center `}
           key={header.id}
           id={`${header.id}`}
           text={header.text}

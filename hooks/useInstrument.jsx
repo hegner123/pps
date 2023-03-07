@@ -17,16 +17,16 @@ export const useInstrument = (instId) => {
     }
 
     updateInstrument(instId, update, supabaseClient).then((data) => {
-      // console.log(data)
-      setStatus(data.status)
+      console.log(data)
+      setStatus(data[0].status)
     })
   }
 
   useEffect(() => {
-    if (instId && ready === false && user) {
+    if (instId && ready === false) {
       getInstrument(instId, supabaseClient).then((data) => {
-        // console.log(data)
-        setStatus(data.status)
+        console.log(data)
+        setStatus(data[0].status)
         setReady(true)
       })
     }

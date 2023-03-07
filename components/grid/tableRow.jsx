@@ -8,11 +8,11 @@ import { useArrangement } from '../../hooks/arrangement/useArrangement'
 export const TableRow = ({ songTitle, songID }) => {
   const [currentArrangementOrder] = useAtom(currentArrangement)
   const arrangement = useArrangement(songID, currentArrangementOrder)
-  const [ready, setReady] = useState(true)
+  const [ready, setReady] = useState(false)
   const setSelectedInst = useSetAtom(selectedSongInit)
 
   useEffect(() => {
-    console.log(arrangement)
+    if (arrangement.ready) setReady(true)
   }, [arrangement])
 
   return (
@@ -25,8 +25,8 @@ export const TableRow = ({ songTitle, songID }) => {
           >
             {songTitle}
           </div>
-          {arrangement.orderedInstruments.map((instrument) => (
-            <TableCell key={instrument.id} instId={instrument.id + 1} />
+          {arrangement.orderedInstruments?.map((instrument) => (
+            <TableCell key={instrument.id} instId={instrument.id} />
           ))}
         </>
       )}
