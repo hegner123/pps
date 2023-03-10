@@ -10,21 +10,21 @@ export const Grid = ({ projectData }) => {
 
   const [ready, setReady] = useState(false)
 
-  const arrangementOrder = projectData?.arrangement_order?.order.map(
-    (inst, i) => {
-      return {
-        id: i,
-        text: inst
-      }
+  const parsedOrder = JSON.parse(projectData?.arrangement_order)
+
+  const arrangementOrder = parsedOrder.order?.map((inst, i) => {
+    return {
+      id: i,
+      text: inst
     }
-  )
+  })
 
   useEffect(() => {
     if (songData.fetched) {
-      setReady(true)
       songData?.songs?.forEach((song) => {
         setSongTitles((songTitles) => [...songTitles, song.name])
       })
+      if (arrangementOrder) setReady(true)
     }
   }, [songData.fetched])
 

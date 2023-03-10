@@ -15,8 +15,8 @@ import { useAtom } from 'jotai'
 
 const SingleProject = () => {
   const [selectedSong, setSelectedSong] = useAtom(selectedSongInit)
-  const [arrangementOrder, setArrangementOrder] = useAtom(currentArrangement)
-  const [currentProjectId, setProjectId] = useAtom(projectId)
+  const [, setArrangementOrder] = useAtom(currentArrangement)
+  const [, setProjectId] = useAtom(projectId)
   const [ready, setReady] = useState(false)
 
   const [showAlert, setShowAlert] = useState(false)
@@ -25,6 +25,7 @@ const SingleProject = () => {
   useEffect(() => {
     if (projectData?.fetched) {
       setReady(true)
+
       setArrangementOrder(projectData?.hasProject?.arrangementOrder)
       setProjectId(projectData?.hasProject?.id)
     }

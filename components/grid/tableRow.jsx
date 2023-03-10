@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { TableCell } from './tableCell'
-import { useAtom, useSetAtom } from 'jotai'
+import { useAtom } from 'jotai'
 import { selectedSongInit, currentArrangement } from '../../state/store'
 import PropTypes from 'prop-types'
 import { useArrangement } from '../../hooks/arrangement/useArrangement'
@@ -9,7 +9,7 @@ export const TableRow = ({ songTitle, songID }) => {
   const [currentArrangementOrder] = useAtom(currentArrangement)
   const arrangement = useArrangement(songID, currentArrangementOrder)
   const [ready, setReady] = useState(false)
-  const setSelectedInst = useSetAtom(selectedSongInit)
+  const [selectedInst, setSelectedInst] = useAtom(selectedSongInit)
 
   useEffect(() => {
     if (arrangement.ready) setReady(true)

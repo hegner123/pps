@@ -17,7 +17,6 @@ export const useInstrument = (instId) => {
     }
 
     updateInstrument(instId, update, supabaseClient).then((data) => {
-      console.log(data)
       setStatus(data[0].status)
     })
   }
@@ -25,7 +24,6 @@ export const useInstrument = (instId) => {
   useEffect(() => {
     if (instId && ready === false) {
       getInstrument(instId, supabaseClient).then((data) => {
-        console.log(data)
         setStatus(data[0].status)
         setReady(true)
       })

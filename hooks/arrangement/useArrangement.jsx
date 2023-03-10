@@ -17,12 +17,9 @@ export const useArrangement = (songId, arrangementOrder) => {
     [hasInstruments, arrangementOrder]
   )
 
-  function handleUpdateArrangement () {
-    updateArrangement(hasProjectId, arrangedInstruments, supabaseClient)
-  }
   function orderInstruments (instruments, projectArrangement) {
     if (fetched === false) return false
-    const ordered = []
+    let ordered = []
     projectArrangement?.forEach((order) => {
       instruments.forEach((instrument) => {
         if (instrument.name.toLowerCase() !== order.text) return
@@ -30,6 +27,13 @@ export const useArrangement = (songId, arrangementOrder) => {
       })
     })
     setReady(true)
+    updateArrangement(arrangedInstruments, hasProjectId, supabaseClient)
+      .then((data) => {
+        ordered = data
+      })
+      .catch((error) => {
+        console.error(error)
+      })
     return ordered
   }
 
@@ -42,7 +46,6 @@ export const useArrangement = (songId, arrangementOrder) => {
 
   return {
     orderedInstruments,
-    ready,
-    handleUpdateArrangement
+    ready
   }
 }
