@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react'
 import { TableCell } from './tableCell'
 import { useAtom } from 'jotai'
-import { selectedSongInit, currentArrangement } from '../../state/store'
+import { songDetailsStore, currentArrangement } from '../../state/store'
 import PropTypes from 'prop-types'
 import { useArrangement } from '../../hooks/arrangement/useArrangement'
 
-export const TableRow = ({ songTitle, songID }) => {
+export const TableRow = ({ songTitle, songID, songInfo }) => {
   const [currentArrangementOrder] = useAtom(currentArrangement)
   const arrangement = useArrangement(songID, currentArrangementOrder)
   const [ready, setReady] = useState(false)
-  const [selectedInst, setSelectedInst] = useAtom(selectedSongInit)
+  const [, setSelectedInst] = useAtom(songDetailsStore)
 
   useEffect(() => {
     if (arrangement.ready) setReady(true)
@@ -21,7 +21,7 @@ export const TableRow = ({ songTitle, songID }) => {
         <>
           <div
             className="cell hover:bg-slate-200 cursor-pointer flex justify-center items-center"
-            onClick={() => setSelectedInst(songID)}
+            onClick={() => setSelectedInst(songInfo)}
           >
             {songTitle}
           </div>
@@ -36,5 +36,6 @@ export const TableRow = ({ songTitle, songID }) => {
 
 TableRow.propTypes = {
   songTitle: PropTypes.string.isRequired,
-  songID: PropTypes.number
+  songID: PropTypes.number,
+  songInfo: PropTypes.object
 }

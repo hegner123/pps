@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 export const Grid = ({ projectData }) => {
   const songData = useSongs(projectData?.id)
   const [songTitles, setSongTitles] = useState([])
+  const [songDataValue, setSongData] = useState([])
 
   const [ready, setReady] = useState(false)
 
@@ -23,7 +24,9 @@ export const Grid = ({ projectData }) => {
     if (songData.fetched) {
       songData?.songs?.forEach((song) => {
         setSongTitles((songTitles) => [...songTitles, song.name])
+        setSongData((songDataValue) => [...songDataValue, song])
       })
+
       if (arrangementOrder) setReady(true)
     }
   }, [songData.fetched])
@@ -39,6 +42,7 @@ export const Grid = ({ projectData }) => {
                   key={songTitles[i]}
                   songTitle={songTitles[i]}
                   songID={song?.id}
+                  songInfo={songDataValue[i]}
                   arrangementOrder={arrangementOrder}
                 />
               ))}

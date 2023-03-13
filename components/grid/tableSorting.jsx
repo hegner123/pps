@@ -8,7 +8,7 @@ import { currentArrangement } from '../../state/store'
 import PropTypes from 'prop-types'
 
 export const TableSorting = memo(function Container (props) {
-  const [arrangementOrder, setArrangementOrder] = useAtom(currentArrangement)
+  const [, setArrangementOrder] = useAtom(currentArrangement)
   const [dropped, setDropped] = useState(true)
   const [headers, setHeaders] = useState(props.projectData)
   const findHeader = useCallback(
@@ -74,5 +74,7 @@ export const TableSorting = memo(function Container (props) {
 })
 
 TableSorting.propTypes = {
-  props: PropTypes.string
+  props: PropTypes.string,
+  children: PropTypes.any,
+  projectData: PropTypes.array
 }

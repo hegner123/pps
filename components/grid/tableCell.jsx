@@ -1,13 +1,13 @@
 import { useInstrument } from '../../hooks/useInstrument'
 import { useState } from 'react'
+import PropTypes from 'prop-types'
 
 export const TableCell = ({ instId }) => {
   const inst = useInstrument(instId)
-  const [instrumentId, setInstrumentId] = useState(instId)
+  const [instrumentId] = useState(instId)
 
   function handleCLick (instId) {
     inst?.onclick(instId)
-    console.log('instrumentId: ', instrumentId)
   }
 
   const statusClass = inst.status === 'complete' ? 'bg-green-500' : 'bg-red-500'
@@ -18,4 +18,8 @@ export const TableCell = ({ instId }) => {
       style={{ '--tw-brightness': 0.8 }}
     ></div>
   )
+}
+
+TableCell.propTypes = {
+  instId: PropTypes.number
 }

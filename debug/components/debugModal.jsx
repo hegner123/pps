@@ -1,5 +1,5 @@
 import {
-  selectedSongInit,
+  songDetailsStore,
   currentArrangement,
   projectId,
   debug
@@ -8,10 +8,11 @@ import { useAtom } from 'jotai'
 import { useEffect } from 'react'
 
 const DebugModal = () => {
-  const [selectedSongInitValue] = useAtom(selectedSongInit)
+  const [songDetailData] = useAtom(songDetailsStore)
   const [currentArrangementValue] = useAtom(currentArrangement)
   const [projectIdValue] = useAtom(projectId)
   const [debugValue] = useAtom(debug)
+
   const modalStyle = {
     position: 'absolute',
     justifySelf: 'center',
@@ -30,19 +31,19 @@ const DebugModal = () => {
           <ul>
             <li>
               <p className="text-white">
-                SelectedSong: {selectedSongInitValue}
+                SelectedSong: {JSON.stringify(songDetailData)}
               </p>
             </li>
             <li>
-              <p className="text-white">CurrentArrangement: </p>
+              <p className="text-white">
+                CurrentArrangement: {JSON.stringify(currentArrangementValue)}
+              </p>
               <ul>
                 {currentArrangementValue.map((inst) => {
                   return (
-                    <>
-                      <li key={inst.text}>
-                        <p className="text-white">inst: {inst.text}</p>
-                      </li>
-                    </>
+                    <li key={inst.text}>
+                      <p className="text-white">inst: {inst.text}</p>
+                    </li>
                   )
                 })}
               </ul>

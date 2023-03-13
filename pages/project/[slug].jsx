@@ -2,24 +2,18 @@ import { useEffect, useState } from 'react'
 
 import { Grid } from '../../components/grid/'
 import { useProject } from '../../hooks/project/useProject'
-import { useRouter } from 'next/router'
 import SongDetails from '../../components/song/songDetails'
 
-import {
-  selectedSongInit,
-  currentArrangement,
-  projectId
-} from '../../state/store'
+import { currentArrangement, projectId } from '../../state/store'
 
 import { useAtom } from 'jotai'
 
 const SingleProject = () => {
-  const [selectedSong, setSelectedSong] = useAtom(selectedSongInit)
   const [, setArrangementOrder] = useAtom(currentArrangement)
   const [, setProjectId] = useAtom(projectId)
   const [ready, setReady] = useState(false)
 
-  const [showAlert, setShowAlert] = useState(false)
+  const [showAlert] = useState(false)
 
   const projectData = useProject()
   useEffect(() => {
@@ -50,7 +44,7 @@ const SingleProject = () => {
               projectData={projectData?.hasProject}
             />
           )}
-          {ready && <SongDetails song={selectedSong} />}
+          {ready && <SongDetails />}
         </div>
       </div>
     </div>

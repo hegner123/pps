@@ -1,22 +1,23 @@
-import { useSong } from '../../hooks/song/useSong'
+import { songDetailsStore } from '../../state/store'
+import { useAtom } from 'jotai'
 
-const SongDetails = ({ song }) => {
-  const songData = useSong(song)
+const SongDetails = () => {
+  const [songDetailsData] = useAtom(songDetailsStore)
 
   return (
     <>
-      {songData && (
+      {songDetailsData.id && (
         <>
           <h3 className="col-start-3 col-end-7 text-3xl">
-            {songData.song?.name}
+            {songDetailsData?.name}
           </h3>
           <div className="col-start-3 col-end-7">
             <ul className="col-start-3 col-end-7 list-disc list-inside">
               <li>
-                <p className="inline">{songData.song?.slug}</p>
+                <p className="inline">{songDetailsData?.slug}</p>
               </li>
               <li>
-                <p className="inline">BPM: {songData.song?.bpm}</p>
+                <p className="inline">BPM: {songDetailsData?.bpm}</p>
               </li>
             </ul>
           </div>
