@@ -1,18 +1,16 @@
 import { useEffect, useState } from 'react'
-
 import { Grid } from '../../components/grid/'
 import { useProject } from '../../hooks/project/useProject'
 import SongDetails from '../../components/song/songDetails'
-
 import { currentArrangement, projectId } from '../../state/store'
-
+import { useRouter } from 'next/router'
 import { useAtom } from 'jotai'
 
 const SingleProject = () => {
   const [, setArrangementOrder] = useAtom(currentArrangement)
   const [, setProjectId] = useAtom(projectId)
   const [ready, setReady] = useState(false)
-
+  const router = useRouter()
   const [showAlert] = useState(false)
 
   const projectData = useProject()
@@ -32,6 +30,7 @@ const SingleProject = () => {
     >
       <div className="col-start-3 col-span-6 pt-5">
         <h1 className="text-6xl ">{projectData?.hasProject?.name}</h1>
+        <a href={`${router.asPath}/newSong`}>New Song</a>
         {showAlert && (
           <div>
             <p>Update received!</p>
