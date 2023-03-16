@@ -19,6 +19,19 @@ async function getInstruments (songID, supabaseClient) {
   return Instruments
 }
 
+async function insertInstruments (instrumentName, songID, supabaseClient) {
+  const { data, error } = await supabaseClient
+    .from('Instruments')
+    .insert([
+      { name: `${instrumentName}`, status: 'incomplete', song_id: `${songID}` }
+    ])
+    .select()
+
+  if (error) console.log('error', error)
+
+  return data
+}
+
 async function updateInstrument (instrumentId, update, supabaseClient) {
   const { data: Status, error } = await supabaseClient
     .from('Instruments')
@@ -32,4 +45,21 @@ async function updateInstrument (instrumentId, update, supabaseClient) {
   return Status
 }
 
-export { getInstrument, getInstruments, updateInstrument }
+async function deleteInstrument (instrumentId, supabaseClient) {
+  const { data, error } = await supabaseClient
+    .from('Instruments')
+    .delete()
+    .eq('id', `${instrumentId}`)
+
+  if (error) console.log('error', error)
+
+  return data
+}
+
+export {
+  getInstrument,
+  getInstruments,
+  insertInstruments,
+  updateInstrument,
+  deleteInstrument
+}

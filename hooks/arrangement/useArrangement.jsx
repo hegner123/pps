@@ -1,5 +1,9 @@
 import { useEffect, useState, useMemo } from 'react'
-import { updateArrangement, getInstruments } from '../../supabaseTables'
+import {
+  updateArrangement,
+  getInstruments,
+  deleteInstrument
+} from '../../supabaseTables'
 import { currentArrangement, projectId } from '../../state/store'
 import { useAtom } from 'jotai'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
@@ -37,6 +41,38 @@ export const useArrangement = (songId, arrangementOrder) => {
     return ordered
   }
 
+  function addInstrument (instrument, songId) {
+    let updatedData = []
+    updateArrangement(instrument, songId, supabaseClient)
+      .then((data) => {
+        updatedData = data
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+    return updatedData
+  }
+
+  function removeInstrument (arrangement, instrument) {
+    const updatedArrangement = arrangement.filter((item) => {
+      return item.name !== instrument.name
+    })
+    deleteInstrument(instrument.id, supabaseClient)
+      .then((data) => {
+        setHasInstruments(data)
+        updateArrangement(updatedArrangement, hasProjectId, supabaseClient)
+          .then((data) => {
+            setArrangedInstruments(data)
+          })
+          .catch((error) => {
+            console.error(error)
+          })
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
   useEffect(() => {
     getInstruments(songId, supabaseClient).then((data) => {
       setHasInstruments(data)
@@ -46,6 +82,8 @@ export const useArrangement = (songId, arrangementOrder) => {
 
   return {
     orderedInstruments,
-    ready
+    ready,
+    addInstrument,
+    removeInstrument
   }
 }
