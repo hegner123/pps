@@ -1,7 +1,5 @@
-import utils from '../utils'
-
 async function newSong (form, user, supabaseClient) {
-  const formSlug = utils.slugify(form.name)
+  const formSlug = slugify(form.name)
   if (form === undefined) {
     console.error('undefined form')
     return
@@ -43,6 +41,13 @@ async function getAllSongs (projectId, supabaseClient, debug, setDebug) {
   if (error) console.error(error)
 
   return Songs
+}
+
+function slugify (str) {
+  return str
+    .toLowerCase()
+    .replace(/[^\w ]+/g, '')
+    .replace(/ +/g, '-')
 }
 
 export { newSong, getSong, getAllSongs }

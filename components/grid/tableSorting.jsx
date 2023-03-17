@@ -68,6 +68,9 @@ export const TableSorting = memo(function Container (props) {
           findHeader={findHeader}
         />
       ))}
+      <div
+        className={'capitalize col-start- row-start-1 text-center flex justify-center '}
+      ></div>
       {props.children}
     </div>
   )

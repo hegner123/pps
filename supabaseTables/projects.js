@@ -1,5 +1,3 @@
-import { utils } from '../utils'
-
 async function getCurrentProject (slug, supabaseClient) {
   if (slug === undefined) {
     console.log('undefined slug')
@@ -28,7 +26,7 @@ async function getAllProjects (userId, supabaseClient) {
 }
 
 async function newProject (form, userId, supabaseClient) {
-  const formSlug = utils.slugify(form.name)
+  const formSlug = slugify(form.name)
   if (form === undefined) {
     console.log('undefined form')
     return
@@ -46,3 +44,10 @@ async function newProject (form, userId, supabaseClient) {
 }
 
 export { newProject, getCurrentProject, getAllProjects }
+
+function slugify (str) {
+  return str
+    .toLowerCase()
+    .replace(/[^\w ]+/g, '')
+    .replace(/ +/g, '-')
+}

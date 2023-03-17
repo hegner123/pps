@@ -28,6 +28,7 @@ export const TableRow = ({ songTitle, songID, songInfo }) => {
           {arrangement.orderedInstruments?.map((instrument) => (
             <TableCell key={instrument.id} instId={instrument.id} />
           ))}
+          <div className={'cursor-pointer cell p-2'}></div>
         </>
       )}
     </>
