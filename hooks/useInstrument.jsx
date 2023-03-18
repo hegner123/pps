@@ -4,6 +4,7 @@ import { getInstrument, updateInstrument } from '../supabaseTables'
 
 export const useInstrument = (instId) => {
   const [status, setStatus] = useState()
+  const [active, setActive] = useState(false)
   const [ready, setReady] = useState(false)
   const supabaseClient = useSupabaseClient()
   const user = useUser()
@@ -25,10 +26,11 @@ export const useInstrument = (instId) => {
     if (instId && ready === false) {
       getInstrument(instId, supabaseClient).then((data) => {
         setStatus(data[0].status)
+        setActive(data[0].active)
         setReady(true)
       })
     }
   }, [instId, user])
 
-  return { status, ready, onclick: handleInstrumentUpdate }
+  return { status, active, ready, onclick: handleInstrumentUpdate }
 }

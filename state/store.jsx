@@ -6,6 +6,12 @@ export const songDetailsStore = atom([])
 export const currentArrangement = atom([])
 export const projectId = atom(null)
 export const debug = atom(false)
+export const gridEditEnabled = atom(false)
+export const newSongEdit = atom(false)
+export const newSongObject = atom({
+  name: '',
+  songs: []
+})
 
 const JotaiProvider = ({ children }) => {
   return <Provider store={ppsStore}>{children}</Provider>

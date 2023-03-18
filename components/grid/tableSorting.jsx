@@ -4,13 +4,21 @@ import { useDrop } from 'react-dnd'
 import { TableHeader } from './tableHeader'
 import { ItemTypes } from '../../itemTypes'
 import { useAtom } from 'jotai'
-import { currentArrangement } from '../../state/store'
+import {
+  currentArrangement,
+  newSongObject,
+  newSongEdit
+} from '../../state/store'
 import PropTypes from 'prop-types'
 
 export const TableSorting = memo(function Container (props) {
+  const [newSongEditEnabled, setNewSongEditEnabled] = useAtom(newSongEdit)
+  const [, setNewSong] = useAtom(newSongObject)
   const [, setArrangementOrder] = useAtom(currentArrangement)
   const [dropped, setDropped] = useState(true)
   const [headers, setHeaders] = useState(props.projectData)
+  const [newSongName, setNewSongName] = useState('')
+  const arrangementLength = headers?.length
   const findHeader = useCallback(
     (id) => {
       const header = headers.filter((c) => `${c.id}` === id)[0]
@@ -46,6 +54,14 @@ export const TableSorting = memo(function Container (props) {
     setArrangementOrder(false)
   }, [headers])
 
+  function handleInstNameChange (e) {
+    setNewSongName(e.target.value)
+    setNewSong((newSong) => ({
+      ...newSong,
+      name: e.target.value
+    }))
+  }
+
   return (
     <div
       ref={drop}
@@ -69,8 +85,34 @@ export const TableSorting = memo(function Container (props) {
         />
       ))}
       <div
-        className={'capitalize col-start- row-start-1 text-center flex justify-center '}
-      ></div>
+        className={'capitalize  row-start-1 text-center flex justify-center '}
+        style={{ gridColumn: arrangementLength + 2, gridRowStart: '1' }}
+      >
+        {!newSongEditEnabled && (
+          <button
+            className="bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold py-2 px-4 rounded"
+            onClick={() => setNewSongEditEnabled(true)}
+          >
+            +
+          </button>
+        )}
+        {newSongEditEnabled && (
+          <>
+            <button
+              className="bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold py-2 px-4 rounded"
+              onClick={() => setNewSongEditEnabled(false)}
+            >
+              X
+            </button>
+            <input
+              type="text"
+              name="add-instrument"
+              value={newSongName}
+              onChange={(e) => handleInstNameChange(e)}
+            />
+          </>
+        )}
+      </div>
       {props.children}
     </div>
   )

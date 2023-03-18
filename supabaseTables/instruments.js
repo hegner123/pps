@@ -1,7 +1,7 @@
 async function getInstrument (instrumentId, supabaseClient) {
   const { data: Instruments, error } = await supabaseClient
     .from('Instruments')
-    .select('id, name, status')
+    .select('id, name, status, active')
     .eq('id', `${instrumentId}`)
 
   if (error) console.log('error', error)

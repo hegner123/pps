@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useSongs } from '../../hooks/song/useSongs'
 import { TableRow } from './tableRow'
+import { newSongObject } from '../../state/store'
+import { useAtom } from 'jotai'
 import { TableSorting } from './tableSorting'
 import PropTypes from 'prop-types'
 
@@ -8,6 +10,7 @@ export const Grid = ({ projectData }) => {
   const songData = useSongs(projectData?.id)
   const [songTitles, setSongTitles] = useState([])
   const [songDataValue, setSongData] = useState([])
+  const [newSong, setNewSong] = useAtom(newSongObject)
 
   const [ready, setReady] = useState(false)
 
@@ -25,12 +28,25 @@ export const Grid = ({ projectData }) => {
       songData?.songs?.forEach((song) => {
         setSongTitles((songTitles) => [...songTitles, song.name])
         setSongData((songDataValue) => [...songDataValue, song])
+        setNewSong(
+          (newSong) =>
+            (newSong = {
+              ...newSong,
+              songs: [
+                ...newSong.songs,
+                { id: song.id, active: false, status: 'incomplete' }
+              ]
+            })
+        )
       })
 
       if (arrangementOrder) setReady(true)
     }
   }, [songData.fetched])
 
+  useEffect(() => {
+    console.log(newSong)
+  }, [newSong])
   return (
     <>
       <div>
