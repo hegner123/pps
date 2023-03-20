@@ -3,7 +3,7 @@ module.exports = {
     browser: true,
     es2021: true
   },
-  extends: ['plugin:react/recommended', 'plugin:react/jsx-runtime', 'standard'],
+  extends: ['plugin:react/recommended', 'plugin:react/jsx-runtime', 'standard', 'plugin:storybook/recommended'],
   overrides: [],
   parserOptions: {
     ecmaVersion: 'latest',
@@ -11,4 +11,4 @@ module.exports = {
   },
   plugins: ['react'],
   rules: {}
-}
+};

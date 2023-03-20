@@ -7,7 +7,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import DebugModal from '../debug/components/debugModal'
 import PropTypes from 'prop-types'
 import Navigation from '../components/nav'
-import '../styles/globals.css'
+import '../styles/style.scss'
 
 function MyApp ({ Component, pageProps }) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient())

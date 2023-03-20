@@ -2,15 +2,18 @@ import { useEffect, useState } from 'react'
 import { Grid } from '../../components/grid/'
 import { useProject } from '../../hooks/project/useProject'
 import SongDetails from '../../components/song/songDetails'
-import { currentArrangement, projectId } from '../../state/store'
-import { useRouter } from 'next/router'
+import {
+  currentArrangement,
+  projectId,
+  gridEditEnabled
+} from '../../state/store'
 import { useAtom } from 'jotai'
 
 const SingleProject = () => {
   const [, setArrangementOrder] = useAtom(currentArrangement)
   const [, setProjectId] = useAtom(projectId)
+  const [isGridEditable, setIsGridEditable] = useAtom(gridEditEnabled)
   const [ready, setReady] = useState(false)
-  const router = useRouter()
   const [showAlert] = useState(false)
 
   const projectData = useProject()
@@ -29,8 +32,12 @@ const SingleProject = () => {
       style={{ minHeight: 'calc(100vh - 64px)' }}
     >
       <div className="col-start-3 col-span-6 pt-5">
-        <h1 className="text-6xl ">{projectData?.hasProject?.name}</h1>
-        <a href={`${router.asPath}/newSong`}>New Song</a>
+        <div className="flex">
+          <h1 className="text-6xl ">{projectData?.hasProject?.name}</h1>
+          <button onClick={() => setIsGridEditable(!isGridEditable)}>
+            {isGridEditable ? 'Disable' : 'Enable'} Grid Edit
+          </button>
+        </div>
         {showAlert && (
           <div>
             <p>Update received!</p>

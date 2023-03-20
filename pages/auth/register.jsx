@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import useRegister from '../../hooks/useRegister'
+import useRegister from '../../hooks/auth/useRegister'
 
 const RegisterForm = () => {
   const userRegister = useRegister()
