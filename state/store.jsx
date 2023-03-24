@@ -7,6 +7,7 @@ export const currentArrangement = atom([])
 export const projectId = atom(null)
 export const debug = atom(false)
 export const gridEditEnabled = atom(false)
+export const showAlert = atom({ show: false, message: '' })
 export const newSongEdit = atom(false)
 export const newSongObject = atom({
   name: '',

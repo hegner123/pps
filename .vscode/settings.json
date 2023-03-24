@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["nextjs", "Supa"],
+  "cSpell.words": ["nextjs", "Supa", "xlight", "xxlight"],
   "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
   "editor.formatOnPaste": false, // required
   "editor.formatOnType": false, // required

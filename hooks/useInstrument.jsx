@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
 import { getInstrument, updateInstrument } from '../supabaseTables'
+import { showAlert } from '../state/store'
+import { useAtom } from 'jotai'
 
 export const useInstrument = (instId) => {
+  const [, setShowUiAlert] = useAtom(showAlert)
   const [status, setStatus] = useState()
   const [active, setActive] = useState(false)
   const [ready, setReady] = useState(false)
@@ -19,6 +22,7 @@ export const useInstrument = (instId) => {
 
     updateInstrument(instId, update, supabaseClient).then((data) => {
       setStatus(data[0].status)
+      setShowUiAlert({ show: true, message: 'Instrument updated' })
     })
   }
 

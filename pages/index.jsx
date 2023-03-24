@@ -1,3 +1,16 @@
+import { useUser } from '@supabase/auth-helpers-react'
+import { useRouter } from 'next/router'
+
+const AuthRouter = () => {
+  const user = useUser()
+  const router = useRouter()
+  if (user) {
+    // console.log(user)
+    router.push('/dashboard/')
+  }
+  return <Homepage />
+}
+
 const Homepage = () => {
   return (
     <div className="bg-slate-50 min-h-screen min-w-full grid grid-cols-12 grid-rows-2 py-60">
@@ -23,4 +36,4 @@ const Homepage = () => {
   )
 }
 
-export default Homepage
+export default AuthRouter

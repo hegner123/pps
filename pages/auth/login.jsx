@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 const LoginPage = () => {
   const supabaseClient = useSupabaseClient()
   const user = useUser()
-  const [data, setData] = useState()
+  const [, setData] = useState()
   const router = useRouter()
 
   useEffect(() => {

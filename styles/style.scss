@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+@import './color';
+
+
+
 :root {
     --grid-cell-size: 300px;
 }
@@ -77,4 +81,14 @@ p {
     font-family: "Roboto", sans-serif;
     color: #1F5689;
     font-size: 12px;
+}
+
+.dark-blue-bg {
+    background: $dark-blue;
+
+
+    & * {
+        color: $dark-blue-text;
+
+    }
 }
