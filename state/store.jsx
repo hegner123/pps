@@ -13,7 +13,7 @@ export const newSongObject = atom({
   name: '',
   songs: []
 })
-export const newInstrumentEdit = atom('')
+export const newInstrumentEdit = atom(false)
 export const newInstrumentObject = atom({ name: '' })
 
 const JotaiProvider = ({ children }) => {

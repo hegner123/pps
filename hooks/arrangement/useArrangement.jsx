@@ -74,6 +74,7 @@ export const useArrangement = (songId, arrangementOrder) => {
   }
 
   useEffect(() => {
+    if (!songId) return
     getInstruments(songId, supabaseClient).then((data) => {
       setHasInstruments(data)
       setFetched(true)

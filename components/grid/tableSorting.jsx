@@ -4,23 +4,14 @@ import { useDrop } from 'react-dnd'
 import { TableHeader } from './tableHeader'
 import { ItemTypes } from '../../itemTypes'
 import { useAtom } from 'jotai'
-import { useArrangement } from '../../hooks/arrangement/useArrangement'
-import {
-  currentArrangement,
-  newInstrumentObject,
-  newInstrumentEdit
-} from '../../state/store'
+import NewInstrument from './newInstrument'
+import { currentArrangement } from '../../state/store'
 import PropTypes from 'prop-types'
 
 export const TableSorting = memo(function Container (props) {
-  const [newInstrumentEditEnabled, setNewInstrumentEditEnabled] =
-    useAtom(newInstrumentEdit)
-  const [, setNewInstrument] = useAtom(newInstrumentObject)
   const [, setArrangementOrder] = useAtom(currentArrangement)
   const [dropped, setDropped] = useState(true)
   const [headers, setHeaders] = useState(props.projectData)
-  const [newInstrumentName, setNewInstrumentName] = useState('')
-  const globalArrangement = useArrangement()
   const arrangementLength = headers?.length
   const findHeader = useCallback(
     (id) => {
@@ -57,18 +48,6 @@ export const TableSorting = memo(function Container (props) {
     setArrangementOrder(false)
   }, [headers])
 
-  function handleInstrumentNameChange (e) {
-    setNewInstrumentName(e.target.value)
-    setNewInstrument((newInstrument) => ({
-      ...newInstrument,
-      name: e.target.value
-    }))
-  }
-
-  function handleInstrumentNameSubmit (e) {
-    globalArrangement.addInstrument(newInstrumentName)
-  }
-
   return (
     <div
       ref={drop}
@@ -91,42 +70,7 @@ export const TableSorting = memo(function Container (props) {
           findHeader={findHeader}
         />
       ))}
-      <div
-        className={'capitalize  row-start-1 text-center flex justify-center '}
-        style={{ gridColumn: arrangementLength + 2, gridRowStart: '1' }}
-      >
-        {!newInstrumentEditEnabled && (
-          <button
-            className="bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold py-2 px-4 rounded"
-            onClick={() => setNewInstrumentEditEnabled(true)}
-          >
-            +
-          </button>
-        )}
-        {newInstrumentEditEnabled && (
-          <>
-            <input
-              className="bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold py-2 px-4 rounded"
-              type="text"
-              name="add-instrument"
-              value={newInstrumentName}
-              onChange={(e) => handleInstrumentNameChange(e)}
-            />
-            <button
-              className="bg-green-300 hover:bg-green-500 text-slate-800 font-bold py-2 px-4 rounded ml-1"
-              onClick={() => handleInstrumentNameSubmit()}
-            >
-              ✓
-            </button>
-            <button
-              className="bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold py-2 px-4 rounded ml-1"
-              onClick={() => setNewInstrumentEditEnabled(false)}
-            >
-              X
-            </button>
-          </>
-        )}
-      </div>
+      <NewInstrument position={arrangementLength + 2} />
       {props.children}
     </div>
   )

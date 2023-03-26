@@ -4,7 +4,7 @@ import { useAtom } from 'jotai'
 import {
   songDetailsStore,
   currentArrangement,
-  newSongEdit,
+  newInstrumentEdit,
   newSongObject
 } from '../../state/store'
 import PropTypes from 'prop-types'
@@ -13,7 +13,7 @@ import { useArrangement } from '../../hooks/arrangement/useArrangement'
 export const TableRow = ({ songTitle, songID, songInfo }) => {
   const [currentArrangementOrder] = useAtom(currentArrangement)
   const [, setNewSong] = useAtom(newSongObject)
-  const [isNewSongEditEnabled] = useAtom(newSongEdit)
+  const [isNewInstrumentEditEnabled] = useAtom(newInstrumentEdit)
   const [isDisabled, setIsDisabled] = useState(false)
   const arrangement = useArrangement(songID, currentArrangementOrder)
   const [ready, setReady] = useState(false)
@@ -50,7 +50,7 @@ export const TableRow = ({ songTitle, songID, songInfo }) => {
             <TableCell key={instrument.id} instId={instrument.id} />
           ))}
           <div className={'cursor-pointer cell p-2'}>
-            {isNewSongEditEnabled && (
+            {isNewInstrumentEditEnabled && (
               <input
                 type="checkbox"
                 name="instrumentActive"
