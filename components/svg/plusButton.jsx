@@ -8,7 +8,7 @@ const PlusButton = ({ extraClasses }) => {
         fill="#000000"
         version="1.1"
         viewBox="0 0 512 512"
-        className={extraClasses.join(' ')}
+        className={extraClasses?.join(' ')}
       >
         <g>
           <g>

@@ -34,7 +34,7 @@ const SingleProject = () => {
 
   return (
     <div
-      className="bg-slate-50  min-w-full grid grid-cols-12  py-60"
+      className="bg-slate-50  min-w-full grid grid-cols-12 "
       style={{ minHeight: 'calc(100vh - 64px)' }}
     >
       <div className="col-start-3 col-span-6 pt-5">

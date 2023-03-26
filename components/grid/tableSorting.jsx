@@ -4,20 +4,23 @@ import { useDrop } from 'react-dnd'
 import { TableHeader } from './tableHeader'
 import { ItemTypes } from '../../itemTypes'
 import { useAtom } from 'jotai'
+import { useArrangement } from '../../hooks/arrangement/useArrangement'
 import {
   currentArrangement,
-  newSongObject,
-  newSongEdit
+  newInstrumentObject,
+  newInstrumentEdit
 } from '../../state/store'
 import PropTypes from 'prop-types'
 
 export const TableSorting = memo(function Container (props) {
-  const [newSongEditEnabled, setNewSongEditEnabled] = useAtom(newSongEdit)
-  const [, setNewSong] = useAtom(newSongObject)
+  const [newInstrumentEditEnabled, setNewInstrumentEditEnabled] =
+    useAtom(newInstrumentEdit)
+  const [, setNewInstrument] = useAtom(newInstrumentObject)
   const [, setArrangementOrder] = useAtom(currentArrangement)
   const [dropped, setDropped] = useState(true)
   const [headers, setHeaders] = useState(props.projectData)
-  const [newSongName, setNewSongName] = useState('')
+  const [newInstrumentName, setNewInstrumentName] = useState('')
+  const globalArrangement = useArrangement()
   const arrangementLength = headers?.length
   const findHeader = useCallback(
     (id) => {
@@ -54,12 +57,16 @@ export const TableSorting = memo(function Container (props) {
     setArrangementOrder(false)
   }, [headers])
 
-  function handleInstNameChange (e) {
-    setNewSongName(e.target.value)
-    setNewSong((newSong) => ({
-      ...newSong,
+  function handleInstrumentNameChange (e) {
+    setNewInstrumentName(e.target.value)
+    setNewInstrument((newInstrument) => ({
+      ...newInstrument,
       name: e.target.value
     }))
+  }
+
+  function handleInstrumentNameSubmit (e) {
+    globalArrangement.addInstrument(newInstrumentName)
   }
 
   return (
@@ -88,28 +95,35 @@ export const TableSorting = memo(function Container (props) {
         className={'capitalize  row-start-1 text-center flex justify-center '}
         style={{ gridColumn: arrangementLength + 2, gridRowStart: '1' }}
       >
-        {!newSongEditEnabled && (
+        {!newInstrumentEditEnabled && (
           <button
             className="bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold py-2 px-4 rounded"
-            onClick={() => setNewSongEditEnabled(true)}
+            onClick={() => setNewInstrumentEditEnabled(true)}
           >
             +
           </button>
         )}
-        {newSongEditEnabled && (
+        {newInstrumentEditEnabled && (
           <>
-            <button
+            <input
               className="bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold py-2 px-4 rounded"
-              onClick={() => setNewSongEditEnabled(false)}
+              type="text"
+              name="add-instrument"
+              value={newInstrumentName}
+              onChange={(e) => handleInstrumentNameChange(e)}
+            />
+            <button
+              className="bg-green-300 hover:bg-green-500 text-slate-800 font-bold py-2 px-4 rounded ml-1"
+              onClick={() => handleInstrumentNameSubmit()}
+            >
+              ✓
+            </button>
+            <button
+              className="bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold py-2 px-4 rounded ml-1"
+              onClick={() => setNewInstrumentEditEnabled(false)}
             >
               X
             </button>
-            <input
-              type="text"
-              name="add-instrument"
-              value={newSongName}
-              onChange={(e) => handleInstNameChange(e)}
-            />
           </>
         )}
       </div>
