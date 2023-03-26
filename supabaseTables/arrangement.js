@@ -3,12 +3,15 @@ async function updateArrangement (
   hasProjectId,
   supabaseClient
 ) {
-  if (!hasProjectId) return false
-  if (!arrangedInstruments) return false
+  if (!hasProjectId) throw new Error('No hasProjectId provided')
+  if (!arrangedInstruments) throw new Error('No arrangedInstruments provided')
+  if (!supabaseClient) throw new Error('No supabaseClient provided')
   const updateData = { order: createProjectArrangement(arrangedInstruments) }
   const jsonUpdateData = JSON.stringify(updateData)
 
   function createProjectArrangement (instruments) {
+    if (!instruments) throw new Error('No instruments provided')
+    if (!instruments.text) throw new Error('instruments.text required')
     return instruments.map((instrument, index) => {
       return instrument.text
     })

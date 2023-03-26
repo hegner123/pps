@@ -1,8 +1,6 @@
 async function getCurrentProject (slug, supabaseClient) {
-  if (slug === undefined) {
-    console.log('undefined slug')
-    return
-  }
+  if (!slug) throw new Error('No slug provided')
+  if (!supabaseClient) throw new Error('No supabaseClient provided')
 
   const { data: Project, error } = await supabaseClient
     .from('Projects')
@@ -15,6 +13,8 @@ async function getCurrentProject (slug, supabaseClient) {
 }
 
 async function getAllProjects (userId, supabaseClient) {
+  if (!userId) throw new Error('No userId provided')
+  if (!supabaseClient) throw new Error('No supabaseClient provided')
   const { data: Projects, error } = await supabaseClient
     .from('Projects')
     .select('*')
@@ -26,12 +26,11 @@ async function getAllProjects (userId, supabaseClient) {
 }
 
 async function newProject (form, userId, supabaseClient) {
+  if (!form) throw new Error('No form provided')
+  if (!userId) throw new Error('No userId provided')
+  if (!supabaseClient) throw new Error('No supabaseClient provided')
   const formSlug = slugify(form.name)
-  if (form === undefined) {
-    console.log('undefined form')
-    return
-  }
-  // console.log('user', user)
+
   const { data, error } = await supabaseClient
     .from('Projects')
     .insert([

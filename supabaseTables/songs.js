@@ -1,19 +1,20 @@
 async function newSong (form, user, supabaseClient) {
+  if (!form) throw new Error('No form provided')
+  if (!user) throw new Error('No user provided')
+  if (!supabaseClient) throw new Error('No supabaseClient provided')
   const formSlug = slugify(form.name)
   if (form === undefined) {
     console.error('undefined form')
     return
   }
-  // console.log('user', user)
+  const newSongData = {
+    name: `${form.name}`,
+    slug: `${formSlug}`,
+    user_ids: [`${user.id}`]
+  }
   const { data, error } = await supabaseClient
     .from('Songs')
-    .insert([
-      {
-        name: `${form.name}`,
-        slug: `${formSlug}`,
-        user_ids: [`${user.id}`]
-      }
-    ])
+    .insert([newSongData])
     .select()
   if (error) console.error(error)
 
@@ -21,6 +22,8 @@ async function newSong (form, user, supabaseClient) {
 }
 
 async function getSong (id, supabaseClient) {
+  if (!id) throw new Error('No id provided')
+  if (!supabaseClient) throw new Error('No supabaseClient provided')
   console.log('getSong', id)
   const { data: Song, error } = await supabaseClient
     .from('Songs')
@@ -33,6 +36,8 @@ async function getSong (id, supabaseClient) {
 }
 
 async function getAllSongs (projectId, supabaseClient, debug, setDebug) {
+  if (!projectId) throw new Error('No projectId provided')
+  if (!supabaseClient) throw new Error('No supabaseClient provided')
   const { data: Songs, error } = await supabaseClient
     .from('Songs')
     .select('*')

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Grid } from '../../components/grid/'
 import { useProject } from '../../hooks/project/useProject'
-import SongDetails from '../../components/song/songDetails'
+import SongDetails from '../../components/grid/songDetails'
 import {
   currentArrangement,
   projectId,
