@@ -1,17 +1,18 @@
-import {
-  songDetailsStore,
-  currentArrangement,
-  projectId,
-  debug
-} from '../../state/store'
+import { ppsStates } from '../../state/store'
 import { useAtom } from 'jotai'
 import { useEffect } from 'react'
 
 const DebugModal = () => {
-  const [songDetailData] = useAtom(songDetailsStore)
-  const [currentArrangementValue] = useAtom(currentArrangement)
-  const [projectIdValue] = useAtom(projectId)
-  const [debugValue] = useAtom(debug)
+  const [songDetailData] = useAtom(ppsStates.songDetailsStore)
+  const [currentArrangementValue] = useAtom(ppsStates.currentArrangement)
+  const [projectIdValue] = useAtom(ppsStates.projectId)
+  const [debugValue] = useAtom(ppsStates.debug)
+  const [gridEditEnabledValue] = useAtom(ppsStates.gridEditEnabled)
+  const [showAlertValue] = useAtom(ppsStates.showAlert)
+  const [newSongEditValue] = useAtom(ppsStates.newSongEdit)
+  const [newSongObjectValue] = useAtom(ppsStates.newSongObject)
+  const [newInstrumentEditValue] = useAtom(ppsStates.newInstrumentEdit)
+  const [newInstrumentObjectValue] = useAtom(ppsStates.newInstrumentObject)
 
   const modalStyle = {
     position: 'absolute',
@@ -38,15 +39,6 @@ const DebugModal = () => {
               <p className="text-white">
                 CurrentArrangement: {JSON.stringify(currentArrangementValue)}
               </p>
-              <ul>
-                {currentArrangementValue.map((inst) => {
-                  return (
-                    <li key={inst.text}>
-                      <p className="text-white">inst: {inst.text}</p>
-                    </li>
-                  )
-                })}
-              </ul>
             </li>
 
             <li>
@@ -55,6 +47,35 @@ const DebugModal = () => {
             <li>
               <p className="text-white">
                 debugValue: {debugValue ? 'true' : 'false'}
+              </p>
+            </li>
+            <li>
+              <p className="text-white">
+                GridEdit: {gridEditEnabledValue ? 'true' : 'false'}
+              </p>
+            </li>
+            <li>
+              <p className="text-white">
+                showAlertValue: {showAlertValue ? 'true' : 'false'}
+              </p>
+            </li>
+            <li>
+              <p className="text-white">newSongEditValue: {newSongEditValue}</p>
+            </li>
+            <li>
+              <p className="text-white">
+                newSongObjectValue: {JSON.stringify(newSongObjectValue)}
+              </p>
+            </li>
+            <li>
+              <p className="text-white">
+                newInstrumentEditValue: {newInstrumentEditValue}
+              </p>
+            </li>
+            <li>
+              <p className="text-white">
+                newInstrumentObjectValue:
+                {JSON.stringify(newInstrumentObjectValue)}
               </p>
             </li>
           </ul>

@@ -16,6 +16,19 @@ export const newSongObject = atom({
 export const newInstrumentEdit = atom(false)
 export const newInstrumentObject = atom({ name: '' })
 
+export const ppsStates = {
+  songDetailsStore,
+  currentArrangement,
+  projectId,
+  debug,
+  gridEditEnabled,
+  showAlert,
+  newSongEdit,
+  newSongObject,
+  newInstrumentEdit,
+  newInstrumentObject
+}
+
 const JotaiProvider = ({ children }) => {
   return <Provider store={ppsStore}>{children}</Provider>
 }

@@ -25,9 +25,14 @@ const Dashboard = () => {
             <PlusButton />
           </a>
         </div>
-        <ul className="grid py-5 space-x-3 grid-cols-10">
+        <ul className="grid py-5 grid-cols-14">
           {userProjects?.projects?.map((project, i) => (
-            <li key={project.id} className={`col-start-${i + 1} `}>
+            <li
+              key={project.id}
+              className={`col-start-${
+                i === 0 ? i + 1 : (i + 1) * 2
+              } col-span-2`}
+            >
               <ProjectCard
                 date={formatDate(project.created_at)}
                 projectName={project.name}
