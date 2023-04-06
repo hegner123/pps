@@ -5,11 +5,11 @@ const CloseIcon = ({ extraClasses }) => {
     <>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className={extraClasses.join(' ')}
         viewBox="0 0 24 24"
         fill="none"
         strokeLinecap="round"
         strokeLinejoin="round"
+        className={extraClasses?.join(' ')}
       >
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <line x1="18" y1="6" x2="6" y2="18" />

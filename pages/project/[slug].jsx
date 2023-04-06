@@ -34,17 +34,17 @@ const SingleProject = () => {
 
   return (
     <div
-      className="bg-slate-50  min-w-full grid grid-cols-12 "
+      className="bg-slate-50  min-w-full site-width full-width"
       style={{ minHeight: 'calc(100vh - 64px)' }}
     >
-      <div className="col-start-3 col-span-6 pt-5">
-        <div className="flex">
+      <div className="col-start site-width col-start-1 col-span-12 pt-5">
+        <div className="flex items-center gap-2">
           <h1 className="text-6xl ">{projectData?.hasProject?.name}</h1>
           <button
             onClick={() => setIsGridEditable(!isGridEditable)}
-            className="w-6 h-6 border-solid border-black border-2 rounded flex justify-center items-center"
+            className="w-10 h-10 border-solid border-black border-1 rounded flex justify-center items-center"
           >
-            <EditIcon extraClasses={['w-6', 'h-6', 'stroke-black']} />
+            <EditIcon extraClasses={['w-10', 'h-10', 'stroke-black']} />
           </button>
           {showUiAlert.show && (
             <div className="dark-blue-bg flex h-7 w-fit p-5 items-center">
@@ -58,7 +58,7 @@ const SingleProject = () => {
           )}
         </div>
 
-        <div className="col-start-3 col-end-7">
+        <div className="col-start col-start-3 col-end-7">
           {ready && (
             <Grid
               projectSlug={projectData?.projectSlug}

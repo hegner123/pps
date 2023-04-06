@@ -9,7 +9,7 @@ const EditIcon = ({ extraClasses }) => {
         fill="none"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className={extraClasses.join(' ')}
+        className={extraClasses?.join(' ')}
       >
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />

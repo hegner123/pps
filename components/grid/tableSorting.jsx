@@ -57,10 +57,10 @@ export const TableSorting = memo(function Container (props) {
           'repeat(auto-fill, min(fit-content,var(--grid-cell-size)))'
       }}
     >
-      <div className="col-start-1 col-span-1 row-start-1"></div>
+      <div className="col-start col-start-1 col-span-1 row-start-1"></div>
       {headers?.map((header, i) => (
         <TableHeader
-          classes={`capitalize col-start-${
+          classes={`capitalize col-start col-start-${
             i + 2
           } row-start-1 text-center flex justify-center `}
           key={header.id}

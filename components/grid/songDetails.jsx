@@ -8,11 +8,11 @@ const SongDetails = () => {
     <>
       {songDetailsData.id && (
         <>
-          <h3 className="col-start-3 col-end-7 text-3xl">
+          <h3 className="col-start col-start-3 col-end-7 text-3xl">
             {songDetailsData?.name}
           </h3>
-          <div className="col-start-3 col-end-7">
-            <ul className="col-start-3 col-end-7 list-disc list-inside">
+          <div className="col-start col-start-3 col-end-7">
+            <ul className="col-start col-start-3 col-end-7 list-disc list-inside">
               <li>
                 <p className="inline">{songDetailsData?.slug}</p>
               </li>

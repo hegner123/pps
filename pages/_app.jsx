@@ -19,7 +19,7 @@ function MyApp ({ Component, pageProps }) {
       <JotaiProvider>
         <DndProvider backend={HTML5Backend}>
           <Navigation />
-          <div style={{ display: 'grid' }}>
+          <div className="site-width" style={{ display: 'grid' }}>
             <DebugModal />
             <Component {...pageProps} />
           </div>

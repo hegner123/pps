@@ -12,7 +12,9 @@ async function updateArrangement (
   function createProjectArrangement (instruments) {
     console.log('instruments', instruments)
     if (!instruments) throw new Error('No instruments provided')
-    if (!instruments.text) throw new Error('instruments.text required')
+    instruments.forEach((instrument) => {
+      if (!instrument.text) throw new Error('instruments.text required')
+    })
     return instruments.map((instrument, index) => {
       return instrument.text
     })

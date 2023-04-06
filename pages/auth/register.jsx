@@ -5,7 +5,7 @@ const RegisterForm = () => {
 
   return (
     <section className="grid grid-cols-12 grid-rows-12 min-h-screen  bg-slate-50">
-      <form className="grid my-auto col-start-3 col-span-5 space-y-3 bg-slate-400 rounded p-4 max-h-max">
+      <form className="grid my-auto col-start col-start-3 col-span-5 space-y-3 bg-slate-400 rounded p-4 max-h-max">
         <h1 className="col-span-full text-6xl">Register</h1>
         <label className="col-span-full " htmlFor="email">
           Email

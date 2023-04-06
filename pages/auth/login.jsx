@@ -25,18 +25,12 @@ const LoginPage = () => {
 
   return (
     <main className="bg-slate-50 min-w-full min-h-screen grid place-items-center">
-      <div className="w-56  ">
+      <div className="">
         <Auth
           redirectTo="http://localhost:3000/"
           appearance={{ theme: ThemeSupa }}
           supabaseClient={supabaseClient}
         />
-        <a
-          className="p-3 bg-black text-white hover:bg-slate-200 text-center"
-          href="../"
-        >
-          Cancel
-        </a>
       </div>
     </main>
   )

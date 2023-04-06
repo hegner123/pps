@@ -4,7 +4,7 @@ import ProjectCard from '../components/projectCard'
 
 const Dashboard = () => {
   const userProjects = useProjects()
-  console.log(userProjects)
+
   function formatDate (times) {
     const dateObject = new Date(times)
     const options = {
@@ -17,19 +17,19 @@ const Dashboard = () => {
   }
 
   return (
-    <main className="grid grid-cols-12 justify-center min-w-full bg-slate-50 min-h-screen">
-      <div className=" justify-center min-w-full col-start-2 col-span-8 py-20">
-        <div className="flex space-x-5 items-center">
-          <h1 className="text-3xl">Dashboard</h1>
+    <main className="grid site-width full-width justify-center min-w-full bg-slate-50 min-h-screen">
+      <div className="justify-center min-w-full site-width site-width-rows full-width py-10">
+        <div className="flex space-x-5 items-center content-width max-h-maxContent">
+          <h1 className="text-3xl ">Dashboard</h1>
           <a href="/dashboard/newProject" className="w-10 ">
-            <PlusButton />
+            <PlusButton extraClasses={['stroke-black']} />
           </a>
         </div>
-        <ul className="grid py-5 grid-cols-14">
+        <ul className="grid py-5 site-width content-width">
           {userProjects?.projects?.map((project, i) => (
             <li
               key={project.id}
-              className={`col-start-${
+              className={`col-start col-start-${
                 i === 0 ? i + 1 : (i + 1) * 2
               } col-span-2`}
             >
