@@ -58,7 +58,7 @@ const SingleProject = () => {
           )}
         </div>
 
-        <div className="col-start col-start-3 col-end-7">
+        <div className="col-start col-start-2 col-span-10">
           {ready && (
             <Grid
               projectSlug={projectData?.projectSlug}
