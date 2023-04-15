@@ -9,7 +9,7 @@ import {
   showAlert
 } from '../../state/store'
 import { useAtom } from 'jotai'
-import EditIcon from '../../components/svg/editIcon'
+
 import CloseIcon from '../../components/svg/closeIcon'
 const SingleProject = () => {
   const [showUiAlert, setShowUiAlert] = useAtom(showAlert)
@@ -37,14 +37,22 @@ const SingleProject = () => {
       className="bg-slate-50  min-w-full site-width full-width"
       style={{ minHeight: 'calc(100vh - 64px)' }}
     >
-      <div className="col-start site-width col-start-1 col-span-12 pt-5">
-        <div className="flex items-center gap-2">
-          <h1 className="text-6xl ">{projectData?.hasProject?.name}</h1>
+      <div className="col-start site-width col-start-1 col-span-14 pt-5">
+        <div className="site_grid items-end gap-2 col-start-2 col-span-12">
+          <h1 className="text-6xl col-start-1 col-span-4">
+            {projectData?.hasProject?.name}
+          </h1>
           <button
+            className="h-10 border-solid border-black hover:text-black hover:bg-white hover:border-1 rounded flex justify-center items-center col-start-11 col-span-1 bg-slate-900 text-white"
             onClick={() => setIsGridEditable(!isGridEditable)}
-            className="w-10 h-10 border-solid border-black border-1 rounded flex justify-center items-center"
           >
-            <EditIcon extraClasses={['w-10', 'h-10', 'stroke-black']} />
+            Edit
+          </button>
+          <button
+            className="h-10 border-solid border-black hover:text-black hover:bg-white hover:border-1 rounded flex justify-center items-center col-start-12 col-span-1 bg-slate-900 text-white"
+            onClick={() => setIsGridEditable(!isGridEditable)}
+          >
+            Settings
           </button>
           {showUiAlert.show && (
             <div className="dark-blue-bg flex h-7 w-fit p-5 items-center">
@@ -58,7 +66,7 @@ const SingleProject = () => {
           )}
         </div>
 
-        <div className="col-start col-start-2 col-span-10">
+        <div className="col-start-2 col-span-12">
           {ready && (
             <Grid
               projectSlug={projectData?.projectSlug}

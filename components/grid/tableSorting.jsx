@@ -51,7 +51,7 @@ export const TableSorting = memo(function Container (props) {
   return (
     <div
       ref={drop}
-      className="grid "
+      className="grid gap-1"
       style={{
         gridTemplateColumns:
           'repeat(auto-fill, min(fit-content,var(--grid-cell-size)))'

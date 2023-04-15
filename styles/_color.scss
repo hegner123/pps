@@ -28,3 +28,18 @@ $danger:#FF6433;
 $light-danger:#FFE0D6;
 $warning:#F99D3E;
 $light-warning:#FFE4C9;
+
+.bg-dark-blue {
+    background-color: $dark-blue;
+    color: $dark-blue-text;
+}
+
+.bg-blue {
+    background-color: $blue;
+    color: $blue-text;
+}
+
+.bg-light-blue {
+    background-color: $light-blue;
+    color: $dark-blue-text;
+}

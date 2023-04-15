@@ -7,25 +7,29 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import DebugModal from '../debug/components/debugModal'
 import PropTypes from 'prop-types'
 import Navigation from '../components/nav'
+import HeadMeta from '../components/head'
 import '../styles/style.scss'
 
 function MyApp ({ Component, pageProps }) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient())
   return (
-    <SessionContextProvider
-      supabaseClient={supabaseClient}
-      initialSession={pageProps.initialSession}
-    >
-      <JotaiProvider>
-        <DndProvider backend={HTML5Backend}>
-          <Navigation />
-          <div className="site-width" style={{ display: 'grid' }}>
-            <DebugModal />
-            <Component {...pageProps} />
-          </div>
-        </DndProvider>
-      </JotaiProvider>
-    </SessionContextProvider>
+    <>
+      <HeadMeta />
+      <SessionContextProvider
+        supabaseClient={supabaseClient}
+        initialSession={pageProps.initialSession}
+      >
+        <JotaiProvider>
+          <DndProvider backend={HTML5Backend}>
+            <Navigation />
+            <div className="site-width" style={{ display: 'grid' }}>
+              <DebugModal />
+              <Component {...pageProps} />
+            </div>
+          </DndProvider>
+        </JotaiProvider>
+      </SessionContextProvider>
+    </>
   )
 }
 

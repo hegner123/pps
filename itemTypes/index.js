@@ -1,3 +1,5 @@
 export const ItemTypes = {
-  HEADER: "header",
-};
+  HEADER: 'header',
+  CARD: 'card',
+  CELL: 'cell'
+}

@@ -6,7 +6,7 @@ const Navigation = () => {
   const user = useUser()
   const supabaseClient = useSupabaseClient()
   const router = useRouter()
-  function handleLogout() {
+  function handleLogout () {
     supabaseClient.auth
       .signOut()
       .then((res) => {
@@ -17,43 +17,49 @@ const Navigation = () => {
       })
   }
   return (
-    <nav className='flex justify-between py-5 px-20'>
+    <nav className="flex justify-between py-5 pl-10 pr-20">
       <div>
-        {!user ? (
-          <a href='/'>ProProject Studio</a>
-        ) : (
-          <a href='/dashboard'>ProProject Studio</a>
-        )}
+        {!user
+          ? (
+          <a href="/">ProProject Studio</a>
+            )
+          : (
+          <a href="/dashboard">ProProject Studio</a>
+            )}
       </div>
-      <ul className='flex space-x-5'>
+      <ul className="flex space-x-5">
         <li>
-        {!user ? (
-          <a className='font-bold hover:underline' href='/'>
-            Home
-          </a>
-        ) : (
-          <a className='font-bold hover:underline' href='/dashboard'>
-            Home
-          </a>
-        )}
-
+          {!user
+            ? (
+            <a className="font-bold hover:underline" href="/">
+              Home
+            </a>
+              )
+            : (
+            <a className="font-bold hover:underline" href="/dashboard">
+              Home
+            </a>
+              )}
         </li>
         <li>
-          {!user ? (
-            <a className='font-bold hover:underline' href='/auth/login'>
+          {!user
+            ? (
+            <a className="font-bold hover:underline" href="/auth/login">
               Login
             </a>
-          ) : (
+              )
+            : (
             <span
-              className='font-bold hover:underline cursor-pointer'
+              className="font-bold hover:underline cursor-pointer"
               onClick={() => handleLogout()}
-              role='link'>
+              role="link"
+            >
               Logout
             </span>
-          )}
+              )}
         </li>
         <li>
-           <DebugUi />
+          <DebugUi />
         </li>
       </ul>
     </nav>

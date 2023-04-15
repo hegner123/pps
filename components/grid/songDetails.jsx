@@ -7,7 +7,7 @@ const SongDetails = () => {
   return (
     <>
       {songDetailsData.id && (
-        <>
+        <div>
           <h3 className="col-start col-start-3 col-end-7 text-3xl">
             {songDetailsData?.name}
           </h3>
@@ -21,7 +21,7 @@ const SongDetails = () => {
               </li>
             </ul>
           </div>
-        </>
+        </div>
       )}
     </>
   )
