@@ -13,18 +13,21 @@ const AuthRouter = () => {
 
 const Homepage = () => {
   return (
-    <div className="bg-slate-50 min-h-screen min-w-full grid grid-cols-12 grid-rows-2 py-60">
-      <div className="col-start col-start-3 col-end-7 pt-5">
+    <div className="bg-slate-50 min-h-screen min-w-full grid grid-cols-12 grid-rows-2 py-60 site-width">
+      <div className="content-width ">
         <h1 className="font-bold text-6xl col-start col-start-3 col-end-9 row-start-1">
           ProProject Studio
         </h1>
-        <div className="pt-10 ">
-          <div className="p-5 space-x-4">
-            <a className="p-3 bg-black text-white rounded" href="/auth/login">
+        <div className="pt-10">
+          <div className="grid grid-cols-12 space-x-4">
+            <a
+              className="block p-3 bg-black text-white text-center rounded hover:bg-slate-200 hover:text-black border-solid border-black border-2"
+              href="/auth/login"
+            >
               Login
             </a>
             <a
-              className="p-3 bg-black text-white rounded"
+              className="block p-3 bg-black text-white text-center rounded hover:bg-slate-200 hover:text-black border-solid border-black border-2"
               href="/auth/register"
             >
               Register

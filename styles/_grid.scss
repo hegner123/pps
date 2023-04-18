@@ -3,23 +3,20 @@
     grid-template-columns: 20px repeat(12, minmax(0, 1fr)) 20px;
     grid-gap: 1rem;
 
-    >.content-width {
-        grid-column: 2 / -2;
-    }
-
     >.full-width {
         grid-column: 1 / -1;
     }
 }
 
-.site-width {
-    @extend .site_grid;
-    grid-template-rows: max-content 1fr;
+.content-width {
+    grid-column: 2 / -2;
 }
 
-.site-width-rows {
-    grid-template-rows: 100px 1fr;
+.site-width {
+    grid-column: 1 /-1;
+    // grid-template-rows: max-content 1fr;
 }
+
 
 .grid-cols-13 {
     grid-template-columns: repeat(13, minmax(0, 1fr));

@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { loginUser } from '../supabaseTables'
+import { loginUser } from '../../supabaseTables'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 
-const useLogin = () => {
+export const useLogin = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState(null)
@@ -19,5 +19,3 @@ const useLogin = () => {
 
   return { email, password, error, setEmail, setPassword, handleSubmit }
 }
-
-export default useLogin
