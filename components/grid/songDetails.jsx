@@ -7,11 +7,11 @@ const SongDetails = () => {
   return (
     <>
       {songDetailsData.id && (
-        <div>
-          <h3 className="col-start col-start-3 col-end-7 text-3xl">
+        <div className="site_grid site-width">
+          <h3 className="col-start-2 col-end-9 text-3xl">
             {songDetailsData?.name}
           </h3>
-          <div className="col-start col-start-3 col-end-7">
+          <div className="col-start-2 col-end-9">
             <ul className="col-start col-start-3 col-end-7 list-disc list-inside">
               <li>
                 <p className="inline">{songDetailsData?.slug}</p>

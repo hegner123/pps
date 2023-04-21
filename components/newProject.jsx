@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { useProject } from '../../hooks/useProject'
+import { useProject } from '../hooks/project/useProject'
 import { useRouter } from 'next/router'
-const NewProject = () => {
+import PropTypes from 'prop-types'
+const NewProject = ({ closeState }) => {
   const project = useProject({ action: 'new' })
   const [projectName, setProjectName] = useState('')
   const router = useRouter()
@@ -19,9 +20,15 @@ const NewProject = () => {
       })
   }
   return (
-    <div className="bg-slate-50 min-h-screen p-5">
-      <h1>New Project</h1>
-      <form className="bg-slate-700 w-fit p-5 grid grid-cols-12 gap-x-12">
+    <div className="bg-slate-700 p-5 site_grid site-width new-project-container justify-between">
+      <h1 className="col-span-11 text-white">New Project</h1>
+      <span
+        className="block col-span-1 text-white"
+        onClick={() => closeState()}
+      >
+        X
+      </span>
+      <form className="bg-slate-700 grid new-project-form col-span-full">
         <label className="text-white block col-span-12" htmlFor="Name">
           Name
         </label>
@@ -41,7 +48,7 @@ const NewProject = () => {
           Create
         </button>
         <a
-          className="border-slate-500 border-2 text-white text-center p-2 rounded-md col-span-6 hover:text-black hover:bg-slate-50 hover:border-slate-50 mt-6"
+          className="flex items-center justify-center border-slate-500 border-2 text-white text-center p-2 rounded-md col-span-6 hover:text-black hover:bg-slate-50 hover:border-slate-50 mt-6"
           href="/dashboard"
         >
           Cancel
@@ -52,3 +59,7 @@ const NewProject = () => {
 }
 
 export default NewProject
+
+NewProject.propTypes = {
+  closeState: PropTypes.func
+}

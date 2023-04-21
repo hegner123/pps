@@ -49,7 +49,7 @@ export const Grid = ({ projectData }) => {
   }, [newSong])
   return (
     <>
-      <div>
+      <div className="site_grid site-width ">
         {ready && (
           <TableSorting projectData={arrangementOrder || false}>
             {ready &&

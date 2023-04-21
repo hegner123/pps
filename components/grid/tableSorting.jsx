@@ -48,21 +48,30 @@ export const TableSorting = memo(function Container (props) {
     setArrangementOrder(false)
   }, [headers])
 
+  function calcGrid (cols) {
+    let grid = '150px'
+    for (let i = 0; i < cols.length; i++) {
+      grid += ' 1fr '
+    }
+    grid += '100px'
+    console.log(grid)
+    return grid
+  }
+
   return (
     <div
       ref={drop}
-      className="grid gap-1"
+      className="grid gap-1 content-width"
       style={{
-        gridTemplateColumns:
-          'repeat(auto-fill, min(fit-content,var(--grid-cell-size)))'
+        gridTemplateColumns: calcGrid(headers)
       }}
     >
       <div className="col-start col-start-1 col-span-1 row-start-1"></div>
       {headers?.map((header, i) => (
         <TableHeader
-          classes={`capitalize col-start col-start-${
+          classes={`capitalize col-start-${
             i + 2
-          } row-start-1 text-center flex justify-center `}
+          } row-start-1 text-center flex justify-center items-center`}
           key={header.id}
           id={`${header.id}`}
           text={header.text}

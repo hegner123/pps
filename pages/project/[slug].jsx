@@ -34,12 +34,12 @@ const SingleProject = () => {
 
   return (
     <div
-      className="bg-slate-50  min-w-full site-width full-width"
+      className="bg-slate-50 site_grid min-w-full site-width full-width"
       style={{ minHeight: 'calc(100vh - 64px)' }}
     >
-      <div className="col-start site-width col-start-1 col-span-14 pt-5">
-        <div className="site_grid items-end gap-2 col-start-2 col-span-12">
-          <h1 className="text-6xl col-start-1 col-span-4">
+      <div className="col-start site-width max-content-rows site_grid col-start-1 col-span-14 pt-5">
+        <div className="site_grid site-width items-end col-span-12 gap-2 ">
+          <h1 className="text-6xl col-start-2 col-span-4">
             {projectData?.hasProject?.name}
           </h1>
           <button
@@ -66,7 +66,7 @@ const SingleProject = () => {
           )}
         </div>
 
-        <div className="col-start-2 col-span-12">
+        <div className="site_grid site-width col-start-2 col-span-12">
           {ready && (
             <Grid
               projectSlug={projectData?.projectSlug}
