@@ -41,7 +41,7 @@ export const TableRow = ({ songTitle, songID, songInfo }) => {
       {ready && (
         <>
           <div
-            className="cell hover:bg-slate-200 cursor-pointer flex justify-center items-center"
+            className="cell hover:bg-slate-200 cursor-pointer col-start-1 flex justify-center items-center"
             onClick={() => setSelectedInst(songInfo)}
           >
             {songTitle}

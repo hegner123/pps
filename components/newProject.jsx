@@ -1,15 +1,19 @@
 import { useState } from 'react'
 import { useProject } from '../hooks/project/useProject'
 import { useRouter } from 'next/router'
+import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
 import PropTypes from 'prop-types'
 const NewProject = ({ closeState }) => {
   const project = useProject({ action: 'new' })
   const [projectName, setProjectName] = useState('')
   const router = useRouter()
+  const users = useUser()
+  const supabaseClient = useSupabaseClient()
+
   function submitForm (e) {
     e.preventDefault()
     project
-      .newProject({ name: projectName })
+      .newProject({ name: projectName }, users.id, supabaseClient)
       .then((success) => {
         if (success) {
           router.push('/dashboard')
@@ -47,12 +51,12 @@ const NewProject = ({ closeState }) => {
         >
           Create
         </button>
-        <a
+        <span
           className="flex items-center justify-center border-slate-500 border-2 text-white text-center p-2 rounded-md col-span-6 hover:text-black hover:bg-slate-50 hover:border-slate-50 mt-6"
-          href="/dashboard"
+          onClick={() => closeState()}
         >
           Cancel
-        </a>
+        </span>
       </form>
     </div>
   )

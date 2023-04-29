@@ -63,3 +63,7 @@
 .col-span-14 {
     grid-column: span 14 / span 14;
 }
+
+.col-end {
+    grid-column-end: -1;
+}

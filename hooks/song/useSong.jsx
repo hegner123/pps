@@ -7,14 +7,15 @@ export const useSong = (id) => {
   const supabaseClient = useSupabaseClient()
   const user = useUser()
 
-  function submitNewSong () {
-    newSong(id, supabaseClient).then((data) => {
+  function submitNewSong (songName, projectId) {
+    console.log(songName, projectId)
+    newSong(songName, projectId, supabaseClient).then((data) => {
       setSong(data)
     })
   }
 
   useEffect(() => {
-    if (user) {
+    if (user && id) {
       getSong(id, supabaseClient).then((data) => {
         setSong(data)
       })

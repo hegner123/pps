@@ -1,6 +1,7 @@
-import { memo } from 'react'
+import { memo, useEffect } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import { ItemTypes } from '../../itemTypes'
+import PropTypes from 'prop-types'
 
 export const TableHeader = memo(function Header ({
   id,
@@ -27,6 +28,7 @@ export const TableHeader = memo(function Header ({
     }),
     [id, originalIndex, moveHeader]
   )
+
   const [, drop] = useDrop(
     () => ({
       accept: ItemTypes.HEADER,
@@ -40,9 +42,21 @@ export const TableHeader = memo(function Header ({
     [findHeader, moveHeader]
   )
 
+  useEffect(() => {
+    console.log(isDragging)
+  }, [isDragging])
+
   return (
     <div ref={(node) => drag(drop(node))} className={classes}>
       <p>{text}</p>
     </div>
   )
 })
+
+TableHeader.propTypes = {
+  id: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  moveHeader: PropTypes.func.isRequired,
+  findHeader: PropTypes.func.isRequired,
+  classes: PropTypes.string.isRequired
+}

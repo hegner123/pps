@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { Grid } from '../../components/grid/'
 import { useProject } from '../../hooks/project/useProject'
 import SongDetails from '../../components/grid/songDetails'
+import NewSongModal from '../../components/newSongModal'
+import { useSong } from '../../hooks/song/useSong'
 import {
   currentArrangement,
   projectId,
@@ -14,15 +16,17 @@ import CloseIcon from '../../components/svg/closeIcon'
 const SingleProject = () => {
   const [showUiAlert, setShowUiAlert] = useAtom(showAlert)
   const [, setArrangementOrder] = useAtom(currentArrangement)
-  const [, setProjectId] = useAtom(projectId)
+  const [currentProjectId, setProjectId] = useAtom(projectId)
   const [isGridEditable, setIsGridEditable] = useAtom(gridEditEnabled)
   const [ready, setReady] = useState(false)
+  const [showNewSongModal, setShowNewSongModal] = useState(false)
+  const [showNewInstrumentModal, setShowNewInstrumentModal] = useState(false)
+  const songHook = useSong()
 
   const projectData = useProject()
   useEffect(() => {
     if (projectData?.fetched) {
       setReady(true)
-
       setArrangementOrder(projectData?.hasProject?.arrangementOrder)
       setProjectId(projectData?.hasProject?.id)
     }
@@ -30,6 +34,11 @@ const SingleProject = () => {
 
   function closeAlert () {
     setShowUiAlert({ show: false, message: '' })
+  }
+
+  function saveNewSong (song, id) {
+    console.log(song, id)
+    songHook.submitNewSong(song, id)
   }
 
   return (
@@ -42,6 +51,18 @@ const SingleProject = () => {
           <h1 className="text-6xl col-start-2 col-span-4">
             {projectData?.hasProject?.name}
           </h1>
+          <button
+            className="h-10 border-solid border-black hover:text-black hover:bg-white hover:border-1 rounded flex justify-center items-center col-start-9 col-span-1 bg-slate-900 text-white"
+            onClick={() => setShowNewInstrumentModal(!showNewInstrumentModal)}
+          >
+            New Instrument
+          </button>
+          <button
+            className="h-10 border-solid border-black hover:text-black hover:bg-white hover:border-1 rounded flex justify-center items-center col-start-10 col-span-1 bg-slate-900 text-white"
+            onClick={() => setShowNewSongModal(!showNewSongModal)}
+          >
+            New Song
+          </button>
           <button
             className="h-10 border-solid border-black hover:text-black hover:bg-white hover:border-1 rounded flex justify-center items-center col-start-11 col-span-1 bg-slate-900 text-white"
             onClick={() => setIsGridEditable(!isGridEditable)}
@@ -65,7 +86,6 @@ const SingleProject = () => {
             </div>
           )}
         </div>
-
         <div className="site_grid site-width col-start-2 col-span-12">
           {ready && (
             <Grid
@@ -74,6 +94,12 @@ const SingleProject = () => {
             />
           )}
           {ready && <SongDetails />}
+          {showNewSongModal && (
+            <NewSongModal
+              closeState={() => setShowNewSongModal(!showNewSongModal)}
+              onSave={(e) => saveNewSong(e, currentProjectId)}
+            />
+          )}
         </div>
       </div>
     </div>

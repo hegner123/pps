@@ -1,17 +1,18 @@
-async function newSong (form, user, supabaseClient) {
-  if (!form) throw new Error('No form provided')
-  if (!user) throw new Error('No user provided')
+async function newSong (songName, projectId, supabaseClient) {
+  if (!songName) throw new Error('No form provided')
+  if (!projectId) throw new Error('No user provided')
   if (!supabaseClient) throw new Error('No supabaseClient provided')
-  const formSlug = slugify(form.name)
-  if (form === undefined) {
+  const formSlug = slugify(songName)
+  if (songName === undefined) {
     console.error('undefined form')
     return
   }
   const newSongData = {
-    name: `${form.name}`,
+    name: `${songName}`,
     slug: `${formSlug}`,
-    user_ids: [`${user.id}`]
+    project_id: `${projectId}`
   }
+  console.log('newSong', newSongData)
   const { data, error } = await supabaseClient
     .from('Songs')
     .insert([newSongData])

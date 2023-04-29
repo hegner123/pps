@@ -10,7 +10,6 @@ async function updateArrangement (
   const jsonUpdateData = JSON.stringify(updateData)
 
   function createProjectArrangement (instruments) {
-    console.log('instruments', instruments)
     if (!instruments) throw new Error('No instruments provided')
     instruments.forEach((instrument) => {
       if (!instrument.text) throw new Error('instruments.text required')

@@ -23,6 +23,8 @@ export const useArrangement = (songId, arrangementOrder) => {
 
   function orderInstruments (instruments, projectArrangement) {
     if (fetched === false) return false
+    if (!instruments) return
+    if (!projectArrangement) return
     let ordered = []
     projectArrangement?.forEach((order) => {
       instruments.forEach((instrument) => {
@@ -31,6 +33,7 @@ export const useArrangement = (songId, arrangementOrder) => {
       })
     })
     setReady(true)
+    if (ordered.length === 0) return
     updateArrangement(arrangedInstruments, hasProjectId, supabaseClient)
       .then((data) => {
         ordered = data
@@ -75,6 +78,7 @@ export const useArrangement = (songId, arrangementOrder) => {
 
   useEffect(() => {
     if (!songId) return
+    if (!arrangementOrder) return
     getInstruments(songId, supabaseClient).then((data) => {
       setHasInstruments(data)
       setFetched(true)

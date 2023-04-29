@@ -4,7 +4,6 @@ import { useDrop } from 'react-dnd'
 import { TableHeader } from './tableHeader'
 import { ItemTypes } from '../../itemTypes'
 import { useAtom } from 'jotai'
-import NewInstrument from './newInstrument'
 import { currentArrangement } from '../../state/store'
 import PropTypes from 'prop-types'
 
@@ -12,7 +11,6 @@ export const TableSorting = memo(function Container (props) {
   const [, setArrangementOrder] = useAtom(currentArrangement)
   const [dropped, setDropped] = useState(true)
   const [headers, setHeaders] = useState(props.projectData)
-  const arrangementLength = headers?.length
   const findHeader = useCallback(
     (id) => {
       const header = headers.filter((c) => `${c.id}` === id)[0]
@@ -49,13 +47,19 @@ export const TableSorting = memo(function Container (props) {
   }, [headers])
 
   function calcGrid (cols) {
+    if (!cols) return '150px 1fr 100px'
     let grid = '150px'
     for (let i = 0; i < cols.length; i++) {
       grid += ' 1fr '
     }
     grid += '100px'
-    console.log(grid)
+
     return grid
+  }
+
+  function stretchHeader (headers) {
+    if (headers.length >= 0) return
+    return 'col-end'
   }
 
   return (
@@ -67,19 +71,20 @@ export const TableSorting = memo(function Container (props) {
       }}
     >
       <div className="col-start col-start-1 col-span-1 row-start-1"></div>
-      {headers?.map((header, i) => (
-        <TableHeader
-          classes={`capitalize col-start-${
-            i + 2
-          } row-start-1 text-center flex justify-center items-center`}
-          key={header.id}
-          id={`${header.id}`}
-          text={header.text}
-          moveHeader={moveHeader}
-          findHeader={findHeader}
-        />
-      ))}
-      <NewInstrument position={arrangementLength + 2} />
+      {headers &&
+        headers?.map((header, i) => (
+          <TableHeader
+            classes={`capitalize col-start-${i + 2} row-start-1 ${stretchHeader(
+              headers
+            )} text-center flex justify-center items-center`}
+            key={header.id || i}
+            id={`${header.id}`}
+            text={header.text}
+            moveHeader={moveHeader}
+            findHeader={findHeader}
+          />
+        ))}
+
       {props.children}
     </div>
   )

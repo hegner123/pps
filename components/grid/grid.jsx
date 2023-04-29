@@ -10,13 +10,15 @@ export const Grid = ({ projectData }) => {
   const songData = useSongs(projectData?.id)
   const [songTitles, setSongTitles] = useState([])
   const [songDataValue, setSongData] = useState([])
-  const [newSong, setNewSong] = useAtom(newSongObject)
+  const [, setNewSong] = useAtom(newSongObject)
 
   const [ready, setReady] = useState(false)
 
-  const parsedOrder = JSON.parse(projectData?.arrangement_order)
+  const parsedOrder = (jsonData) => {
+    return JSON.parse(jsonData?.arrangement_order)
+  }
 
-  const arrangementOrder = parsedOrder.order?.map((inst, i) => {
+  const arrangementOrder = parsedOrder(projectData)?.order?.map((inst, i) => {
     return {
       id: i,
       text: inst
@@ -40,18 +42,16 @@ export const Grid = ({ projectData }) => {
         )
       })
 
-      if (arrangementOrder) setReady(true)
+      setReady(true)
     }
   }, [songData.fetched])
 
-  useEffect(() => {
-    console.log(newSong)
-  }, [newSong])
   return (
     <>
       <div className="site_grid site-width ">
-        {ready && (
-          <TableSorting projectData={arrangementOrder || false}>
+        {ready
+          ? (
+          <TableSorting projectData={arrangementOrder || [false]}>
             {ready &&
               songData?.songs?.map((song, i) => (
                 <TableRow
@@ -63,7 +63,12 @@ export const Grid = ({ projectData }) => {
                 />
               ))}
           </TableSorting>
-        )}
+            )
+          : (
+          <div className="site_grid site-width">
+            <p className="col-start-2">No Songs Yet</p>
+          </div>
+            )}
       </div>
     </>
   )

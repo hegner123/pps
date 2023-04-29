@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
 import { newInstrumentEdit, newInstrumentObject } from '../../state/store'
-import { useArrangement } from '../../hooks/arrangement/useArrangement'
+// import { useArrangement } from '../../hooks/arrangement/useArrangement'
 import { useAtom } from 'jotai'
 
 const NewInstrument = ({ position, songId }) => {
@@ -9,7 +9,7 @@ const NewInstrument = ({ position, songId }) => {
     useAtom(newInstrumentEdit)
   const [, setNewInstrumentState] = useAtom(newInstrumentObject)
   const [newInstrumentName, setNewInstrumentName] = useState('')
-  const globalArrangement = useArrangement(songId)
+  // const globalArrangement = useArrangement(songId)
 
   function handleInstrumentNameChange (e) {
     setNewInstrumentName(e.target.value)
@@ -33,7 +33,7 @@ const NewInstrument = ({ position, songId }) => {
           className="bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold py-2 px-4 rounded"
           onClick={() => setNewInstrumentEditEnabled(true)}
         >
-          +
+          New Instrument
         </button>
       )}
       {isNewInstrumentEditEnabled && (
