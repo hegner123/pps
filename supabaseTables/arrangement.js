@@ -11,6 +11,11 @@ async function updateArrangement (
 
   function createProjectArrangement (instruments) {
     if (!instruments) throw new Error('No instruments provided')
+    console.log('instruments', instruments)
+    if (instruments.length <= 1) {
+      return instruments[0].text
+    }
+    console.log(instruments)
     instruments.forEach((instrument) => {
       if (!instrument.text) throw new Error('instruments.text required')
     })

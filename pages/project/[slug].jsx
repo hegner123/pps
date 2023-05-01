@@ -3,7 +3,9 @@ import { Grid } from '../../components/grid/'
 import { useProject } from '../../hooks/project/useProject'
 import SongDetails from '../../components/grid/songDetails'
 import NewSongModal from '../../components/newSongModal'
+import NewInstrumentModal from '../../components/newInstrumentModal'
 import { useSong } from '../../hooks/song/useSong'
+import { useArrangement } from '../../hooks/arrangement/useArrangement'
 import {
   currentArrangement,
   projectId,
@@ -22,8 +24,9 @@ const SingleProject = () => {
   const [showNewSongModal, setShowNewSongModal] = useState(false)
   const [showNewInstrumentModal, setShowNewInstrumentModal] = useState(false)
   const songHook = useSong()
-
+  const instrumentHook = useArrangement()
   const projectData = useProject()
+
   useEffect(() => {
     if (projectData?.fetched) {
       setReady(true)
@@ -39,6 +42,11 @@ const SingleProject = () => {
   function saveNewSong (song, id) {
     console.log(song, id)
     songHook.submitNewSong(song, id)
+  }
+
+  function saveNewInstrument (instrument, id) {
+    console.log(instrument, id)
+    instrumentHook.addInstrument(instrument, id)
   }
 
   return (
@@ -98,6 +106,14 @@ const SingleProject = () => {
             <NewSongModal
               closeState={() => setShowNewSongModal(!showNewSongModal)}
               onSave={(e) => saveNewSong(e, currentProjectId)}
+            />
+          )}
+          {showNewInstrumentModal && (
+            <NewInstrumentModal
+              closeState={() =>
+                setShowNewInstrumentModal(!showNewInstrumentModal)
+              }
+              onSave={(e) => saveNewInstrument(e, currentProjectId)}
             />
           )}
         </div>

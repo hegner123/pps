@@ -2,6 +2,8 @@ import { memo, useEffect } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import { ItemTypes } from '../../itemTypes'
 import PropTypes from 'prop-types'
+import { debugDrag } from '../../state/store'
+import { useAtom } from 'jotai'
 
 export const TableHeader = memo(function Header ({
   id,
@@ -11,6 +13,7 @@ export const TableHeader = memo(function Header ({
   classes
 }) {
   const originalIndex = findHeader(id).index
+  const [logDrag] = useAtom(debugDrag)
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: ItemTypes.HEADER,
@@ -43,7 +46,9 @@ export const TableHeader = memo(function Header ({
   )
 
   useEffect(() => {
-    console.log(isDragging)
+    if (logDrag) {
+      console.log(isDragging)
+    }
   }, [isDragging])
 
   return (

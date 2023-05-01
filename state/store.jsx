@@ -15,12 +15,14 @@ export const newSongObject = atom({
 })
 export const newInstrumentEdit = atom(false)
 export const newInstrumentObject = atom({ name: '' })
+export const debugDrag = atom(false)
 
 export const ppsStates = {
   songDetailsStore,
   currentArrangement,
   projectId,
   debug,
+  debugDrag,
   gridEditEnabled,
   showAlert,
   newSongEdit,
