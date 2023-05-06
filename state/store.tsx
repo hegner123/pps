@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 const ppsStore = createStore()
 export const songDetailsStore = atom([])
+export const projectHasSongs = atom(false)
 export const currentArrangement = atom([])
 export const projectId = atom(null)
 export const debug = atom(false)
@@ -16,9 +17,11 @@ export const newSongObject = atom({
 export const newInstrumentEdit = atom(false)
 export const newInstrumentObject = atom({ name: '' })
 export const debugDrag = atom(false)
+export const requireUpdate = atom(false)
 
 export const ppsStates = {
   songDetailsStore,
+  projectHasSongs,
   currentArrangement,
   projectId,
   debug,
@@ -28,7 +31,8 @@ export const ppsStates = {
   newSongEdit,
   newSongObject,
   newInstrumentEdit,
-  newInstrumentObject
+  newInstrumentObject,
+  requireUpdate
 }
 
 const JotaiProvider = ({ children }) => {

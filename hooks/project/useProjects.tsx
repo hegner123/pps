@@ -7,15 +7,19 @@ export const useProjects = (userId, project) => {
   const [fetched, setFetched] = useState(false)
   const supabaseClient = useSupabaseClient()
   const user = useUser()
+  const reload = () => {
+    setFetched(false)
+  }
 
   useEffect(() => {
     if (fetched === false && user) {
       getAllProjects(user?.id, supabaseClient).then((data) => {
         setProjects(data)
         setFetched(true)
+        console.log('fetching projects')
       })
     }
-  }, [user])
+  }, [user, fetched])
 
-  return { projects, fetched }
+  return { projects, fetched, reload }
 }

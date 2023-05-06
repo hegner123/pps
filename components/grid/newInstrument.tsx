@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
-import { newInstrumentEdit, newInstrumentObject } from '../../state/store'
+import { newInstrumentEdit, newInstrumentObject } from 'pps/state/store'
 // import { useArrangement } from '../../hooks/arrangement/useArrangement'
 import { useAtom } from 'jotai'
 

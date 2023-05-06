@@ -1,4 +1,5 @@
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
+import Link from 'next/link'
 import DebugUi from '../debug/debug'
 import { useRouter } from 'next/router'
 
@@ -21,32 +22,32 @@ const Navigation = () => {
       <div>
         {!user
           ? (
-          <a href="/">ProProject Studio</a>
+          <Link href="/">ProProject Studio</Link>
             )
           : (
-          <a href="/dashboard">ProProject Studio</a>
+          <Link href="/dashboard">ProProject Studio</Link>
             )}
       </div>
       <ul className="flex space-x-5">
         <li>
           {!user
             ? (
-            <a className="font-bold hover:underline" href="/">
+            <Link className="font-bold hover:underline" href="/">
               Home
-            </a>
+            </Link>
               )
             : (
-            <a className="font-bold hover:underline" href="/dashboard">
+            <Link className="font-bold hover:underline" href="/dashboard">
               Home
-            </a>
+            </Link>
               )}
         </li>
         <li>
           {!user
             ? (
-            <a className="font-bold hover:underline" href="/auth/login">
+            <Link className="font-bold hover:underline" href="/auth/login">
               Login
-            </a>
+            </Link>
               )
             : (
             <span

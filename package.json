@@ -22,10 +22,15 @@
   },
   "homepage": "https://github.com/hegner123/pps#readme",
   "dependencies": {
+    "@emotion/react": "^11.11.0",
     "@supabase/auth-helpers-nextjs": "^0.5.4",
     "@supabase/auth-helpers-react": "^0.3.1",
     "@supabase/auth-ui-react": "^0.2.7",
     "@supabase/supabase-js": "^2.5.0",
+    "@types/node": "^20.1.0",
+    "@types/react": "^18.2.6",
+    "@types/react-dom": "^18.2.4",
+    "eslint-config-next": "^13.4.1",
     "immutability-helper": "^3.1.1",
     "jotai": "^2.0.2",
     "jotai-devtools": "^0.2.0",
@@ -36,7 +41,8 @@
     "react": "^18.2.0",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "typescript": "^5.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.21.3",
@@ -52,12 +58,6 @@
     "autoprefixer": "^10.4.13",
     "babel-loader": "^8.3.0",
     "eslint": "^8.35.0",
-    "eslint-config-standard": "^17.0.0",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-n": "^15.6.1",
-    "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-react": "^7.32.2",
-    "eslint-plugin-storybook": "^0.6.11",
     "postcss": "^8.4.21",
     "sass": "^1.59.3",
     "tailwindcss": "^3.2.4"

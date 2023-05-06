@@ -1,6 +1,6 @@
-import { useInstrument } from '../../hooks/useInstrument'
+import { useInstrument } from 'pps/hooks/useInstrument'
 import { useEffect, useState } from 'react'
-import { gridEditEnabled } from '../../state/store'
+import { gridEditEnabled } from 'pps/state/store'
 import { useAtom } from 'jotai'
 import PropTypes from 'prop-types'
 

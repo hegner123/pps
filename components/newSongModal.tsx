@@ -1,12 +1,17 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
+import { useAtom } from 'jotai'
+import { requireUpdate } from '../state/store'
 
-const NewSongModal = ({ closeState, onSave }) => {
+const NewSongModal = ({ close, onSave }) => {
   const [songName, setSongName] = useState('')
+  const [, setUpdate] = useAtom(requireUpdate)
 
   function submitForm (e) {
     e.preventDefault()
     onSave(songName)
+    setUpdate(true)
+    close()
   }
   return (
     <div className="bg-slate-700 p-5 site_grid site-width new-project-container justify-between">
@@ -32,7 +37,7 @@ const NewSongModal = ({ closeState, onSave }) => {
         </button>
         <span
           className="flex items-center justify-center border-slate-500 border-2 text-white text-center p-2 rounded-md col-span-6 hover:text-black hover:bg-slate-50 hover:border-slate-50 mt-6 cursor-pointer"
-          onClick={() => closeState()}
+          onClick={() => close()}
         >
           Cancel
         </span>
@@ -44,6 +49,6 @@ const NewSongModal = ({ closeState, onSave }) => {
 export default NewSongModal
 
 NewSongModal.propTypes = {
-  closeState: PropTypes.func,
+  close: PropTypes.func,
   onSave: PropTypes.func
 }

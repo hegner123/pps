@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react'
-import { useSongs } from '../../hooks/song/useSongs'
+import { useSongs } from 'pps/hooks/song/useSongs'
 import { TableRow } from './tableRow'
-import { newSongObject } from '../../state/store'
+import { newSongObject } from 'pps/state/store'
 import { useAtom } from 'jotai'
 import { TableSorting } from './tableSorting'
 import PropTypes from 'prop-types'
+
 
 export const Grid = ({ projectData }) => {
   const songData = useSongs(projectData?.id)
   const [songTitles, setSongTitles] = useState([])
   const [songDataValue, setSongData] = useState([])
   const [, setNewSong] = useAtom(newSongObject)
+  // const [needsUpdate, setUpdate] = useAtom(requireUpdate)
 
   const [ready, setReady] = useState(false)
 
@@ -26,6 +28,7 @@ export const Grid = ({ projectData }) => {
   })
 
   useEffect(() => {
+    console.log(projectData)
     if (songData.fetched) {
       songData?.songs?.forEach((song) => {
         setSongTitles((songTitles) => [...songTitles, song.name])

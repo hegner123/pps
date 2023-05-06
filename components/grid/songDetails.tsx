@@ -1,4 +1,4 @@
-import { songDetailsStore } from '../../state/store'
+import { songDetailsStore } from 'pps/state/store'
 import { useAtom } from 'jotai'
 
 const SongDetails = () => {

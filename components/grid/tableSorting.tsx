@@ -2,9 +2,9 @@ import update from 'immutability-helper'
 import { memo, useCallback, useEffect, useState } from 'react'
 import { useDrop } from 'react-dnd'
 import { TableHeader } from './tableHeader'
-import { ItemTypes } from '../../itemTypes'
+import { ItemTypes } from 'pps/itemTypes/index.ts'
 import { useAtom } from 'jotai'
-import { currentArrangement } from '../../state/store'
+import { currentArrangement } from 'pps/state/store'
 import PropTypes from 'prop-types'
 
 export const TableSorting = memo(function Container (props) {

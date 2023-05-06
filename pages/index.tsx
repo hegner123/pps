@@ -1,5 +1,6 @@
 import { useUser } from '@supabase/auth-helpers-react'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 const AuthRouter = () => {
   const user = useUser()
@@ -20,18 +21,18 @@ const Homepage = () => {
         </h1>
         <div className="pt-10">
           <div className="grid grid-cols-12 space-x-4">
-            <a
+            <Link
               className="block p-3 bg-black text-white text-center rounded hover:bg-slate-200 hover:text-black border-solid border-black border-2"
               href="/auth/login"
             >
               Login
-            </a>
-            <a
+            </Link>
+            <Link
               className="block p-3 bg-black text-white text-center rounded hover:bg-slate-200 hover:text-black border-solid border-black border-2"
               href="/auth/register"
             >
               Register
-            </a>
+            </Link>
           </div>
         </div>
       </div>

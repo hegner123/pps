@@ -6,9 +6,9 @@ import {
   currentArrangement,
   newInstrumentEdit,
   newSongObject
-} from '../../state/store'
+} from 'pps/state/store'
 import PropTypes from 'prop-types'
-import { useArrangement } from '../../hooks/arrangement/useArrangement'
+import { useArrangement } from 'pps/hooks/arrangement/useArrangement'
 
 export const TableRow = ({ songTitle, songID, songInfo }) => {
   const [currentArrangementOrder] = useAtom(currentArrangement)

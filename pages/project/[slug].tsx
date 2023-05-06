@@ -1,39 +1,43 @@
 import { useEffect, useState } from 'react'
-import { Grid } from '../../components/grid/'
-import { useProject } from '../../hooks/project/useProject'
-import SongDetails from '../../components/grid/songDetails'
-import NewSongModal from '../../components/newSongModal'
-import NewInstrumentModal from '../../components/newInstrumentModal'
-import { useSong } from '../../hooks/song/useSong'
-import { useArrangement } from '../../hooks/arrangement/useArrangement'
+import { Grid } from 'pps/components/grid'
+import { useProject } from 'pps/hooks/project/useProject'
+import SongDetails from 'pps/components/grid/songDetails'
+import NewSongModal from 'pps/components/newSongModal'
+import NewInstrumentModal from 'pps/components/newInstrumentModal'
+import { useSong } from 'pps/hooks/song/useSong'
+import { useArrangement } from 'pps/hooks/arrangement/useArrangement'
 import {
   currentArrangement,
   projectId,
   gridEditEnabled,
-  showAlert
-} from '../../state/store'
+  showAlert,
+  requireUpdate,
+  projectHasSongs
+} from 'pps/state/store'
 import { useAtom } from 'jotai'
 
 import CloseIcon from '../../components/svg/closeIcon'
 const SingleProject = () => {
+  const [ready, setReady] = useState(false)
+  const [showNewSongModal, setShowNewSongModal] = useState(false)
+  const [showNewInstrumentModal, setShowNewInstrumentModal] = useState(false)
   const [showUiAlert, setShowUiAlert] = useAtom(showAlert)
   const [, setArrangementOrder] = useAtom(currentArrangement)
   const [currentProjectId, setProjectId] = useAtom(projectId)
   const [isGridEditable, setIsGridEditable] = useAtom(gridEditEnabled)
-  const [ready, setReady] = useState(false)
-  const [showNewSongModal, setShowNewSongModal] = useState(false)
-  const [showNewInstrumentModal, setShowNewInstrumentModal] = useState(false)
+  const [hasSongs] = useAtom(projectHasSongs)
+  const [needsUpdate] = useAtom(requireUpdate)
   const songHook = useSong()
   const instrumentHook = useArrangement()
   const projectData = useProject()
 
   useEffect(() => {
-    if (projectData?.fetched) {
+    if (projectData?.fetched || needsUpdate) {
       setReady(true)
       setArrangementOrder(projectData?.hasProject?.arrangementOrder)
       setProjectId(projectData?.hasProject?.id)
     }
-  }, [projectData?.fetched])
+  }, [projectData?.fetched, needsUpdate])
 
   function closeAlert () {
     setShowUiAlert({ show: false, message: '' })
@@ -59,12 +63,14 @@ const SingleProject = () => {
           <h1 className="text-6xl col-start-2 col-span-4">
             {projectData?.hasProject?.name}
           </h1>
-          <button
-            className="h-10 border-solid border-black hover:text-black hover:bg-white hover:border-1 rounded flex justify-center items-center col-start-9 col-span-1 bg-slate-900 text-white"
-            onClick={() => setShowNewInstrumentModal(!showNewInstrumentModal)}
-          >
-            New Instrument
-          </button>
+          {hasSongs && (
+            <button
+              className="h-10 border-solid border-black hover:text-black hover:bg-white hover:border-1 rounded flex justify-center items-center col-start-9 col-span-1 bg-slate-900 text-white"
+              onClick={() => setShowNewInstrumentModal(!showNewInstrumentModal)}
+            >
+              New Instrument
+            </button>
+          )}
           <button
             className="h-10 border-solid border-black hover:text-black hover:bg-white hover:border-1 rounded flex justify-center items-center col-start-10 col-span-1 bg-slate-900 text-white"
             onClick={() => setShowNewSongModal(!showNewSongModal)}

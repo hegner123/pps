@@ -1,8 +1,8 @@
 import { memo, useEffect } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
-import { ItemTypes } from '../../itemTypes'
+import { ItemTypes } from 'pps/itemTypes/index.ts'
 import PropTypes from 'prop-types'
-import { debugDrag } from '../../state/store'
+import { debugDrag } from 'pps/state/store'
 import { useAtom } from 'jotai'
 
 export const TableHeader = memo(function Header ({

@@ -1,11 +1,14 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useProjects } from '../hooks/project/useProjects'
+import { useAtom } from 'jotai'
+import { requireUpdate } from '../state/store'
 import PlusButton from '../components/svg/plusButton'
 import ProjectCard from '../components/projectCard'
 import NewProject from '../components/newProject'
 
 const Dashboard = () => {
   const userProjects = useProjects()
+  const [needsUpdate, setNeedsUpdate] = useAtom(requireUpdate)
   const [showNewProject, setShowNewProject] = useState(false)
 
   function formatDate (times) {
@@ -18,6 +21,13 @@ const Dashboard = () => {
     const date = new Intl.DateTimeFormat('en-US', options).format(dateObject)
     return date
   }
+
+  useEffect(() => {
+    if (needsUpdate) {
+      userProjects.reload()
+      setNeedsUpdate(false)
+    }
+  }, [needsUpdate])
 
   return (
     <main className="grid site_grid site-width full-width  min-w-full bg-slate-50 min-h-screen">
@@ -51,7 +61,7 @@ const Dashboard = () => {
         </ul>
       </div>
       {showNewProject && (
-        <NewProject closeState={() => setShowNewProject(!showNewProject)} />
+        <NewProject close={() => setShowNewProject(!showNewProject)} />
       )}
     </main>
   )
