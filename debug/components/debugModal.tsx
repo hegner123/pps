@@ -15,7 +15,7 @@ const DebugModal = () => {
   const [newInstrumentObjectValue] = useAtom(ppsStates.newInstrumentObject)
 
   const modalStyle = {
-    position: 'absolute',
+    Position: 'absolute',
     justifySelf: 'center',
     alignSelf: 'center'
   }
