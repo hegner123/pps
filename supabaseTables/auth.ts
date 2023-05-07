@@ -1,4 +1,4 @@
-async function loginUser (email, password, supabaseClient) {
+async function loginUser (email : string, password : string, supabaseClient : any) {
   if (!email) throw new Error('No email provided')
   if (!password) throw new Error('No password provided')
   if (!supabaseClient) throw new Error('No supabaseClient provided')

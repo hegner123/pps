@@ -1,4 +1,4 @@
-async function getInstrument (instrumentId, supabaseClient) {
+async function getInstrument (instrumentId : number, supabaseClient : any) {
   if (!instrumentId) throw new Error('No instrumentId provided')
   if (!supabaseClient) throw new Error('No supabaseClient provided')
   const { data: Instruments, error } = await supabaseClient
@@ -10,7 +10,7 @@ async function getInstrument (instrumentId, supabaseClient) {
 
   return Instruments
 }
-async function getInstruments (songID, supabaseClient) {
+async function getInstruments (songID : number, supabaseClient : any) {
   if (!songID) throw new Error('No songID provided')
   if (!supabaseClient) throw new Error('No supabaseClient provided')
   const { data: Instruments, error } = await supabaseClient
@@ -23,7 +23,7 @@ async function getInstruments (songID, supabaseClient) {
   return Instruments
 }
 
-async function insertInstruments (instrumentName, songID, supabaseClient) {
+async function insertInstruments (instrumentName : string, songID : number, supabaseClient : any) {
   if (!instrumentName) throw new Error('No instrumentName provided')
   if (!songID) throw new Error('No songID provided')
   if (!supabaseClient) throw new Error('No supabaseClient provided')
@@ -39,7 +39,7 @@ async function insertInstruments (instrumentName, songID, supabaseClient) {
   return data
 }
 
-async function updateInstrument (instrumentId, update, supabaseClient) {
+async function updateInstrument (instrumentId : number, update : string , supabaseClient : any) {
   if (!instrumentId) throw new Error('No instrumentId provided')
   if (!update) throw new Error('No update provided')
   if (!supabaseClient) throw new Error('No supabaseClient provided')
@@ -55,7 +55,7 @@ async function updateInstrument (instrumentId, update, supabaseClient) {
   return Status
 }
 
-async function deleteInstrument (instrumentId, supabaseClient) {
+async function deleteInstrument (instrumentId : number, supabaseClient : any) {
   if (!instrumentId) throw new Error('No instrumentId provided')
   if (!supabaseClient) throw new Error('No supabaseClient provided')
   const { data, error } = await supabaseClient

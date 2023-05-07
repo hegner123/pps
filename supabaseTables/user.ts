@@ -1,7 +1,7 @@
-async function getDisplayName (userId, supabase) {
+async function getDisplayName (userId : number, supabaseClient : any) {
   if (!userId) throw new Error('No userId provided')
-  if (!supabase) throw new Error('No supabase provided')
-  const { data: usersPublic, error } = await supabase
+  if (!supabaseClient) throw new Error('No supabase provided')
+  const { data: usersPublic, error } = await supabaseClient
     .from('users_public')
     .select('display_name')
     .eq('user_id', userId)

@@ -1,7 +1,7 @@
 async function updateArrangement (
-  arrangedInstruments,
-  hasProjectId,
-  supabaseClient
+  arrangedInstruments : any,
+  hasProjectId : number,
+  supabaseClient : any
 ) {
   if (!hasProjectId) throw new Error('No hasProjectId provided')
   if (!arrangedInstruments) throw new Error('No arrangedInstruments provided')
@@ -9,17 +9,15 @@ async function updateArrangement (
   const updateData = { order: createProjectArrangement(arrangedInstruments) }
   const jsonUpdateData = JSON.stringify(updateData)
 
-  function createProjectArrangement (instruments) {
+  function createProjectArrangement (instruments : any) {
     if (!instruments) throw new Error('No instruments provided')
-    console.log('instruments', instruments)
     if (instruments.length <= 1) {
       return instruments[0].text
     }
-    console.log(instruments)
-    instruments.forEach((instrument) => {
+    instruments.forEach((instrument : any) => {
       if (!instrument.text) throw new Error('instruments.text required')
     })
-    return instruments.map((instrument, index) => {
+    return instruments.map((instrument : any, index : number) => {
       return instrument.text
     })
   }
@@ -30,7 +28,6 @@ async function updateArrangement (
     .eq('id', `${hasProjectId}`)
     .select('arrangement_order')
   if (error) console.log('error', error)
-
   return newArrangement
 }
 

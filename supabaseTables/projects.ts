@@ -1,4 +1,6 @@
-async function getCurrentProject (slug, supabaseClient) {
+import {NewProject} from '../itemTypes/form'
+
+async function getCurrentProject (slug : string, supabaseClient : any) {
   if (!slug) throw new Error('No slug provided')
   if (!supabaseClient) throw new Error('No supabaseClient provided')
 
@@ -13,9 +15,9 @@ async function getCurrentProject (slug, supabaseClient) {
 }
 
 async function updateArrangementOrder (
-  projectId,
-  arrangementOrder,
-  supabaseClient
+  projectId : number,
+  arrangementOrder : any,
+  supabaseClient : any
 ) {
   if (!projectId) throw new Error('No projectId provided')
   if (!arrangementOrder) throw new Error('No arrangementOrder provided')
@@ -31,7 +33,7 @@ async function updateArrangementOrder (
   return Project[0]
 }
 
-async function getAllProjects (userId, supabaseClient) {
+async function getAllProjects (userId : number, supabaseClient : any) {
   if (!userId) throw new Error('No userId provided')
   if (!supabaseClient) throw new Error('No supabaseClient provided')
   const { data: Projects, error } = await supabaseClient
@@ -44,7 +46,7 @@ async function getAllProjects (userId, supabaseClient) {
   return Projects
 }
 
-async function newProject (form, userId, supabaseClient) {
+async function newProject (form : NewProject, userId : number, supabaseClient : any) {
   if (!form) throw new Error('No form provided')
   if (!userId) throw new Error('No userId provided')
   if (!supabaseClient) throw new Error('No supabaseClient provided')
@@ -68,7 +70,7 @@ async function newProject (form, userId, supabaseClient) {
 
 export { newProject, updateArrangementOrder, getCurrentProject, getAllProjects }
 
-function slugify (str) {
+function slugify (str : string) {
   return str
     .toLowerCase()
     .replace(/[^\w ]+/g, '')

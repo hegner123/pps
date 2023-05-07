@@ -1,4 +1,4 @@
-async function newSong (songName, projectId, supabaseClient) {
+async function newSong (songName : string, projectId : number, supabaseClient : any) {
   if (!songName) throw new Error('No form provided')
   if (!projectId) throw new Error('No user provided')
   if (!supabaseClient) throw new Error('No supabaseClient provided')
@@ -22,7 +22,7 @@ async function newSong (songName, projectId, supabaseClient) {
   return data
 }
 
-async function getSong (id, supabaseClient) {
+async function getSong (id : number, supabaseClient : any) {
   if (!id) throw new Error('No id provided')
   if (!supabaseClient) throw new Error('No supabaseClient provided')
   console.log('getSong', id)
@@ -36,7 +36,7 @@ async function getSong (id, supabaseClient) {
   return Song
 }
 
-async function getAllSongs (projectId, supabaseClient, debug, setDebug) {
+async function getAllSongs (projectId : number, supabaseClient : any, debug : any, setDebug : any) {
   if (!projectId) throw new Error('No projectId provided')
   if (!supabaseClient) throw new Error('No supabaseClient provided')
   const { data: Songs, error } = await supabaseClient
@@ -49,7 +49,7 @@ async function getAllSongs (projectId, supabaseClient, debug, setDebug) {
   return Songs
 }
 
-function slugify (str) {
+function slugify (str : string) {
   return str
     .toLowerCase()
     .replace(/[^\w ]+/g, '')
