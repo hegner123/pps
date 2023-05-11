@@ -14,10 +14,10 @@ export const TableRow = ({ songTitle, songID, songInfo }) => {
   const [currentArrangementOrder] = useAtom(currentArrangement)
   const [, setNewSong] = useAtom(newSongObject)
   const [isNewInstrumentEditEnabled] = useAtom(newInstrumentEdit)
+  const [, setSelectedInst] = useAtom(songDetailsStore)
   const [isDisabled, setIsDisabled] = useState(false)
   const arrangement = useArrangement(songID, currentArrangementOrder)
   const [ready, setReady] = useState(false)
-  const [, setSelectedInst] = useAtom(songDetailsStore)
 
   useEffect(() => {
     if (arrangement.ready) setReady(true)

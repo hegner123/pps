@@ -1,15 +1,17 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
 import { useAtom } from 'jotai'
-import { requireUpdate } from '../state/store'
+import { requireUpdate } from 'pps/state/store'
+import { useSong } from 'pps/hooks/song/useSong'
 
-const NewSongModal = ({ close, onSave }) => {
+const NewSongModal = ({ close , id } : any) => {
   const [songName, setSongName] = useState('')
   const [, setUpdate] = useAtom(requireUpdate)
+  const songHook = useSong(id)
 
-  function submitForm (e) {
+  function submitForm (e : any) {
     e.preventDefault()
-    onSave(songName)
+    songHook.submitNewSong(songName)
     setUpdate(true)
     close()
   }

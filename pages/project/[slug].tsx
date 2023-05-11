@@ -27,7 +27,7 @@ const SingleProject = () => {
   const [isGridEditable, setIsGridEditable] = useAtom(gridEditEnabled)
   const [hasSongs] = useAtom(projectHasSongs)
   const [needsUpdate] = useAtom(requireUpdate)
-  const songHook = useSong()
+  
   const instrumentHook = useArrangement()
   const projectData = useProject()
 
@@ -41,11 +41,6 @@ const SingleProject = () => {
 
   function closeAlert () {
     setShowUiAlert({ show: false, message: '' })
-  }
-
-  function saveNewSong (song, id) {
-    console.log(song, id)
-    songHook.submitNewSong(song, id)
   }
 
   function saveNewInstrument (instrument, id) {
@@ -111,7 +106,7 @@ const SingleProject = () => {
           {showNewSongModal && (
             <NewSongModal
               closeState={() => setShowNewSongModal(!showNewSongModal)}
-              onSave={(e) => saveNewSong(e, currentProjectId)}
+              projectId = { currentProjectId }
             />
           )}
           {showNewInstrumentModal && (
@@ -119,7 +114,7 @@ const SingleProject = () => {
               closeState={() =>
                 setShowNewInstrumentModal(!showNewInstrumentModal)
               }
-              onSave={(e) => saveNewInstrument(e, currentProjectId)}
+              projectId = { currentProjectId }
             />
           )}
         </div>

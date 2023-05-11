@@ -3,12 +3,12 @@ import {
   updateArrangement,
   getInstruments,
   deleteInstrument
-} from '../../supabaseTables'
-import { currentArrangement, projectId } from '../../state/store'
+} from 'pps/supabaseTables'
+import { currentArrangement, projectId } from 'pps/state/store'
 import { useAtom } from 'jotai'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 
-export const useArrangement = (songId, arrangementOrder) => {
+export const useArrangement = (songId : number, arrangementOrder : any) => {
   const [hasProjectId] = useAtom(projectId)
   const [hasInstruments, setHasInstruments] = useState([])
   const [ready, setReady] = useState(false)
@@ -21,11 +21,11 @@ export const useArrangement = (songId, arrangementOrder) => {
     [hasInstruments, arrangementOrder]
   )
 
-  function orderInstruments (instruments, projectArrangement) {
+  function orderInstruments (instruments : string[], projectArrangement: string[]) {
     if (fetched === false) return false
     if (!instruments) return
     if (!projectArrangement) return
-    let ordered = []
+    let ordered : any[]= []
     projectArrangement?.forEach((order) => {
       instruments.forEach((instrument) => {
         if (instrument.name.toLowerCase() !== order.text) return
@@ -44,8 +44,8 @@ export const useArrangement = (songId, arrangementOrder) => {
     return ordered
   }
 
-  function addInstrument (instrument, songId) {
-    let updatedData = []
+  function addInstrument (instrument : string, songId : number) {
+    let updatedData : any[] = []
     updateArrangement(instrument, songId, supabaseClient)
       .then((data) => {
         updatedData = data
@@ -56,7 +56,7 @@ export const useArrangement = (songId, arrangementOrder) => {
     return updatedData
   }
 
-  function removeInstrument (arrangement, instrument) {
+  function removeInstrument (arrangement : string[], instrument : any) {
     const updatedArrangement = arrangement.filter((item) => {
       return item.name !== instrument.name
     })

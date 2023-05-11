@@ -4,4 +4,10 @@ export type ItemTypes = {
   CELL: string,
 }
 
+export const Components = {
+  HEADER: 'header',
+  CARD: 'card',
+  CELL: 'cell',
+}
+
 

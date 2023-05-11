@@ -7,7 +7,7 @@ import { TableSorting } from './tableSorting'
 import PropTypes from 'prop-types'
 
 
-export const Grid = ({ projectData }) => {
+export const Grid = ({ projectData } : any) => {
   const songData = useSongs(projectData?.id)
   const [songTitles, setSongTitles] = useState([])
   const [songDataValue, setSongData] = useState([])
@@ -16,11 +16,11 @@ export const Grid = ({ projectData }) => {
 
   const [ready, setReady] = useState(false)
 
-  const parsedOrder = (jsonData) => {
+  const parsedOrder = (jsonData : string) => {
     return JSON.parse(jsonData?.arrangement_order)
   }
 
-  const arrangementOrder = parsedOrder(projectData)?.order?.map((inst, i) => {
+  const arrangementOrder = parsedOrder(projectData)?.order?.map((inst : string, i : number) => {
     return {
       id: i,
       text: inst
@@ -28,13 +28,12 @@ export const Grid = ({ projectData }) => {
   })
 
   useEffect(() => {
-    console.log(projectData)
     if (songData.fetched) {
       songData?.songs?.forEach((song) => {
         setSongTitles((songTitles) => [...songTitles, song.name])
         setSongData((songDataValue) => [...songDataValue, song])
         setNewSong(
-          (newSong) =>
+          (newSong : any) =>
             (newSong = {
               ...newSong,
               songs: [

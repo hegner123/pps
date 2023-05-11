@@ -2,7 +2,7 @@ import update from 'immutability-helper'
 import { memo, useCallback, useEffect, useState } from 'react'
 import { useDrop } from 'react-dnd'
 import { TableHeader } from './tableHeader'
-import { ItemTypes } from 'pps/itemTypes/index.ts'
+import { Components } from 'pps/itemTypes/index.ts'
 import { useAtom } from 'jotai'
 import { currentArrangement } from 'pps/state/store'
 import PropTypes from 'prop-types'
@@ -37,7 +37,7 @@ export const TableSorting = memo(function Container (props) {
     },
     [findHeader, headers, setHeaders]
   )
-  const [, drop] = useDrop(() => ({ accept: ItemTypes.HEADER }))
+  const [, drop] = useDrop(() => ({ accept: Components.HEADER }))
   useEffect(() => {
     if (dropped) {
       setArrangementOrder(headers)
@@ -46,7 +46,7 @@ export const TableSorting = memo(function Container (props) {
     setArrangementOrder(false)
   }, [headers])
 
-  function calcGrid (cols) {
+  function calcGrid (cols : any[]) {
     if (!cols) return '150px 1fr 100px'
     let grid = '150px'
     for (let i = 0; i < cols.length; i++) {
@@ -57,7 +57,7 @@ export const TableSorting = memo(function Container (props) {
     return grid
   }
 
-  function stretchHeader (headers) {
+  function stretchHeader (headers : any[]) {
     if (headers.length >= 0) return
     return 'col-end'
   }
@@ -72,7 +72,7 @@ export const TableSorting = memo(function Container (props) {
     >
       <div className="col-start col-start-1 col-span-1 row-start-1"></div>
       {headers &&
-        headers?.map((header, i) => (
+        headers?.map((header : any, i : number) => (
           <TableHeader
             classes={`capitalize col-start-${i + 2} row-start-1 ${stretchHeader(
               headers

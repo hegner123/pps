@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
+import { useSong } from 'pps/hooks/song/useSong'
 
-const NewInstrumentModal = ({ closeState, onSave }) => {
+const NewInstrumentModal = ( closeState : any, projectId : any) => {
   const [instrumentName, setInstrumentName] = useState('')
+  const songHook = useSong(projectId)
 
   function submitForm (e) {
     e.preventDefault()
-    onSave([instrumentName])
+    songHook.submitNewSong([instrumentName])
   }
   return (
     <dialog

@@ -11,6 +11,7 @@ async function getInstrument (instrumentId : number, supabaseClient : any) {
   return Instruments
 }
 async function getInstruments (songID : number, supabaseClient : any) {
+  console.log(songID)
   if (!songID) throw new Error('No songID provided')
   if (!supabaseClient) throw new Error('No supabaseClient provided')
   const { data: Instruments, error } = await supabaseClient

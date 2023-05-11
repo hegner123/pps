@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
-import { newSong, getInstruments, getSong } from '../../supabaseTables'
+import { newSong, getInstruments, getSong } from 'pps/supabaseTables'
 import { Song } from 'pps/itemTypes/song'
 
 export const useSong = (id : number) => {

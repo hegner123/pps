@@ -12,7 +12,7 @@ async function newSong (songName : string, projectId : number, supabaseClient : 
     slug: `${formSlug}`,
     project_id: `${projectId}`
   }
-  console.log('newSong', newSongData)
+  
   const { data, error } = await supabaseClient
     .from('Songs')
     .insert([newSongData])
@@ -25,7 +25,6 @@ async function newSong (songName : string, projectId : number, supabaseClient : 
 async function getSong (id : number, supabaseClient : any) {
   if (!id) throw new Error('No id provided')
   if (!supabaseClient) throw new Error('No supabaseClient provided')
-  console.log('getSong', id)
   const { data: Song, error } = await supabaseClient
     .from('Songs')
     .select('*')
@@ -36,7 +35,7 @@ async function getSong (id : number, supabaseClient : any) {
   return Song
 }
 
-async function getAllSongs (projectId : number, supabaseClient : any, debug : any, setDebug : any) {
+async function getAllSongs (projectId : number, supabaseClient : any) {
   if (!projectId) throw new Error('No projectId provided')
   if (!supabaseClient) throw new Error('No supabaseClient provided')
   const { data: Songs, error } = await supabaseClient
