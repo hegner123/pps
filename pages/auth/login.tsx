@@ -9,7 +9,7 @@ const LoginPage = () => {
 
   const supabaseClient = useSupabaseClient()
   const user = useUser()
-  const [, setData] = useState()
+  const [, setData] = useState<any>()
   const router = useRouter()
 
   if (user) {
@@ -23,34 +23,34 @@ const LoginPage = () => {
     }
 
     if (user) loadData()
-  }, [user])
+  }, [user, supabaseClient])
 
   return (
-    <main className="bg-slate-50 min-w-full min-h-screen place-items-center site-width site_grid">
-      <div className="col-start-4 col-span-3 w-full">
-        <form className="bg-slate-600 w-full p-10 grid grid-cols-2">
-          <h4 className="text-4xl text-white col-span-2">Login</h4>
-          {error && <p className="text-red-500 col-span-2">{error}</p>}
-          <label className="cols-start-2 col-span-2 w-full text-white mt-5">
+    <main className="min-w-full min-h-screen bg-slate-50 place-items-center site-width site_grid">
+      <div className="w-full col-span-3 col-start-4">
+        <form className="grid w-full grid-cols-2 p-10 bg-slate-600">
+          <h4 className="col-span-2 text-4xl text-white">Login</h4>
+          {error && <p className="col-span-2 text-red-500">{error}</p>}
+          <label className="w-full col-span-2 mt-5 text-white cols-start-2">
             Email:{' '}
           </label>
           <input
-            className="cols-start-2 col-span-2 w-full rounded p-5"
+            className="w-full col-span-2 p-5 rounded cols-start-2"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
             type="email"
           />
-          <label className="cols-start-2 col-span-2 w-full text-white mt-5">
+          <label className="w-full col-span-2 mt-5 text-white cols-start-2">
             Password:{' '}
           </label>
           <input
-            className="cols-start-2 col-span-2 w-full rounded p-5"
+            className="w-full col-span-2 p-5 rounded cols-start-2"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
             type="password"
           />
           <button
-            className="bg-black text-white p-2 rounded mt-5"
+            className="p-2 mt-5 text-white bg-black rounded"
             onClick={(e) => handleSubmit(e)}
           >
             Login

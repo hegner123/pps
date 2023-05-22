@@ -4,7 +4,7 @@ import { getInstrument, updateInstrument } from '../supabaseTables'
 import { showAlert } from '../state/store'
 import { useAtom } from 'jotai'
 
-export const useInstrument = (instId) => {
+export const useInstrument = (instId:any) => {
   const [, setShowUiAlert] = useAtom(showAlert)
   const [status, setStatus] = useState()
   const [active, setActive] = useState(false)
@@ -12,7 +12,7 @@ export const useInstrument = (instId) => {
   const supabaseClient = useSupabaseClient()
   const user = useUser()
 
-  function handleInstrumentUpdate (e) {
+  function handleInstrumentUpdate (e :any) {
     let update
     if (status === 'incomplete') {
       update = 'complete'
@@ -34,7 +34,7 @@ export const useInstrument = (instId) => {
         setReady(true)
       })
     }
-  }, [instId, user])
+  }, [instId, user, supabaseClient, ready])
 
   return { status, active, ready, onclick: handleInstrumentUpdate }
 }

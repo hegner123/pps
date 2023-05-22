@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState, useMemo ,useCallback} from 'react'
 import {
   updateArrangement,
   getInstruments,
@@ -8,7 +8,7 @@ import { currentArrangement, projectId } from 'pps/state/store'
 import { useAtom } from 'jotai'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 
-export const useArrangement = (songId : number, arrangementOrder : any) => {
+export const useArrangement = (songId : number, arrangementOrder?:any ) => {
   const [hasProjectId] = useAtom(projectId)
   const [hasInstruments, setHasInstruments] = useState([])
   const [ready, setReady] = useState(false)
@@ -16,18 +16,14 @@ export const useArrangement = (songId : number, arrangementOrder : any) => {
   const supabaseClient = useSupabaseClient()
   const [arrangedInstruments, setArrangedInstruments] =
     useAtom(currentArrangement)
-  const orderedInstruments = useMemo(
-    () => orderInstruments(hasInstruments, arrangementOrder),
-    [hasInstruments, arrangementOrder]
-  )
 
-  function orderInstruments (instruments : string[], projectArrangement: string[]) {
+  const orderInstruments = useCallback((instruments:any, projectArrangement:any) => {
     if (fetched === false) return false
     if (!instruments) return
-    if (!projectArrangement) return
+    
     let ordered : any[]= []
-    projectArrangement?.forEach((order) => {
-      instruments.forEach((instrument) => {
+    projectArrangement?.forEach((order :any) => {
+      instruments.forEach((instrument:any) => {
         if (instrument.name.toLowerCase() !== order.text) return
         ordered.push(instrument)
       })
@@ -42,7 +38,14 @@ export const useArrangement = (songId : number, arrangementOrder : any) => {
         console.error(error)
       })
     return ordered
-  }
+  }, [arrangedInstruments, hasProjectId, supabaseClient, fetched ]); 
+
+  const orderedInstruments = useMemo<any>(
+    () => orderInstruments(hasInstruments, arrangementOrder),
+    [hasInstruments, arrangementOrder, orderInstruments]
+  )
+
+
 
   function addInstrument (instrument : string, songId : number) {
     let updatedData : any[] = []
@@ -57,7 +60,7 @@ export const useArrangement = (songId : number, arrangementOrder : any) => {
   }
 
   function removeInstrument (arrangement : string[], instrument : any) {
-    const updatedArrangement = arrangement.filter((item) => {
+    const updatedArrangement = arrangement.filter((item :any) => {
       return item.name !== instrument.name
     })
     deleteInstrument(instrument.id, supabaseClient)
@@ -83,7 +86,7 @@ export const useArrangement = (songId : number, arrangementOrder : any) => {
       setHasInstruments(data)
       setFetched(true)
     })
-  }, [songId, fetched, arrangedInstruments])
+  }, [songId, fetched, arrangedInstruments,arrangementOrder, supabaseClient])
 
   return {
     orderedInstruments,

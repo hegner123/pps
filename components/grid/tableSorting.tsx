@@ -2,18 +2,18 @@ import update from 'immutability-helper'
 import { memo, useCallback, useEffect, useState } from 'react'
 import { useDrop } from 'react-dnd'
 import { TableHeader } from './tableHeader'
-import { Components } from 'pps/itemTypes/index.ts'
+import { Components } from 'pps/itemTypes/index'
 import { useAtom } from 'jotai'
 import { currentArrangement } from 'pps/state/store'
 import PropTypes from 'prop-types'
 
-export const TableSorting = memo(function Container (props) {
+export const TableSorting = memo(function Container (props:any) {
   const [, setArrangementOrder] = useAtom(currentArrangement)
   const [dropped, setDropped] = useState(true)
-  const [headers, setHeaders] = useState(props.projectData)
+  const [headers, setHeaders] = useState<any>(props.projectData)
   const findHeader = useCallback(
-    (id) => {
-      const header = headers.filter((c) => `${c.id}` === id)[0]
+    (id :any) => {
+      const header = headers.filter((c:any) => `${c.id}` === id)[0]
       return {
         header,
         index: headers.indexOf(header)
@@ -22,7 +22,7 @@ export const TableSorting = memo(function Container (props) {
     [headers]
   )
   const moveHeader = useCallback(
-    (id, atIndex) => {
+    (id:any, atIndex:any) => {
       setDropped(false)
       const { header, index } = findHeader(id)
       setHeaders(
@@ -43,8 +43,8 @@ export const TableSorting = memo(function Container (props) {
       setArrangementOrder(headers)
       return
     }
-    setArrangementOrder(false)
-  }, [headers])
+    setArrangementOrder(false || headers)
+  }, [headers, dropped, setArrangementOrder])
 
   function calcGrid (cols : any[]) {
     if (!cols) return '150px 1fr 100px'
@@ -70,11 +70,11 @@ export const TableSorting = memo(function Container (props) {
         gridTemplateColumns: calcGrid(headers)
       }}
     >
-      <div className="col-start col-start-1 col-span-1 row-start-1"></div>
+      <div className="col-span-1 col-start-1 row-start-1 col-start"></div>
       {headers &&
         headers?.map((header : any, i : number) => (
           <TableHeader
-            classes={`capitalize col-start-${i + 2} row-start-1 ${stretchHeader(
+            class={`capitalize col-start-${i + 2} row-start-1 ${stretchHeader(
               headers
             )} text-center flex justify-center items-center`}
             key={header.id || i}
@@ -90,8 +90,4 @@ export const TableSorting = memo(function Container (props) {
   )
 })
 
-TableSorting.propTypes = {
-  props: PropTypes.string,
-  children: PropTypes.any,
-  projectData: PropTypes.array
-}
+

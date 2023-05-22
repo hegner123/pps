@@ -5,11 +5,11 @@ const useRegister = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [passwordConfirmation, setPasswordConfirmation] = useState('')
-  const [error, setError] = useState(null)
+  const [error, setError] = useState<any>(null)
   const supabaseClient = useSupabaseClient()
 
   async function registerUser () {
-    const { data, error } = await supabaseClient.auth.signUp({
+    const { data, error }= await supabaseClient.auth.signUp({
       email: `${email}`,
       password: `${password}`
     })
@@ -21,7 +21,7 @@ const useRegister = () => {
     return data
   }
 
-  function handleSubmit (e) {
+  function handleSubmit (e:any) {
     e.preventDefault()
     if (password !== passwordConfirmation) {
       setError('Passwords do not match')

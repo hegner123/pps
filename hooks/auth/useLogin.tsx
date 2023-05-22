@@ -8,11 +8,11 @@ export const useLogin = () => {
   const [error, setError] = useState(null)
   const supabaseClient = useSupabaseClient()
 
-  function handleSubmit (e) {
+  function handleSubmit (e:any) {
     e.preventDefault()
     try {
       loginUser(email, password, supabaseClient)
-    } catch (err) {
+    } catch (err:any) {
       setError(err)
     }
   }

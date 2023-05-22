@@ -2,14 +2,14 @@ import { Provider, createStore, atom } from 'jotai'
 import PropTypes from 'prop-types'
 
 const ppsStore = createStore()
-export const songDetailsStore = atom([])
-export const projectHasSongs = atom(false)
-export const currentArrangement = atom([])
-export const projectId = atom(null)
-export const debug = atom(false)
-export const gridEditEnabled = atom(false)
+export const songDetailsStore = atom<any>([])
+export const projectHasSongs = atom<any>(false)
+export const currentArrangement = atom<any>([])
+export const projectId = atom<any>(null)
+export const debug = atom<any>(false)
+export const gridEditEnabled = atom<any>(false)
 export const showAlert = atom({ show: false, message: '' })
-export const newSongEdit = atom(false)
+export const newSongEdit = atom<any>(false)
 export const newSongObject = atom({
   name: '',
   songs: []
@@ -17,7 +17,7 @@ export const newSongObject = atom({
 export const newInstrumentEdit = atom(false)
 export const newInstrumentObject = atom({ name: '' })
 export const debugDrag = atom(false)
-export const requireUpdate = atom(false)
+export const requireUpdate = atom<Boolean>(false)
 
 export const ppsStates = {
   songDetailsStore,
@@ -35,12 +35,10 @@ export const ppsStates = {
   requireUpdate
 }
 
-const JotaiProvider = ({ children }) => {
+const JotaiProvider = ({ children }:any) => {
   return <Provider store={ppsStore}>{children}</Provider>
 }
 
-JotaiProvider.propTypes = {
-  children: PropTypes.node
-}
+
 
 export default JotaiProvider

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-const CloseIcon = ({ extraClasses }) => {
+const CloseIcon = ({ extraClasses }:any) => {
   return (
     <>
       <svg

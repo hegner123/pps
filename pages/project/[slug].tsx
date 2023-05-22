@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
+import { use, useEffect, useState } from 'react'
 import { Grid } from 'pps/components/grid'
+import { useRouter } from 'next/router'
 import { useProject } from 'pps/hooks/project/useProject'
 import SongDetails from 'pps/components/grid/songDetails'
 import NewSongModal from 'pps/components/newSongModal'
@@ -19,6 +20,7 @@ import { useAtom } from 'jotai'
 import CloseIcon from '../../components/svg/closeIcon'
 const SingleProject = () => {
   const [ready, setReady] = useState(false)
+  const router = useRouter()
   const [showNewSongModal, setShowNewSongModal] = useState(false)
   const [showNewInstrumentModal, setShowNewInstrumentModal] = useState(false)
   const [showUiAlert, setShowUiAlert] = useAtom(showAlert)
@@ -28,8 +30,8 @@ const SingleProject = () => {
   const [hasSongs] = useAtom(projectHasSongs)
   const [needsUpdate] = useAtom(requireUpdate)
   
-  const instrumentHook = useArrangement()
-  const projectData = useProject()
+  const instrumentHook = useArrangement(router.query.slug as any)
+  const projectData :any = useProject()
 
   useEffect(() => {
     if (projectData?.fetched || needsUpdate) {
@@ -37,55 +39,57 @@ const SingleProject = () => {
       setArrangementOrder(projectData?.hasProject?.arrangementOrder)
       setProjectId(projectData?.hasProject?.id)
     }
-  }, [projectData?.fetched, needsUpdate])
+  }, [projectData?.fetched, needsUpdate, projectData?.hasProject?.id, projectData?.hasProject?.arrangementOrder, setArrangementOrder, setProjectId])
 
   function closeAlert () {
     setShowUiAlert({ show: false, message: '' })
   }
 
-  function saveNewInstrument (instrument, id) {
+  function saveNewInstrument (instrument : any, id : any) {
     console.log(instrument, id)
     instrumentHook.addInstrument(instrument, id)
   }
 
+
+
   return (
     <div
-      className="bg-slate-50 site_grid min-w-full site-width full-width"
+      className="min-w-full bg-slate-50 site_grid site-width full-width"
       style={{ minHeight: 'calc(100vh - 64px)' }}
     >
-      <div className="col-start site-width max-content-rows site_grid col-start-1 col-span-14 pt-5">
-        <div className="site_grid site-width items-end col-span-12 gap-2 ">
-          <h1 className="text-6xl col-start-2 col-span-4">
+      <div className="col-start-1 pt-5 col-start site-width max-content-rows site_grid col-span-14">
+        <div className="items-end col-span-12 gap-2 site_grid site-width ">
+          <h1 className="col-span-4 col-start-2 text-6xl">
             {projectData?.hasProject?.name}
           </h1>
           {hasSongs && (
             <button
-              className="h-10 border-solid border-black hover:text-black hover:bg-white hover:border-1 rounded flex justify-center items-center col-start-9 col-span-1 bg-slate-900 text-white"
+              className="flex items-center justify-center h-10 col-span-1 col-start-9 text-white border-black border-solid rounded hover:text-black hover:bg-white hover:border-1 bg-slate-900"
               onClick={() => setShowNewInstrumentModal(!showNewInstrumentModal)}
             >
               New Instrument
             </button>
           )}
           <button
-            className="h-10 border-solid border-black hover:text-black hover:bg-white hover:border-1 rounded flex justify-center items-center col-start-10 col-span-1 bg-slate-900 text-white"
+            className="flex items-center justify-center h-10 col-span-1 col-start-10 text-white border-black border-solid rounded hover:text-black hover:bg-white hover:border-1 bg-slate-900"
             onClick={() => setShowNewSongModal(!showNewSongModal)}
           >
             New Song
           </button>
           <button
-            className="h-10 border-solid border-black hover:text-black hover:bg-white hover:border-1 rounded flex justify-center items-center col-start-11 col-span-1 bg-slate-900 text-white"
+            className="flex items-center justify-center h-10 col-span-1 col-start-11 text-white border-black border-solid rounded hover:text-black hover:bg-white hover:border-1 bg-slate-900"
             onClick={() => setIsGridEditable(!isGridEditable)}
           >
             Edit
           </button>
           <button
-            className="h-10 border-solid border-black hover:text-black hover:bg-white hover:border-1 rounded flex justify-center items-center col-start-12 col-span-1 bg-slate-900 text-white"
+            className="flex items-center justify-center h-10 col-span-1 col-start-12 text-white border-black border-solid rounded hover:text-black hover:bg-white hover:border-1 bg-slate-900"
             onClick={() => setIsGridEditable(!isGridEditable)}
           >
             Settings
           </button>
           {showUiAlert.show && (
-            <div className="dark-blue-bg flex h-7 w-fit p-5 items-center">
+            <div className="flex items-center p-5 dark-blue-bg h-7 w-fit">
               <p>{showUiAlert.message}</p>
               <button onClick={() => closeAlert()}>
                 <CloseIcon
@@ -95,10 +99,9 @@ const SingleProject = () => {
             </div>
           )}
         </div>
-        <div className="site_grid site-width col-start-2 col-span-12">
+        <div className="col-span-12 col-start-2 site_grid site-width">
           {ready && (
             <Grid
-              projectSlug={projectData?.projectSlug}
               projectData={projectData?.hasProject}
             />
           )}
@@ -106,7 +109,7 @@ const SingleProject = () => {
           {showNewSongModal && (
             <NewSongModal
               closeState={() => setShowNewSongModal(!showNewSongModal)}
-              projectId = { currentProjectId }
+              id = { currentProjectId }
             />
           )}
           {showNewInstrumentModal && (
@@ -114,7 +117,7 @@ const SingleProject = () => {
               closeState={() =>
                 setShowNewInstrumentModal(!showNewInstrumentModal)
               }
-              projectId = { currentProjectId }
+              id = { currentProjectId }
             />
           )}
         </div>

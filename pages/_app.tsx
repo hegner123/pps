@@ -10,7 +10,7 @@ import Navigation from '../components/nav'
 import HeadMeta from '../components/head'
 import '../styles/style.scss'
 
-function MyApp ({ Component, pageProps }) {
+function MyApp ({ Component, pageProps }:{Component:any, pageProps:any}) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient())
   return (
     <>

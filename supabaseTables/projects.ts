@@ -1,6 +1,6 @@
 import {NewProject} from '../itemTypes/form'
 
-async function getCurrentProject (slug : string, supabaseClient : any) {
+async function getCurrentProject (slug : string | any, supabaseClient : any) {
   if (!slug) throw new Error('No slug provided')
   if (!supabaseClient) throw new Error('No supabaseClient provided')
 
@@ -46,7 +46,7 @@ async function getAllProjects (userId : number, supabaseClient : any) {
   return Projects
 }
 
-async function newProject (form : NewProject, userId : number, supabaseClient : any) {
+async function newProject (form : any, userId : any, supabaseClient : any) {
   if (!form) throw new Error('No form provided')
   if (!userId) throw new Error('No userId provided')
   if (!supabaseClient) throw new Error('No supabaseClient provided')

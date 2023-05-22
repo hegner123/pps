@@ -9,7 +9,7 @@ const ProjectCard = ({
   songCount,
   link,
   ...props
-}) => {
+}:any) => {
   const { users } = useUsers(author)
   return (
     <a href={link}>

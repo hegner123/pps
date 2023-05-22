@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { getCurrentProject, newProject } from '../../supabaseTables/projects'
+import { getCurrentProject, newProject } from 'pps/supabaseTables/projects'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 
 export const useProject = () => {
@@ -11,7 +11,7 @@ export const useProject = () => {
 
   useEffect(() => {
     if (fetched === false && router?.query?.slug) {
-      getCurrentProject(router?.query?.slug, supabaseClient)
+      getCurrentProject(router.query.slug, supabaseClient)
         .then((data) => {
           setProject(data)
           setFetched(true)
@@ -20,7 +20,7 @@ export const useProject = () => {
           console.log(err)
         })
     }
-  }, [router])
+  }, [router , fetched, supabaseClient])
 
   return { hasProject, fetched, newProject }
 }

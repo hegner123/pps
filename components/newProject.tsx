@@ -1,22 +1,22 @@
-import { useState } from 'react'
+import { SyntheticEvent, useState } from 'react'
 import { useProject } from '../hooks/project/useProject'
 import { useRouter } from 'next/router'
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useAtom } from 'jotai'
 import { requireUpdate } from '../state/store'
-import PropTypes from 'prop-types'
-const NewProject = ({ close }) => {
-  const project = useProject({ action: 'new' })
+
+const NewProject = ({ close }: any) => {
+  const project = useProject()
   const [projectName, setProjectName] = useState('')
   const [, setUpdate] = useAtom(requireUpdate)
   const router = useRouter()
   const users = useUser()
   const supabaseClient = useSupabaseClient()
 
-  function submitForm (e) {
+  function submitForm (e : SyntheticEvent) {
     e.preventDefault()
     project
-      .newProject({ name: projectName }, users.id, supabaseClient)
+      .newProject({ name: projectName } , users?.id, supabaseClient)
       .then((success) => {
         if (success) {
           router.push('/dashboard')
@@ -29,16 +29,16 @@ const NewProject = ({ close }) => {
       })
   }
   return (
-    <div className="bg-slate-700 p-5 site_grid site-width new-project-container justify-between">
+    <div className="justify-between p-5 bg-slate-700 site_grid site-width new-project-container">
       <h1 className="col-span-11 text-white">New Project</h1>
       <span
-        className="block col-span-1 text-white cursor-pointer ml-auto"
+        className="block col-span-1 ml-auto text-white cursor-pointer"
         onClick={() => close()}
       >
         X
       </span>
-      <form className="bg-slate-700 grid new-project-form col-span-full">
-        <label className="text-white block col-span-12" htmlFor="Name">
+      <form className="grid bg-slate-700 new-project-form col-span-full">
+        <label className="block col-span-12 text-white" htmlFor="Name">
           Name
         </label>
         <input
@@ -50,14 +50,14 @@ const NewProject = ({ close }) => {
           onChange={(e) => setProjectName(e.target.value)}
         />
         <button
-          className="bg-slate-500 text-white text-center p-2 rounded-md col-span-6 hover:text-black hover:bg-slate-50 mt-6"
+          className="col-span-6 p-2 mt-6 text-center text-white rounded-md bg-slate-500 hover:text-black hover:bg-slate-50"
           type="submit"
           onClick={(e) => submitForm(e)}
         >
           Create
         </button>
         <span
-          className="flex items-center justify-center border-slate-500 border-2 text-white text-center p-2 rounded-md col-span-6 hover:text-black hover:bg-slate-50 hover:border-slate-50 mt-6"
+          className="flex items-center justify-center col-span-6 p-2 mt-6 text-center text-white border-2 rounded-md border-slate-500 hover:text-black hover:bg-slate-50 hover:border-slate-50"
           onClick={() => close()}
         >
           Cancel
@@ -69,6 +69,4 @@ const NewProject = ({ close }) => {
 
 export default NewProject
 
-NewProject.propTypes = {
-  close: PropTypes.func
-}
+

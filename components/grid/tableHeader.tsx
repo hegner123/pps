@@ -1,6 +1,6 @@
 import { memo, useEffect } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
-import { Components } from 'pps/itemTypes/index.ts'
+import { Components } from 'pps/itemTypes/index'
 import PropTypes from 'prop-types'
 import { debugDrag } from 'pps/state/store'
 import { useAtom } from 'jotai'
@@ -11,7 +11,7 @@ export const TableHeader = memo(function Header ({
   moveHeader,
   findHeader,
   classes
-}) {
+} :any) {
   const [logDrag] = useAtom(debugDrag)
   const originalIndex = findHeader(id).index
   const [{ isDragging }, drag] = useDrag(
@@ -32,7 +32,7 @@ export const TableHeader = memo(function Header ({
     [id, originalIndex, moveHeader]
   )
 
-  const [, drop] = useDrop(
+  const [, drop] = useDrop<any>(
     () => ({
       accept: Components.HEADER,
       hover ({ id: draggedId }) {
@@ -45,11 +45,11 @@ export const TableHeader = memo(function Header ({
     [findHeader, moveHeader]
   )
 
-  useEffect(() => {
-    if (logDrag) {
-      console.log(isDragging)
-    }
-  }, [isDragging])
+  // useEffect(() => {
+  //   if (logDrag) {
+  //     console.log(isDragging)
+  //   }
+  // }, [isDragging ,logDrag])
 
   return (
     <div ref={(node) => drag(drop(node))} className={classes}>
@@ -58,10 +58,4 @@ export const TableHeader = memo(function Header ({
   )
 })
 
-TableHeader.propTypes = {
-  id: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
-  moveHeader: PropTypes.func.isRequired,
-  findHeader: PropTypes.func.isRequired,
-  classes: PropTypes.string.isRequired
-}
+

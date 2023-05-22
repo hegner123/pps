@@ -2,42 +2,42 @@ import { useState } from 'react'
 import PropTypes from 'prop-types'
 import { useSong } from 'pps/hooks/song/useSong'
 
-const NewInstrumentModal = ( closeState : any, projectId : any) => {
+const NewInstrumentModal = ( {closeState , id }:{closeState:any,id:any}) => {
   const [instrumentName, setInstrumentName] = useState('')
-  const songHook = useSong(projectId)
+  const songHook = useSong(id)
 
-  function submitForm (e) {
+  function submitForm (e :any) {
     e.preventDefault()
-    songHook.submitNewSong([instrumentName])
+    songHook.submitNewSong(instrumentName,id)
   }
   return (
     <dialog
       id="newInstrumentModal"
-      className="bg-slate-700 p-5 site_grid site-width new-project-container justify-between"
+      className="justify-between p-5 bg-slate-700 site_grid site-width new-project-container"
       onCancel={() => console.log('close')}
       open
     >
-      <h3 className="col-span-13 text-white">New Instrument</h3>
-      <form className="bg-slate-700 grid new-project-form col-span-full">
-        <label className="col-span-13 text-white" htmlFor="instrumentName">
+      <h3 className="text-white col-span-13">New Instrument</h3>
+      <form className="grid bg-slate-700 new-project-form col-span-full">
+        <label className="text-white col-span-13" htmlFor="instrumentName">
           Instrument Name
         </label>
         <input
           type="text"
           id="instrumentName"
-          className="col-span-13 pl-1"
+          className="pl-1 col-span-13"
           value={instrumentName}
           onChange={(e) => setInstrumentName(e.target.value)}
         />
         <button
-          className="bg-slate-500 text-white text-center p-2 rounded-md col-span-6 hover:text-black hover:bg-slate-50 cursor-pointer mt-6"
+          className="col-span-6 p-2 mt-6 text-center text-white rounded-md cursor-pointer bg-slate-500 hover:text-black hover:bg-slate-50"
           type="submit"
           onClick={(e) => submitForm(e)}
         >
           Create
         </button>
         <span
-          className="flex items-center justify-center border-slate-500 border-2 text-white text-center p-2 rounded-md col-span-6 hover:text-black hover:bg-slate-50 hover:border-slate-50 mt-6 cursor-pointer"
+          className="flex items-center justify-center col-span-6 p-2 mt-6 text-center text-white border-2 rounded-md cursor-pointer border-slate-500 hover:text-black hover:bg-slate-50 hover:border-slate-50"
           onClick={() => closeState()}
         >
           Cancel

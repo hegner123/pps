@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-const EditIcon = ({ extraClasses }) => {
+const EditIcon = ({ extraClasses }:any) => {
   return (
     <>
       <svg

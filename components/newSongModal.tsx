@@ -4,22 +4,22 @@ import { useAtom } from 'jotai'
 import { requireUpdate } from 'pps/state/store'
 import { useSong } from 'pps/hooks/song/useSong'
 
-const NewSongModal = ({ close , id } : any) => {
+const NewSongModal = ({ closeState , id } : {closeState:any, id:number}) => {
   const [songName, setSongName] = useState('')
   const [, setUpdate] = useAtom(requireUpdate)
   const songHook = useSong(id)
 
   function submitForm (e : any) {
     e.preventDefault()
-    songHook.submitNewSong(songName)
+    songHook.submitNewSong(songName, id)
     setUpdate(true)
-    close()
+    closeState()
   }
   return (
-    <div className="bg-slate-700 p-5 site_grid site-width new-project-container justify-between">
-      <h3 className="col-span-13 text-white">New Song</h3>
-      <form className="bg-slate-700 grid new-project-form col-span-full">
-        <label className="text-white block col-span-12" htmlFor="Name">
+    <div className="justify-between p-5 bg-slate-700 site_grid site-width new-project-container">
+      <h3 className="text-white col-span-13">New Song</h3>
+      <form className="grid bg-slate-700 new-project-form col-span-full">
+        <label className="block col-span-12 text-white" htmlFor="Name">
           Name
         </label>
         <input
@@ -31,15 +31,15 @@ const NewSongModal = ({ close , id } : any) => {
           onChange={(e) => setSongName(e.target.value)}
         />
         <button
-          className="bg-slate-500 text-white text-center p-2 rounded-md col-span-6 hover:text-black hover:bg-slate-50 cursor-pointer mt-6"
+          className="col-span-6 p-2 mt-6 text-center text-white rounded-md cursor-pointer bg-slate-500 hover:text-black hover:bg-slate-50"
           type="submit"
           onClick={(e) => submitForm(e)}
         >
           Create
         </button>
         <span
-          className="flex items-center justify-center border-slate-500 border-2 text-white text-center p-2 rounded-md col-span-6 hover:text-black hover:bg-slate-50 hover:border-slate-50 mt-6 cursor-pointer"
-          onClick={() => close()}
+          className="flex items-center justify-center col-span-6 p-2 mt-6 text-center text-white border-2 rounded-md cursor-pointer border-slate-500 hover:text-black hover:bg-slate-50 hover:border-slate-50"
+          onClick={() => closeState()}
         >
           Cancel
         </span>
@@ -49,8 +49,3 @@ const NewSongModal = ({ close , id } : any) => {
 }
 
 export default NewSongModal
-
-NewSongModal.propTypes = {
-  close: PropTypes.func,
-  onSave: PropTypes.func
-}

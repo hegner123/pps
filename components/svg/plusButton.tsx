@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-const PlusButton = ({ extraClasses }) => {
+const PlusButton = ({ extraClasses }:any) => {
   return (
     <>
       <svg

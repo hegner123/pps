@@ -7,10 +7,9 @@ import {
   newInstrumentEdit,
   newSongObject
 } from 'pps/state/store'
-import PropTypes from 'prop-types'
 import { useArrangement } from 'pps/hooks/arrangement/useArrangement'
 
-export const TableRow = ({ songTitle, songID, songInfo }) => {
+export const TableRow = ({ songTitle, songID, songInfo } : {songTitle:any, songID:any, songInfo:any}) => {
   const [currentArrangementOrder] = useAtom(currentArrangement)
   const [, setNewSong] = useAtom(newSongObject)
   const [isNewInstrumentEditEnabled] = useAtom(newInstrumentEdit)
@@ -23,11 +22,11 @@ export const TableRow = ({ songTitle, songID, songInfo }) => {
     if (arrangement.ready) setReady(true)
   }, [arrangement])
 
-  function handleChange (active, songID) {
+  function handleChange (active:any, songID:any) {
     setIsDisabled(active)
-    setNewSong((newSong) => ({
+    setNewSong((newSong : any) => ({
       ...newSong,
-      songs: newSong.songs.map((song) => {
+      songs: newSong?.songs.map((song :any) => {
         if (song.id === songID) {
           song.active = active
         }
@@ -41,12 +40,12 @@ export const TableRow = ({ songTitle, songID, songInfo }) => {
       {ready && (
         <>
           <div
-            className="cell hover:bg-slate-200 cursor-pointer col-start-1 flex justify-center items-center"
+            className="flex items-center justify-center col-start-1 cursor-pointer cell hover:bg-slate-200"
             onClick={() => setSelectedInst(songInfo)}
           >
             {songTitle}
           </div>
-          {arrangement.orderedInstruments?.map((instrument) => (
+          {arrangement?.orderedInstruments?.map((instrument :any) => (
             <TableCell key={instrument.id} instId={instrument.id} />
           ))}
           <div className={'cursor-pointer cell p-2'}>
@@ -65,8 +64,4 @@ export const TableRow = ({ songTitle, songID, songInfo }) => {
   )
 }
 
-TableRow.propTypes = {
-  songTitle: PropTypes.string.isRequired,
-  songID: PropTypes.number,
-  songInfo: PropTypes.object
-}
+

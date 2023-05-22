@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-const useGridStore = (song) => {
+const useGridStore = (song :any) => {
   const [selectedSong, setSelectedSong] = useState(0)
   useEffect(() => {
     if (song) {
@@ -7,7 +7,7 @@ const useGridStore = (song) => {
     }
   }, [song])
 
-  function handleSelectSong (song) {
+  function handleSelectSong (song :any) {
     setSelectedSong(song)
   }
 
