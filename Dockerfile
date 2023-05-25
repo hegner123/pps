@@ -25,7 +25,7 @@ COPY . .
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.
-# ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_TELEMETRY_DISABLED 1
 
 # RUN yarn build
 
@@ -41,7 +41,7 @@ ENV NEXT_PUBLIC_SUPABASE_URL=https://bfyfmeezmpcdjmpiztrr.supabase.co
 ENV NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJmeWZtZWV6bXBjZGptcGl6dHJyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzUwMDQ2MzEsImV4cCI6MTk5MDU4MDYzMX0.OiDJeCyN8-7vEe2-sAQEH9BsO5gXlTaYO_MGe_sEC-M
 # ENV NODE_ENV development
 # Uncomment the following line in case you want to disable telemetry during runtime.
-# ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
@@ -55,7 +55,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 
-EXPOSE 3000
+EXPOSE 3000/tcp
 
 ENV PORT 3000
 

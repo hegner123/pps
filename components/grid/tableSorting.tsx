@@ -5,11 +5,11 @@ import { TableHeader } from './tableHeader'
 import { Components } from 'pps/itemTypes/index'
 import { useAtom } from 'jotai'
 import { currentArrangement } from 'pps/state/store'
-import PropTypes from 'prop-types'
+
 
 export const TableSorting = memo(function Container (props:any) {
   const [, setArrangementOrder] = useAtom(currentArrangement)
-  const [dropped, setDropped] = useState(true)
+  const [dropped, setDropped] = useState<any>(true)
   const [headers, setHeaders] = useState<any>(props.projectData)
   const findHeader = useCallback(
     (id :any) => {
@@ -72,12 +72,12 @@ export const TableSorting = memo(function Container (props:any) {
     >
       <div className="col-span-1 col-start-1 row-start-1 col-start"></div>
       {headers &&
-        headers?.map((header : any, i : number) => (
+        headers?.map((header : any, i : any) => (
           <TableHeader
             class={`capitalize col-start-${i + 2} row-start-1 ${stretchHeader(
               headers
             )} text-center flex justify-center items-center`}
-            key={header.id || i}
+            key={header.id }
             id={`${header.id}`}
             text={header.text}
             moveHeader={moveHeader}

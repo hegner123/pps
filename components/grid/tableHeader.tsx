@@ -45,11 +45,11 @@ export const TableHeader = memo(function Header ({
     [findHeader, moveHeader]
   )
 
-  // useEffect(() => {
-  //   if (logDrag) {
-  //     console.log(isDragging)
-  //   }
-  // }, [isDragging ,logDrag])
+  useEffect(() => {
+    if (logDrag) {
+      console.log(isDragging)
+    }
+  }, [isDragging ,logDrag])
 
   return (
     <div ref={(node) => drag(drop(node))} className={classes}>
