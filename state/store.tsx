@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 const ppsStore = createStore()
 export const songDetailsStore = atom<any>([])
+export const songDetailsEditStore = atom<any>(false)
 export const projectHasSongs = atom<any>(false)
 export const currentArrangement = atom<any>([])
 export const projectId = atom<any>(null)
@@ -21,6 +22,7 @@ export const requireUpdate = atom<Boolean>(false)
 
 export const ppsStates = {
   songDetailsStore,
+  songDetailsEditStore,
   projectHasSongs,
   currentArrangement,
   projectId,
